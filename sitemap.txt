@@ -8,4 +8,4 @@ http://kokerwang.github.io//tag/
 http://kokerwang.github.io//timing/
 http://kokerwang.github.io//type/
 
-http://kokerwang.github.io//android/hello%20world.html
+http://kokerwang.github.io//others/My%20fist%20blog.html
