@@ -1,11 +1,12 @@
 
-http://kokerwang.github.io//about/
-http://kokerwang.github.io//index.html
-http://kokerwang.github.io//rss.xml
-http://kokerwang.github.io//search/
-http://kokerwang.github.io//sitemap.txt
-http://kokerwang.github.io//tag/
-http://kokerwang.github.io//timing/
-http://kokerwang.github.io//type/
+http://www.kokerwang.com//about/
+http://www.kokerwang.com//index.html
+http://www.kokerwang.com//rss.xml
+http://www.kokerwang.com//search/
+http://www.kokerwang.com//sitemap.txt
+http://www.kokerwang.com//tag/
+http://www.kokerwang.com//timing/
+http://www.kokerwang.com//type/
 
-http://kokerwang.github.io//others/My%20fist%20blog.html
+http://www.kokerwang.com//android/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html
+http://www.kokerwang.com//others/My%20first%20blog.html
