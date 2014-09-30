@@ -4,13 +4,278 @@
     <title>曾经不知你好</title>
     <link href="http://liyouhai.com/rss.xml" rel="self"/>
     <link href="http://liyouhai.com/"/>
-    <updated>2014-09-29T00:16:24+08:00</updated>
+    <updated>2014-09-30T22:15:12+08:00</updated>
     <id>http://liyouhai.com/</id>
     <author>
         <name>liyouhai</name>
         <email>liyouhai@vip.qq.com</email>
     </author>
 
+    
+    <entry>
+        <title>Android简单实现方形头像图片转圆形</title>
+        <link href="http://liyouhai.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BD%A2%E5%A4%B4%E5%83%8F%E5%9B%BE%E7%89%87%E8%BD%AC%E5%9C%86%E5%BD%A2.html"/>
+        <updated>2014-09-30T00:00:00+08:00</updated>
+        <id>http://liyouhai.com//android/Android简单实现方形头像图片转圆形</id>
+        <content type="html">&lt;hr /&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.&lt;/p&gt;
+
+&lt;p&gt;在网上找了一番之后,大概解决方法有两种&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;使用自定义组件继承ImageView&lt;/li&gt;
+&lt;li&gt;通过对BitMap重绘得到&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;第一种方式,有许多开源框架可以实现,如&lt;a href=&quot;https://github.com/nostra13/Android-Universal-Image-Loader&quot;&gt;&lt;strong&gt;CircleImageView&lt;/strong&gt;&lt;/a&gt;&amp;nbsp;,由于我们项目中图片缓存及显示使用的是&lt;a href=&quot;https://github.com/nostra13/Android-Universal-Image-Loader&quot;&gt;&lt;strong&gt;Android-Universal-Image-Loader&lt;/strong&gt;&lt;/a&gt;,而他本身支持在获取到网络图片之后增加回调,那我毫无疑问的选择了第二种方式实现,&lt;/p&gt;
+
+&lt;p&gt;首先是圆形图片转换的方法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/**
+ * 将图片转为圆型
+ * 
+ * @param bitmap
+ * @return
+ */
+public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+    int width = bitmap.getWidth();
+    int height = bitmap.getHeight();
+    Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+    Canvas canvas = new Canvas(output);
+
+    final int color = 0xff424242;
+    final Paint paint = new Paint();
+    final Rect rect = new Rect(0, 0, width, height);
+    final RectF rectF = new RectF(rect);
+    final float roundPx = width &amp;gt; height ? height / 2 : width / 2;
+
+    paint.setAntiAlias(true);
+    canvas.drawARGB(0, 0, 0, 0);
+    paint.setColor(color);
+    canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+    paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+    canvas.drawBitmap(bitmap, rect, rect, paint);
+    return output;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;再然后是显示图片工具类&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;public static SimpleImageLoadingListener listener;
+
+public static &amp;lt;T extends ImageView&amp;gt; void displayImage2Circle(T container, String url) {
+    if (listener == null) {
+        listener = new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                ((ImageView) view).setImageBitmap(getRoundedCornerBitmap(loadedImage));
+            }
+        };
+    }
+    ImageLoader.getInstance().displayImage(url, container, listener);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样只要是需要把图片显示为圆形的地方直接调用&lt;code&gt;displayImage2Circle&lt;/code&gt;这个方法即可&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:
+&lt;img src=&quot;../img/20140930151619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;起先以为是图片有白边,后来发现不是,&lt;a href=&quot;http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg&quot;&gt;图片地址&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;然后又以为是半径没算对,验证之后再次被排除&lt;/li&gt;
+&lt;li&gt;最终把原因定位到了Image-Loader上,解决办法如下:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ImageLoaderConfiguration的defaultDisplayImageOptions方法需要一个DisplayImageOptions参数而DisplayImageOptions的参数的imageScaleType属性默认的是ImageScaleType.IN_SAMPLE_POWER_OF_2就是这个属性导致的图片不圆,查了一下文档&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/** 
+ * 图片的缩放方式 
+ */  
+imageScaleType(ImageScaleType imageScaleType)  
+imageScaleType:  
+    EXACTLY :图像将完全按比例缩小的目标大小  
+    EXACTLY_STRETCHED:图片会完全缩放到目标大小  
+    IN_SAMPLE_INT:图像将被二次采样,并且倍数为整数倍  
+    IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小  
+    NONE:图片不会调整  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;IN_SAMPLE_POWER_OF_2模式下缩放是成倍缩放的所以导致实际显示的要比我设定的宽一些,改成EXACTLY_STRETCHED之后问题得到解决&lt;/p&gt;
+
+&lt;p&gt;最后展示一下最终效果&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../img/20140930154619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;以及Image-Loader的完整设置&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;private void initImageLoader() {
+    DisplayImageOptions options = new DisplayImageOptions.Builder()
+    .showImageForEmptyUri(R.drawable.default_image) 
+    .showImageOnFail(R.drawable.default_image) 
+    .delayBeforeLoading(1000)
+    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) 
+    .bitmapConfig(Config.RGB_565) 
+    .build();
+
+    File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); 
+
+    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+    .denyCacheImageMultipleSizesInMemory()
+    .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+    .threadPoolSize(4)
+    .memoryCacheSize(2 * 1024 * 1024)
+    .diskCache(new UnlimitedDiscCache(cacheDir)) // 缓存路径
+    .diskCacheSize(50 * 1024 * 1024)
+    .diskCacheFileCount(100)
+    .defaultDisplayImageOptions(options) 
+    .build();
+
+     ImageLoader.getInstance().init(config);  
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;公司项目我就不放源码了,核心代码都在上面了.有问题可以和我联系&lt;/p&gt;
+
+&lt;hr /&gt;
+</content>
+        <summary type="html">&lt;hr /&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.&lt;/p&gt;
+
+&lt;p&gt;在网上找了一番之后,大概解决方法有两种&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;使用自定义组件继承ImageView&lt;/li&gt;
+&lt;li&gt;通过对BitMap重绘得到&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;第一种方式,有许多开源框架可以实现,如&lt;a href=&quot;https://github.com/nostra13/Android-Universal-Image-Loader&quot;&gt;&lt;strong&gt;CircleImageView&lt;/strong&gt;&lt;/a&gt;&amp;nbsp;,由于我们项目中图片缓存及显示使用的是&lt;a href=&quot;https://github.com/nostra13/Android-Universal-Image-Loader&quot;&gt;&lt;strong&gt;Android-Universal-Image-Loader&lt;/strong&gt;&lt;/a&gt;,而他本身支持在获取到网络图片之后增加回调,那我毫无疑问的选择了第二种方式实现,&lt;/p&gt;
+
+&lt;p&gt;首先是圆形图片转换的方法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/**
+ * 将图片转为圆型
+ * 
+ * @param bitmap
+ * @return
+ */
+public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+    int width = bitmap.getWidth();
+    int height = bitmap.getHeight();
+    Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+    Canvas canvas = new Canvas(output);
+
+    final int color = 0xff424242;
+    final Paint paint = new Paint();
+    final Rect rect = new Rect(0, 0, width, height);
+    final RectF rectF = new RectF(rect);
+    final float roundPx = width &amp;gt; height ? height / 2 : width / 2;
+
+    paint.setAntiAlias(true);
+    canvas.drawARGB(0, 0, 0, 0);
+    paint.setColor(color);
+    canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+    paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+    canvas.drawBitmap(bitmap, rect, rect, paint);
+    return output;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;再然后是显示图片工具类&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;public static SimpleImageLoadingListener listener;
+
+public static &amp;lt;T extends ImageView&amp;gt; void displayImage2Circle(T container, String url) {
+    if (listener == null) {
+        listener = new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                ((ImageView) view).setImageBitmap(getRoundedCornerBitmap(loadedImage));
+            }
+        };
+    }
+    ImageLoader.getInstance().displayImage(url, container, listener);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样只要是需要把图片显示为圆形的地方直接调用&lt;code&gt;displayImage2Circle&lt;/code&gt;这个方法即可&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:
+&lt;img src=&quot;../img/20140930151619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;起先以为是图片有白边,后来发现不是,&lt;a href=&quot;http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg&quot;&gt;图片地址&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;然后又以为是半径没算对,验证之后再次被排除&lt;/li&gt;
+&lt;li&gt;最终把原因定位到了Image-Loader上,解决办法如下:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ImageLoaderConfiguration的defaultDisplayImageOptions方法需要一个DisplayImageOptions参数而DisplayImageOptions的参数的imageScaleType属性默认的是ImageScaleType.IN_SAMPLE_POWER_OF_2就是这个属性导致的图片不圆,查了一下文档&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/** 
+ * 图片的缩放方式 
+ */  
+imageScaleType(ImageScaleType imageScaleType)  
+imageScaleType:  
+    EXACTLY :图像将完全按比例缩小的目标大小  
+    EXACTLY_STRETCHED:图片会完全缩放到目标大小  
+    IN_SAMPLE_INT:图像将被二次采样,并且倍数为整数倍  
+    IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小  
+    NONE:图片不会调整  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;IN_SAMPLE_POWER_OF_2模式下缩放是成倍缩放的所以导致实际显示的要比我设定的宽一些,改成EXACTLY_STRETCHED之后问题得到解决&lt;/p&gt;
+
+&lt;p&gt;最后展示一下最终效果&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../img/20140930154619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;以及Image-Loader的完整设置&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;private void initImageLoader() {
+    DisplayImageOptions options = new DisplayImageOptions.Builder()
+    .showImageForEmptyUri(R.drawable.default_image) 
+    .showImageOnFail(R.drawable.default_image) 
+    .delayBeforeLoading(1000)
+    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) 
+    .bitmapConfig(Config.RGB_565) 
+    .build();
+
+    File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); 
+
+    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+    .denyCacheImageMultipleSizesInMemory()
+    .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+    .threadPoolSize(4)
+    .memoryCacheSize(2 * 1024 * 1024)
+    .diskCache(new UnlimitedDiscCache(cacheDir)) // 缓存路径
+    .diskCacheSize(50 * 1024 * 1024)
+    .diskCacheFileCount(100)
+    .defaultDisplayImageOptions(options) 
+    .build();
+
+     ImageLoader.getInstance().init(config);  
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;公司项目我就不放源码了,核心代码都在上面了.有问题可以和我联系&lt;/p&gt;
+
+&lt;hr /&gt;
+</summary>
+    </entry>
     
     <entry>
         <title>Android BroadcastReceiver 接收顺序</title>
