@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-    <title>曾经不知你好</title>
-    <link href="http://liyouhai.com/rss.xml" rel="self"/>
-    <link href="http://liyouhai.com/"/>
-    <updated>2014-09-30T22:15:12+08:00</updated>
-    <id>http://liyouhai.com/</id>
+    <title>KokerWang‘s bloggg</title>
+    <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
+    <link href="http://www.kokerwang.com/"/>
+    <updated>2014-09-30T22:46:50+08:00</updated>
+    <id>http://www.kokerwang.com</id>
     <author>
-        <name>liyouhai</name>
-        <email>liyouhai@vip.qq.com</email>
+        <name>kokerwang</name>
+        <email>kokerwang@gmail.com</email>
     </author>
 
     
     <entry>
         <title>Android简单实现方形头像图片转圆形</title>
-        <link href="http://liyouhai.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BD%A2%E5%A4%B4%E5%83%8F%E5%9B%BE%E7%89%87%E8%BD%AC%E5%9C%86%E5%BD%A2.html"/>
+        <link href="http://www.kokerwang.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BD%A2%E5%A4%B4%E5%83%8F%E5%9B%BE%E7%89%87%E8%BD%AC%E5%9C%86%E5%BD%A2.html"/>
         <updated>2014-09-30T00:00:00+08:00</updated>
-        <id>http://liyouhai.com//android/Android简单实现方形头像图片转圆形</id>
+        <id>http://www.kokerwang.com/android/Android简单实现方形头像图片转圆形</id>
         <content type="html">&lt;hr /&gt;
 
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.&lt;/p&gt;
@@ -279,9 +279,9 @@ imageScaleType:
     
     <entry>
         <title>Android BroadcastReceiver 接收顺序</title>
-        <link href="http://liyouhai.com/android/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html"/>
+        <link href="http://www.kokerwang.com/android/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html"/>
         <updated>2014-09-28T00:00:00+08:00</updated>
-        <id>http://liyouhai.com//android/Android BroadcastReceiver 接收顺序</id>
+        <id>http://www.kokerwang.com/android/Android BroadcastReceiver 接收顺序</id>
         <content type="html">&lt;hr /&gt;
 
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天项目里有这样一个需求，访问一个请求并把手机号作为参数传过去，同时拦截收到的短信验证码，自动填进EditText，一个看似很简单的功能。然而在真机上测试竟然没有拦截到，把优先级调到最大也无济于事。&lt;/p&gt;
@@ -436,9 +436,9 @@ String[] files = file.list();
     
     <entry>
         <title>My first blog</title>
-        <link href="http://liyouhai.com/others/My%20first%20blog.html"/>
+        <link href="http://www.kokerwang.com/others/My%20first%20blog.html"/>
         <updated>2014-09-27T00:00:00+08:00</updated>
-        <id>http://liyouhai.com//others/My first blog</id>
+        <id>http://www.kokerwang.com/others/My first blog</id>
         <content type="html">&lt;hr /&gt;
 
 &lt;h2&gt;历程&lt;/h2&gt;
