@@ -4,7 +4,7 @@
     <title>KokerWang‘s bloggg</title>
     <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
     <link href="http://www.kokerwang.com/"/>
-    <updated>2014-09-30T22:46:50+08:00</updated>
+    <updated>2014-09-30T22:52:46+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>kokerwang</name>
@@ -13,10 +13,10 @@
 
     
     <entry>
-        <title>Android简单实现方形头像图片转圆形</title>
-        <link href="http://www.kokerwang.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BD%A2%E5%A4%B4%E5%83%8F%E5%9B%BE%E7%89%87%E8%BD%AC%E5%9C%86%E5%BD%A2.html"/>
+        <title>Android简单实现圆形头像</title>
+        <link href="http://www.kokerwang.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F.html"/>
         <updated>2014-09-30T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/android/Android简单实现方形头像图片转圆形</id>
+        <id>http://www.kokerwang.com/android/Android简单实现圆形头像</id>
         <content type="html">&lt;hr /&gt;
 
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.&lt;/p&gt;
