@@ -1,0 +1,428 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="我大步走大步跑，我没有追我不会累"/>
+    <meta name="keywords" content="android,github,Open Source,kokerwang"/>
+    <meta name="author" content="www.kokerwang.com"/> 
+    <link rel="canonical" href=""/>
+    <!--<link href="http://liyouhai.com/rss.xml" title="RSS 2.0" type="application/rss+xml" rel="alternate"/>-->
+    <link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
+    <title>KokerWang's blog</title>
+    <link rel="stylesheet" href="/css/min/pure-min.css"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/min/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/css/min/grids-responsive-min.css"/>
+    <!--<![endif]-->
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/JekyllPure-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/css/JekyllPure.css"/>
+    <!--<![endif]-->
+
+    <link href="/css/min/font-awesome.min.css" rel="stylesheet"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/min/font-awesome-ie7.min.css">
+    <![endif]-->
+    <script src="/js/min/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <div class="headerpic">
+                <a href="/">
+                    <img src="/img/kokerwang.jpg" alt="Profile Picture" style="width: 140px;" title="KokerWang's blog">
+                </a>
+            </div>
+            <h1 class="brand-title">KokerWang</h1>
+            <h2 class="brand-tagline">on the way  don't weary</h2>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="pure-button" href="/timing">时间轴</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/tag">标签库</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/about">关于我</a>
+                    </li>
+                </ul>
+            </nav>
+            <!--<div class="search">
+                <form action="/search">
+                    <input type="text" class="search-query" placeholder="Search Blog" name="query" title="全站搜索-只支持英文">
+                </form>
+            </div>-->
+            <div id="toc"></div>
+            <nav id="nav">
+                <ul class="nav-list">
+                    <li class="nav-link">
+                    <a class="weibo "  href="http://kokerwang.lofter.com/" ><i class="fa fa-weibo fa-2x"></i></a>
+                    </li>
+                    <li class="nav-link">
+                    <a class="github" href="https://github.com/kokerwang"><i class="fa fa-github fa-2x"></i></a>
+                    </li>
+                    <!--<li class="nav-link">
+                    <a class="rss" href="/rss.xml" ><i class="fa fa-rss fa-2x"></i></a>
+                    </li>-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <!--[if lt IE 8]>
+        <i class="label label-danger">亲爱的用户，您的浏览器版本过低，建议您升级浏览器获得更好的用户体验</i>
+        <![endif]-->
+        <div>
+            <div class="posts">
+
+                
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="../img/3.jpeg">
+
+            <h2 class="post-title">Android简单实现方形头像图片转圆形</h2>
+
+            <p class="post-meta">By 09月30日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > UI</a><a
+                    class="post-category " >  Bitmap</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.</p>
+
+<p>在网上找了一番之后,大概解决方法有两种</p>
+
+<blockquote><ul>
+<li>使用自定义组件继承ImageView</li>
+<li>通过对BitMap重绘得到</li>
+</ul>
+</blockquote>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一种方式,有许多开源框架可以实现,如<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>CircleImageView</strong></a>&nbsp;,由于我们项目中图片缓存及显示使用的是<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>Android-Universal-Image-Loader</strong></a>,而他本身支持在获取到网络图片之后增加回调,那我毫无疑问的选择了第二种方式实现,</p>
+
+<p>首先是圆形图片转换的方法</p>
+
+<pre><code class="java">/**
+ * 将图片转为圆型
+ * 
+ * @param bitmap
+ * @return
+ */
+public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+    int width = bitmap.getWidth();
+    int height = bitmap.getHeight();
+    Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+    Canvas canvas = new Canvas(output);
+
+    final int color = 0xff424242;
+    final Paint paint = new Paint();
+    final Rect rect = new Rect(0, 0, width, height);
+    final RectF rectF = new RectF(rect);
+    final float roundPx = width &gt; height ? height / 2 : width / 2;
+
+    paint.setAntiAlias(true);
+    canvas.drawARGB(0, 0, 0, 0);
+    paint.setColor(color);
+    canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+    paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+    canvas.drawBitmap(bitmap, rect, rect, paint);
+    return output;
+}
+</code></pre>
+
+<p>再然后是显示图片工具类</p>
+
+<pre><code class="java">public static SimpleImageLoadingListener listener;
+
+public static &lt;T extends ImageView&gt; void displayImage2Circle(T container, String url) {
+    if (listener == null) {
+        listener = new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                ((ImageView) view).setImageBitmap(getRoundedCornerBitmap(loadedImage));
+            }
+        };
+    }
+    ImageLoader.getInstance().displayImage(url, container, listener);
+}
+</code></pre>
+
+<p>这样只要是需要把图片显示为圆形的地方直接调用<code>displayImage2Circle</code>这个方法即可</p>
+
+<hr />
+
+<p>本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:
+<img src="../img/20140930151619.png" alt="tool-editor" /></p>
+
+<blockquote><ul>
+<li>起先以为是图片有白边,后来发现不是,<a href="http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg">图片地址</a></li>
+<li>然后又以为是半径没算对,验证之后再次被排除</li>
+<li>最终把原因定位到了Image-Loader上,解决办法如下:</li>
+</ul>
+</blockquote>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ImageLoaderConfiguration的defaultDisplayImageOptions方法需要一个DisplayImageOptions参数而DisplayImageOptions的参数的imageScaleType属性默认的是ImageScaleType.IN_SAMPLE_POWER_OF_2就是这个属性导致的图片不圆,查了一下文档</p>
+
+<pre><code class="java">/** 
+ * 图片的缩放方式 
+ */  
+imageScaleType(ImageScaleType imageScaleType)  
+imageScaleType:  
+    EXACTLY :图像将完全按比例缩小的目标大小  
+    EXACTLY_STRETCHED:图片会完全缩放到目标大小  
+    IN_SAMPLE_INT:图像将被二次采样,并且倍数为整数倍  
+    IN_SAMPLE_POWER_OF_2:图片将降低2倍，直到下一减少步骤，使图像更小的目标大小  
+    NONE:图片不会调整  
+</code></pre>
+
+<p>IN_SAMPLE_POWER_OF_2模式下缩放是成倍缩放的所以导致实际显示的要比我设定的宽一些,改成EXACTLY_STRETCHED之后问题得到解决</p>
+
+<p>最后展示一下最终效果</p>
+
+<p><img src="../img/20140930154619.png" alt="tool-editor" /></p>
+
+<p>以及Image-Loader的完整设置</p>
+
+<pre><code class="java">private void initImageLoader() {
+    DisplayImageOptions options = new DisplayImageOptions.Builder()
+    .showImageForEmptyUri(R.drawable.default_image) 
+    .showImageOnFail(R.drawable.default_image) 
+    .delayBeforeLoading(1000)
+    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) 
+    .bitmapConfig(Config.RGB_565) 
+    .build();
+
+    File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); 
+
+    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+    .denyCacheImageMultipleSizesInMemory()
+    .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+    .threadPoolSize(4)
+    .memoryCacheSize(2 * 1024 * 1024)
+    .diskCache(new UnlimitedDiscCache(cacheDir)) // 缓存路径
+    .diskCacheSize(50 * 1024 * 1024)
+    .diskCacheFileCount(100)
+    .defaultDisplayImageOptions(options) 
+    .build();
+
+     ImageLoader.getInstance().init(config);  
+
+}
+</code></pre>
+
+<p>公司项目我就不放源码了,核心代码都在上面了.有问题可以和我联系</p>
+
+<hr />
+
+
+
+            <a href="/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BD%A2%E5%A4%B4%E5%83%8F%E5%9B%BE%E7%89%87%E8%BD%AC%E5%9C%86%E5%BD%A2.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="../img/2.jpeg">
+
+            <h2 class="post-title">Android BroadcastReceiver 接收顺序</h2>
+
+            <p class="post-meta">By 09月28日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > BroadcastReceiver</a><a
+                    class="post-category " >  四大组件</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天项目里有这样一个需求，访问一个请求并把手机号作为参数传过去，同时拦截收到的短信验证码，自动填进EditText，一个看似很简单的功能。然而在真机上测试竟然没有拦截到，把优先级调到最大也无济于事。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四处寻访，原来BroadcastReceiver除了有优先级顺序之外，还有注册的顺序。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大家都知道广播分有序广播和无序广播，有序广播和无序广播的区别就是，有序广播可以被任何一个接受者消耗掉，而无序广播则不可以，注册的话既可以在代码里面动态注册，也可以在Manifest里面直接声明，屌丝青年大多会直接在Manifest里面定义注册，文艺青年一般使用代码动态注册。这两种方式接受的广播的顺序是不一样的。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一般来说有序广播在同等优先级的情况下有这样的顺序</p>
+
+<blockquote><ul>
+<li>动态注册的BroadcastReceiver，先注册的先接收</li>
+<li>Manifest里注册的BroadcastReceiver，接收广播的顺序与String[] java.io.File.list()顺序一致</li>
+</ul>
+</blockquote>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在不同优先级的情况下</p>
+
+<blockquote><ul>
+<li>有序广播按优先级顺序接收</li>
+<li>无序广播因为是异步的所以接收broadcast的顺序不确定。</li>
+</ul>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th> 假设有如下优先级的5个接收器  并且B先于C注册     </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 1.动态A（优先级=1）      </td>
+</tr>
+<tr>
+<td> 2.动态B（优先级=2）      </td>
+</tr>
+<tr>
+<td> 3.动态C（优先级=2）      </td>
+</tr>
+<tr>
+<td> 4.静态D（优先级=1)       </td>
+</tr>
+<tr>
+<td> 5.静态E（优先级=2）      </td>
+</tr>
+<tr>
+<td> 那么实际接收顺序应为：  B C E A D  </td>
+</tr>
+</tbody>
+</table>
+
+
+<hr />
+
+<h2>关于 String[] java.io.File.list()</h2>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们以开机时候发出的广播android.intent.action.BOOT_COMPLETED为例，这是个无序广播。如果应用想要开启自启动，那么就要监听这个广播，程序启动之前，动态广播接收器肯定是无法使用的，只能在XML中静态注册。大家都知道，第三方应用是存放在/data/app目录下，当安装完毕之后，你会找到一个文件，他的名字是以与安装的应用包名开始的，然后可能会跟着"-数字.apk"，比如：com.android.test-1.apk。接收的顺序与这个名字是有关的！那么关系是怎样的呢？</p>
+
+<blockquote><ul>
+<li>系统在开机的时候，会按着一个顺序解析apk，首先，会解析手机中的/system/framework这个目录，原生系统中，这下面就一个apk - framework-res.apk，当然各个厂商也会加入自己的内容</li>
+<li>然后受到重视的文件夹按顺序分别为：
+/system/app，
+/vendor/app，
+/data/app，
+/drm/app-private
+那么每个文件夹下解析的顺序是怎样的呢？我们先只看/data/app，也就是用户安装的第三方应用的存放位置，这与下面代码返回结果的顺序是一致的
+File file = new File("/data/app/");
+String[] files = file.list();
+也就是说，我们按顺序打印这个数组，就能知道哪个接收器会先接收到这个广播，哪个会后接收到</li>
+</ul>
+</blockquote>
+
+<hr />
+
+
+
+            <a href="/android/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="../img/1.jpeg">
+
+            <h2 class="post-title">My first blog</h2>
+
+            <p class="post-meta">By 09月27日  2014  <a
+                    class="post-categorybut " href="/type/#others">others</a><a
+                    class="post-category " > on the way</a><a
+                    class="post-category " >  process</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<h2>历程</h2>
+
+<p>一直以来我都是只写笔记不写博客，总以为写博客很无聊。直到后来接触到了github，接触到了开源，我才发现了分享的乐趣，我想我的那些笔记一定也不喜欢孤独，那我也加入开源的世界吧。搭建自己的博客，分享自己在工作中的问题，这本身不就是一件快乐的事情么？从有想法到实现，辛辛苦苦花费了将近一周的时间，终于把博客搭建了起来，中间的辛苦和快乐也只有自己最清楚。</p>
+
+<p>大概步骤记录下来</p>
+
+<blockquote><ul>
+<li>搭建ruby环境，搭建python环境，搭建jekyll环境</li>
+<li>找模板，改模板（最辛苦的一件事）</li>
+<li>添加统计，评论等小功能</li>
+<li>发布到github</li>
+</ul>
+</blockquote>
+
+<p>中途碰到了无数问题，只能自己解决，百度不行google，google不行，那就只能换一种方法，反正最后终于搞成了如今的样子，还有一些bug，慢慢在解决吧，重点应该是内容而不是界面。</p>
+
+<hr />
+
+<h2>下一个目标</h2>
+
+<p>微信公众账号 lol</p>
+
+<hr />
+
+
+
+            <a href="/others/My%20first%20blog.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+<div class="pure-g pagination">
+    
+    <span class=" pure-u-1-2 pagination-item"><p>Newer</p></span>
+    
+
+
+    
+    <span class=" pure-u-1-2 pagination-item"><p>Older</p></span>
+    
+</div>
+
+
+
+
+
+
+
+
+            </div>
+            </div>
+           
+        <div class="footer" style="float:left" >
+                <a href="/about">About</a>
+                <a href="http://kokerwang.lofter.com/">LOFTER</a>
+                <a href="tencent://message/?uin=280995163">QQ</a>
+                <a href="https://github.com/kokerwang">GitHub</a>
+                <a href="http://www.kokerwang.com">Powered by KokerWang</a>
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253336121'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1253336121%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+            <script src="/js/min/nprogress.min.js"></script>
+            <script src="/js/index.js"></script>
+        </div>
+        <div class="topfade"><a href="javascript:;" title="返回顶部"></a></div>
+    </div>
+</div>
+</body>
+</html>
