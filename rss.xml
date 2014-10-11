@@ -4,7 +4,7 @@
     <title>KokerWang‘s bloggg</title>
     <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
     <link href="http://www.kokerwang.com/"/>
-    <updated>2014-10-11T22:29:00+08:00</updated>
+    <updated>2014-10-12T01:18:55+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>kokerwang</name>
@@ -13,10 +13,10 @@
 
     
     <entry>
-        <title>Android简单实现圆形头像（2）</title>
-        <link href="http://www.kokerwang.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F(2).html"/>
+        <title>Android简单实现圆形头像(续)</title>
+        <link href="http://www.kokerwang.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F(%E7%BB%AD).html"/>
         <updated>2014-10-11T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/android/Android简单实现圆形头像(2)</id>
+        <id>http://www.kokerwang.com/android/Android简单实现圆形头像(续)</id>
         <content type="html">&lt;hr /&gt;
 
 &lt;h2&gt;前言&lt;/h2&gt;
