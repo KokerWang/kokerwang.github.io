@@ -4,13 +4,166 @@
     <title>KokerWang‘s bloggg</title>
     <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
     <link href="http://www.kokerwang.com/"/>
-    <updated>2014-10-11T01:00:12+08:00</updated>
+    <updated>2014-10-11T22:29:00+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>kokerwang</name>
         <email>kokerwang@gmail.com</email>
     </author>
 
+    
+    <entry>
+        <title>Android简单实现圆形头像（2）</title>
+        <link href="http://www.kokerwang.com/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F(2).html"/>
+        <updated>2014-10-11T00:00:00+08:00</updated>
+        <id>http://www.kokerwang.com/android/Android简单实现圆形头像(2)</id>
+        <content type="html">&lt;hr /&gt;
+
+&lt;h2&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;上一篇文章里面详细讲解了用自己的方式实现圆形头像，如今发现之前的代码效率并不高,因为每次都要createBitmap和转换图片,createBitmap是一件很费内存的事,而频繁转换是一件很费cpu的事,这样费手机资源肯定必然是不行的,并且随着自己对imageloader的深入使用,发现使用imageloader还有另外一种更简单的方法来实现这样的效果,或许能解决这样的问题.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;下面我详细介绍下,先看代码:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt; DisplayImageOptions options = new DisplayImageOptions.Builder()
+    .showImageForEmptyUri(R.drawable.default_image)
+    .showImageOnFail(R.drawable.default_image)
+    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+    .bitmapConfig(Config.RGB_565)
+    .cacheInMemory(true)
+    .cacheOnDisk(true)
+    .resetViewBeforeLoading(true)
+    .displayer(new RoundedBitmapDisplayer(112)).build();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里面的displayer方法可以接收实现BitmapDisplayer接口的对象,关键点就在这里,imageloader有默认的可以实现圆角的Displayer 那就是 FadeInBitmapDisplayer（int durationMillis）,durationMillis就是圆角的半径. 用他就不用之前自己那么麻烦的方法了.&lt;/p&gt;
+
+&lt;h2&gt;完整代码&lt;/h2&gt;
+
+&lt;p&gt;imageloader 的初始化方法没变，同上一篇blog,这里只展示一下显示的工具类.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;//显示圆角的option
+public static DisplayImageOptions options ;
+
+public static &amp;lt;T extends ImageView&amp;gt; void displayImage2Circle(T container, String url) {
+    if(options == null){
+        options = new DisplayImageOptions.Builder()
+            .showImageForEmptyUri(R.drawable.default_image)
+            .showImageOnFail(R.drawable.default_image)
+            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+            .bitmapConfig(Config.RGB_565)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .resetViewBeforeLoading(true)
+            // 我们的图片大小是70dp 所以我这里半径=70*1.6 ,其他情况可以自己算,或者动态设置
+            .displayer(new RoundedBitmapDisplayer(112)) 
+            .build();
+    }
+    ImageLoader.getInstance().displayImage(url, container, options);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;附 :&lt;/h2&gt;
+
+&lt;p&gt;其他displayer&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;displayer：  
+        RoundedBitmapDisplayer（int roundPixels）设置圆角图片  
+        FakeBitmapDisplayer（）这个类什么都没做  
+        FadeInBitmapDisplayer（int durationMillis）设置图片渐显的时间  
+        SimpleBitmapDisplayer()正常显示一张图片
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;疑问&lt;/h2&gt;
+
+&lt;p&gt;imageloader缓存的图片是转换之前的bitmap呢还是之后的呢?&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;如果是之前的,那执行效率并不会较之前我实现的方法提高多少,只是转换的工作交给了imageloader, 每次还是要转换.&lt;/li&gt;
+&lt;li&gt;如果缓存的是转换之后的圆角bitmap 那效率就会大大提高,而我也希望是这样的,但这样拓展性可能会降低.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;等有时间了我会深入研究一下imageloader 的源码,把结果写出来&lt;/p&gt;
+
+&lt;hr /&gt;
+</content>
+        <summary type="html">&lt;hr /&gt;
+
+&lt;h2&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;上一篇文章里面详细讲解了用自己的方式实现圆形头像，如今发现之前的代码效率并不高,因为每次都要createBitmap和转换图片,createBitmap是一件很费内存的事,而频繁转换是一件很费cpu的事,这样费手机资源肯定必然是不行的,并且随着自己对imageloader的深入使用,发现使用imageloader还有另外一种更简单的方法来实现这样的效果,或许能解决这样的问题.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;下面我详细介绍下,先看代码:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt; DisplayImageOptions options = new DisplayImageOptions.Builder()
+    .showImageForEmptyUri(R.drawable.default_image)
+    .showImageOnFail(R.drawable.default_image)
+    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+    .bitmapConfig(Config.RGB_565)
+    .cacheInMemory(true)
+    .cacheOnDisk(true)
+    .resetViewBeforeLoading(true)
+    .displayer(new RoundedBitmapDisplayer(112)).build();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里面的displayer方法可以接收实现BitmapDisplayer接口的对象,关键点就在这里,imageloader有默认的可以实现圆角的Displayer 那就是 FadeInBitmapDisplayer（int durationMillis）,durationMillis就是圆角的半径. 用他就不用之前自己那么麻烦的方法了.&lt;/p&gt;
+
+&lt;h2&gt;完整代码&lt;/h2&gt;
+
+&lt;p&gt;imageloader 的初始化方法没变，同上一篇blog,这里只展示一下显示的工具类.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;//显示圆角的option
+public static DisplayImageOptions options ;
+
+public static &amp;lt;T extends ImageView&amp;gt; void displayImage2Circle(T container, String url) {
+    if(options == null){
+        options = new DisplayImageOptions.Builder()
+            .showImageForEmptyUri(R.drawable.default_image)
+            .showImageOnFail(R.drawable.default_image)
+            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+            .bitmapConfig(Config.RGB_565)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .resetViewBeforeLoading(true)
+            // 我们的图片大小是70dp 所以我这里半径=70*1.6 ,其他情况可以自己算,或者动态设置
+            .displayer(new RoundedBitmapDisplayer(112)) 
+            .build();
+    }
+    ImageLoader.getInstance().displayImage(url, container, options);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;附 :&lt;/h2&gt;
+
+&lt;p&gt;其他displayer&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;displayer：  
+        RoundedBitmapDisplayer（int roundPixels）设置圆角图片  
+        FakeBitmapDisplayer（）这个类什么都没做  
+        FadeInBitmapDisplayer（int durationMillis）设置图片渐显的时间  
+        SimpleBitmapDisplayer()正常显示一张图片
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;疑问&lt;/h2&gt;
+
+&lt;p&gt;imageloader缓存的图片是转换之前的bitmap呢还是之后的呢?&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;如果是之前的,那执行效率并不会较之前我实现的方法提高多少,只是转换的工作交给了imageloader, 每次还是要转换.&lt;/li&gt;
+&lt;li&gt;如果缓存的是转换之后的圆角bitmap 那效率就会大大提高,而我也希望是这样的,但这样拓展性可能会降低.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;等有时间了我会深入研究一下imageloader 的源码,把结果写出来&lt;/p&gt;
+
+&lt;hr /&gt;
+</summary>
+    </entry>
     
     <entry>
         <title>Android简单实现圆形头像</title>
@@ -34,7 +187,7 @@
 &lt;p&gt;首先是圆形图片转换的方法&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/**
- * 将图片转为圆型
+ * 将图片转为圆型  不标准的图形从中心截取
  * 
  * @param bitmap
  * @return
@@ -44,12 +197,15 @@ public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
     int height = bitmap.getHeight();
     Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);
     Canvas canvas = new Canvas(output);
-
+    // 切圆的直径
+    int minLength = width &amp;gt; height ? height : width;
     final int color = 0xff424242;
     final Paint paint = new Paint();
-    final Rect rect = new Rect(0, 0, width, height);
+    int x = (width - minLength) / 2;
+    int y = (height - minLength) / 2;
+    final Rect rect = new Rect(x, y, x + minLength, y + minLength);
     final RectF rectF = new RectF(rect);
-    final float roundPx = width &amp;gt; height ? height / 2 : width / 2;
+    final float roundPx = minLength / 2;
 
     paint.setAntiAlias(true);
     canvas.drawARGB(0, 0, 0, 0);
@@ -83,8 +239,9 @@ public static &amp;lt;T extends ImageView&amp;gt; void displayImage2Circle(T con
 
 &lt;hr /&gt;
 
-&lt;p&gt;本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:
-&lt;img src=&quot;/img/20140930151619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20140930151619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;&lt;ul&gt;
 &lt;li&gt;起先以为是图片有白边,后来发现不是,&lt;a href=&quot;http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg&quot;&gt;图片地址&lt;/a&gt;&lt;/li&gt;
@@ -119,9 +276,11 @@ imageScaleType:
     DisplayImageOptions options = new DisplayImageOptions.Builder()
     .showImageForEmptyUri(R.drawable.default_image) 
     .showImageOnFail(R.drawable.default_image) 
-    .delayBeforeLoading(1000)
     .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) 
     .bitmapConfig(Config.RGB_565) 
+    .cacheInMemory(true)
+    .cacheOnDisk(true)
+    .resetViewBeforeLoading(true)
     .build();
 
     File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); 
@@ -163,7 +322,7 @@ imageScaleType:
 &lt;p&gt;首先是圆形图片转换的方法&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/**
- * 将图片转为圆型
+ * 将图片转为圆型  不标准的图形从中心截取
  * 
  * @param bitmap
  * @return
@@ -173,12 +332,15 @@ public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
     int height = bitmap.getHeight();
     Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);
     Canvas canvas = new Canvas(output);
-
+    // 切圆的直径
+    int minLength = width &amp;gt; height ? height : width;
     final int color = 0xff424242;
     final Paint paint = new Paint();
-    final Rect rect = new Rect(0, 0, width, height);
+    int x = (width - minLength) / 2;
+    int y = (height - minLength) / 2;
+    final Rect rect = new Rect(x, y, x + minLength, y + minLength);
     final RectF rectF = new RectF(rect);
-    final float roundPx = width &amp;gt; height ? height / 2 : width / 2;
+    final float roundPx = minLength / 2;
 
     paint.setAntiAlias(true);
     canvas.drawARGB(0, 0, 0, 0);
@@ -212,8 +374,9 @@ public static &amp;lt;T extends ImageView&amp;gt; void displayImage2Circle(T con
 
 &lt;hr /&gt;
 
-&lt;p&gt;本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:
-&lt;img src=&quot;/img/20140930151619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20140930151619.png&quot; alt=&quot;tool-editor&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;&lt;ul&gt;
 &lt;li&gt;起先以为是图片有白边,后来发现不是,&lt;a href=&quot;http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg&quot;&gt;图片地址&lt;/a&gt;&lt;/li&gt;
@@ -248,9 +411,11 @@ imageScaleType:
     DisplayImageOptions options = new DisplayImageOptions.Builder()
     .showImageForEmptyUri(R.drawable.default_image) 
     .showImageOnFail(R.drawable.default_image) 
-    .delayBeforeLoading(1000)
     .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) 
     .bitmapConfig(Config.RGB_565) 
+    .cacheInMemory(true)
+    .cacheOnDisk(true)
+    .resetViewBeforeLoading(true)
     .build();
 
     File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); 
