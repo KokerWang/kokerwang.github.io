@@ -4,13 +4,888 @@
     <title>KokerWang‘s bloggg</title>
     <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
     <link href="http://www.kokerwang.com/"/>
-    <updated>2014-10-14T00:11:22+08:00</updated>
+    <updated>2014-10-21T22:56:01+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>kokerwang</name>
         <email>kokerwang@gmail.com</email>
     </author>
 
+    
+    <entry>
+        <title>下拉刷新封装</title>
+        <link href="http://www.kokerwang.com/android/%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E5%B0%81%E8%A3%85.html"/>
+        <updated>2014-10-21T00:00:00+08:00</updated>
+        <id>http://www.kokerwang.com/android/下拉刷新封装</id>
+        <content type="html">&lt;hr /&gt;
+
+&lt;h2&gt;前言&lt;/h2&gt;
+
+&lt;p&gt; 忙了两周,楼里app终于完成了,25号正式上线,顺便吐槽一下接私活果然好坑,特别是这种工期比较着急的,不过今天款项下来了,拿到money之后感觉整个人萌萌哒~~ 废话不多说,今天分享一下自己在工作中对&lt;a href=&quot;https://github.com/chrisbanes/Android-PullToRefresh&quot;&gt;Android-PullToRefresh&lt;/a&gt;的封装&lt;/p&gt;
+
+&lt;h2&gt;简介&lt;/h2&gt;
+
+&lt;p&gt;目前Android上实现下拉刷新的方式主要有两种:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;通过修改HeaderView的Padding实现,常见作法是使用自定义组件继承ListView,一个类就可以搞定&lt;/li&gt;
+&lt;li&gt;在listview底部套一层ScrollView或者LinearLayout,通过移动ListView来实现&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;第一种方法简单但是碰到复杂的ListView,特别是带有图片的的item就会特别卡,因为主线程刷新界面也需要时间,而改变之后的效果只有刷新之后才能看到,所以给人的感觉是一顿一顿的.第二种方法就不会出现这样的效果,这里推荐的是Android-PullToRefresh,具体使用大家可以看该项目的demo,该项目对常见的带滑动的组件都有支持,很强大,而且可以定制.&lt;/p&gt;
+
+&lt;h2&gt;使用&lt;/h2&gt;
+
+&lt;p&gt;我的封装主要是对消息处理的封装和页码计算的封装,使你只用写自己逻辑而不用管这些细节
+直接看代码, 首先是封装类&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;package com.louli.activity.louli;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+import android.app.Activity;
+import android.os.Message;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.louli.community.R;
+
+/**
+ * 带下拉刷新的activity 需要继承该类
+ * 
+ * @author KokerWang
+ * 
+ */
+public abstract class ListViewBaseActivity extends Activity {
+
+    /**
+     * 分页的页码，当前第几页
+     */
+    public int pageCount = 1;
+
+    /**
+     * 当前刷新状态　　-1　下拉　,　1　　上拉 , 0 默认值
+     */
+    public int status;
+
+    /**
+     * 获取页码   如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法,自己记录页码
+     * 
+     * @return
+     */
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    /**
+     * 设置页码  如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法,自己记录页码
+     * 
+     * @param pageCount
+     */
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    /**
+     * 返回数据内容的集合
+     * 
+     * @return
+     */
+    public abstract List&amp;lt;?&amp;gt; getList();
+
+    /**
+     * 返回ListView
+     * 
+     * @return
+     */
+    public abstract PullToRefreshListView getListView();
+
+    /**
+     * 返回适配器
+     * 
+     * @return
+     */
+    public abstract BaseAdapter getAdapter();
+
+    /**
+     * 该方法主要完成异步获取数据分别需要处理三种结果 获取成功 msg.what=LOAD_SUCCESS 获取失败
+     * msg.what=LOAD_FAIL 没有数据 msg.what=LOAD_NODATA 获取成功的数据放在msg.obj 里 ，List 类型
+     */
+    public abstract void loadData();
+
+    /**
+     * 初始化带刷新的ListView
+     * 
+     * @param id
+     *            组件id
+     * @return
+     */
+    protected PullToRefreshListView initListView(int id) {
+        PullToRefreshListView listView = (PullToRefreshListView) findViewById(id);
+        if (listView == null) {
+            return null;
+        }
+        return initListView(listView);
+    }
+
+    /**
+     * 初始化带刷新的ListView
+     * 
+     * @param listView
+     *            帅新组件
+     * @return
+     */
+    protected PullToRefreshListView initListView(PullToRefreshListView listView) {
+        if (listView == null) {
+            return null;
+        }
+        listView.setMode(Mode.BOTH);
+        //以下为自定义提示语 可以不写使用默认的
+        listView.getLoadingLayoutProxy(false, true).setPullLabel(getResources().getString(R.string.push_label));
+        listView.getLoadingLayoutProxy(false, true).setRefreshingLabel(getResources().getString(R.string.refreshing_label));
+        listView.getLoadingLayoutProxy(false, true).setReleaseLabel(getResources().getString(R.string.release_label));
+        listView.getLoadingLayoutProxy(true, false).setPullLabel(getResources().getString(R.string.pull_label));
+        listView.getLoadingLayoutProxy(true, false).setRefreshingLabel(getResources().getString(R.string.refreshing_label));
+        listView.getLoadingLayoutProxy(true, false).setReleaseLabel(getResources().getString(R.string.release_label));
+
+        listView.setOnRefreshListener(new OnRefreshListener2Impl());
+        return listView;
+    }
+
+    /**
+     * 获取成功的处理, 主要在handler 里面调用
+     * 
+     * @param msg
+     */
+    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+    protected void loadSucess(Message msg) {
+        List ls = (List) msg.obj;
+        if (getPageCount() == 1) {
+            getList().clear();
+            getListView().setMode(Mode.BOTH);
+        }
+        if (ls != null) {
+            getList().addAll(ls);
+        }
+        getAdapter().notifyDataSetChanged();
+        getListView().onRefreshComplete();
+    };
+
+    /**
+     * 获取成功但是没有数据的处理, 主要在handler 里面调用
+     * 
+     * @param msg
+     */
+    protected void loadZeroDate(Message msg) {
+        if (getPageCount() == 1) {
+            Toast.makeText(this, R.string.zero_date, Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, R.string.msg_last, Toast.LENGTH_SHORT).show();
+        }
+        getAdapter().notifyDataSetChanged();
+        getListView().onRefreshComplete();
+        getListView().setMode(Mode.PULL_FROM_START);
+    };
+
+    /**
+     * 获取失败的处理, 主要在handler 里面调用
+     * 
+     * @param msg
+     */
+    protected void loadFalt(Message msg) {
+        Toast.makeText(this, R.string.load_error, Toast.LENGTH_SHORT).show();
+        getAdapter().notifyDataSetChanged();
+        getListView().onRefreshComplete();
+    };
+
+    /**
+     * 上拉刷新及加载更多的回调接口实现类
+     * 
+     * @author tom
+     * 
+     */
+    private class OnRefreshListener2Impl implements OnRefreshListener2&amp;lt;ListView&amp;gt; {
+        SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.refresh_for) + &quot;:MM-dd hh:mm&quot;);
+
+        @Override
+        public void onPullDownToRefresh(PullToRefreshBase&amp;lt;ListView&amp;gt; refreshView) {
+            //下拉
+            status = 1;
+            setPageCount(1);
+            loadData();
+            String label = sdf.format(System.currentTimeMillis());
+            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+        }
+
+        @Override
+        public void onPullUpToRefresh(PullToRefreshBase&amp;lt;ListView&amp;gt; refreshView) {
+            //上拉
+            status = -1;
+            setPageCount(getPageCount() + 1);
+            loadData();
+            String label = sdf.format(System.currentTimeMillis());
+            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+        }
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果你的界面里有一个以上的PullToRefreshListView组件,那你需要额外重写getPageCount和setPageCount来自己控制页码,当然这个时候其他几个重写的方法也需要你加上判断,具体示例我会在文章最后附上&lt;/p&gt;
+
+&lt;p&gt;下面看例子代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;package com.test;
+
+import android.os.Message;
+
+
+public class ChannelExhibitionListActivity extends ListViewBaseActivity {
+
+    // 界面组件
+    PullToRefreshListView _listView;
+    List&amp;lt;ChannelExhibitionListItem&amp;gt; _list;
+    ChannelExhibitionListAdapter _adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.channel_exhibition_list_activity);
+        init();
+    }
+
+    private void init() {
+        // 初始化组件及适配器
+        _listView = initListView(R.id.listView);
+        // 获取内部listview 推荐这样用而不是直接给_listview设置参数
+        ListView actualListView = _listView.getRefreshableView();
+        _adapter = new ChannelExhibitionListAdapter(this);
+        _list = new ArrayList&amp;lt;ChannelExhibitionListItem&amp;gt;();
+        _adapter.setList(_list);
+        actualListView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView&amp;lt;?&amp;gt; parent, View view, int position, long id) {
+                // 不要忘了这一行代码　　因为自带了headview 所以postiton加了1 这里要减去
+                position--;
+            }
+        });
+        actualListView.setAdapter(_adapter);
+
+    }
+
+    // 异步任务接受处理
+    Handler _handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+            case LOAD_SUCCESS:
+                loadSucess(msg);
+                break;
+            case LOAD_FAIL:
+                loadFalt(msg);
+                break;
+            case LOAD_NODATA:
+                loadZeroDate(msg);
+                break;
+            }
+        }
+    };
+
+    // 获取数据的线程
+    Thread loadThread;
+
+    /**
+     * 更改数据并刷新adapter
+     */
+    @Override
+    public void loadData() {
+        createCountryThread();
+        loadThread.start();
+    }
+
+    /**
+     * 初始化线程
+     */
+    private void createCountryThread() {
+        loadThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                List&amp;lt;ChannelExhibitionListItem&amp;gt; channels = new ArrayList&amp;lt;ChannelExhibitionListItem&amp;gt;();
+                try {
+                    // 把页码拼接到url
+                    StringBuffer loadService = new StringBuffer(); 
+                    loadService.append(&quot;?r=findlist&amp;amp;pagesize=15&amp;amp;pagenow=&quot; + getPageCount());
+
+                    String res = HttpConstants.getPHPRequest(&quot;url&quot;, loadService.toString());
+                    if (res == null || res.equals(&quot;&quot;)) {
+                        throw new Exception(&quot;resoult=&quot; + res);
+                    }
+                    JSONObject resultJsonObject = new JSONObject(res);
+                    int code = resultJsonObject.getInt(&quot;returncode&quot;);
+                    if (code == 0) {
+                        // 业务处理　　大概就是解析出list
+                        JSONArray datas = resultJsonObject.getJSONArray(&quot;result&quot;);
+                        if (datas.length() == 0) {
+                            Message m = _handler.obtainMessage(LOAD_NODATA);
+                            _handler.sendMessage(m);
+                            return;
+                        }
+                        int size = datas.length();
+                        for (int i = 0; i &amp;lt; size; i++) {
+                            JSONObject obj = (JSONObject) datas.get(i);
+                            ChannelExhibitionListItem item = new ChannelExhibitionListItem();
+                            item.setId(&quot;&quot;);
+
+                            channels.add(item);
+                        }
+                        Message message = _handler.obtainMessage(LOAD_SUCCESS);
+                        message.obj = channels;
+                        _handler.sendMessage(message);
+                        return;
+                    }else if(code == 1){
+                        Message m = _handler.obtainMessage(LOAD_NODATA);
+                        _handler.sendMessage(m);
+                        return;
+                    }
+                    // 获取失败
+                    Message m = _handler.obtainMessage(LOAD_FAIL);
+                    _handler.sendMessage(m);
+                } catch (Exception e) {
+                    Message m = _handler.obtainMessage(LOAD_FAIL);
+                    _handler.sendMessage(m);
+                } finally {
+                    //关闭进度条
+                    //Util.dismissWaitingDialog(pd);
+                }
+            }
+        });
+    }
+
+    @Override
+    public List&amp;lt;?&amp;gt; getList() {
+        return _list;
+    }
+
+    @Override
+    public PullToRefreshListView getListView() {
+        return _listView;
+    }
+
+    @Override
+    public BaseAdapter getAdapter() {
+        return _adapter;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上代码只是逻辑代码,复制在自己的项目中是不能运行的,参考着就可以写了,因为我们的项目是使用的httpClient+Handler回调,所以用这个特别方便, 如果你们项目使用Volley 那就更简单了,稍微修改一下就能用&lt;/p&gt;
+
+&lt;p&gt;最后是布局  布局只需要把ListView替换实现就可以 其他的一下属性和ListView通用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;  &amp;lt;com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id=&quot;@+id/listView&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:cacheColorHint=&quot;#00000000&quot;
+        android:divider=&quot;#19000000&quot;
+        android:dividerHeight=&quot;1dp&quot;
+        android:fadingEdge=&quot;none&quot;
+        android:fastScrollEnabled=&quot;false&quot;
+        android:footerDividersEnabled=&quot;true&quot;
+        android:headerDividersEnabled=&quot;true&quot;
+        android:smoothScrollbar=&quot;true&quot; &amp;gt;
+    &amp;lt;/com.handmark.pulltorefresh.library.PullToRefreshListView&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;附&lt;/h2&gt;
+
+&lt;p&gt;多个PullToRefreshListView组件时的示例代码 , 其他几个重写的方法也要这样修改&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/**
+ *当前第几个PullToRefreshListView的标示
+ */
+int num=1;
+/**
+ * 页码
+ */
+private int count_p = 1;
+private int count_r = 1;
+
+
+/**
+ * 获取页码
+ * 
+ * @return
+ */
+public int getPageCount() {
+    if (num ==1) {
+        return count_p;
+    }else{
+        return count_r;
+    }
+}
+
+/**
+ * 设置页码
+ * 
+ * @param pageCount
+ */
+public void setPageCount(int pageCount) {
+    if (num ==1) {
+        this.count_p = pageCount;
+    }else{
+        this.count_r = pageCount;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;写完啦 ,我要去腐败喽&lt;/p&gt;
+
+&lt;hr /&gt;
+</content>
+        <summary type="html">&lt;hr /&gt;
+
+&lt;h2&gt;前言&lt;/h2&gt;
+
+&lt;p&gt; 忙了两周,楼里app终于完成了,25号正式上线,顺便吐槽一下接私活果然好坑,特别是这种工期比较着急的,不过今天款项下来了,拿到money之后感觉整个人萌萌哒~~ 废话不多说,今天分享一下自己在工作中对&lt;a href=&quot;https://github.com/chrisbanes/Android-PullToRefresh&quot;&gt;Android-PullToRefresh&lt;/a&gt;的封装&lt;/p&gt;
+
+&lt;h2&gt;简介&lt;/h2&gt;
+
+&lt;p&gt;目前Android上实现下拉刷新的方式主要有两种:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;ul&gt;
+&lt;li&gt;通过修改HeaderView的Padding实现,常见作法是使用自定义组件继承ListView,一个类就可以搞定&lt;/li&gt;
+&lt;li&gt;在listview底部套一层ScrollView或者LinearLayout,通过移动ListView来实现&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;第一种方法简单但是碰到复杂的ListView,特别是带有图片的的item就会特别卡,因为主线程刷新界面也需要时间,而改变之后的效果只有刷新之后才能看到,所以给人的感觉是一顿一顿的.第二种方法就不会出现这样的效果,这里推荐的是Android-PullToRefresh,具体使用大家可以看该项目的demo,该项目对常见的带滑动的组件都有支持,很强大,而且可以定制.&lt;/p&gt;
+
+&lt;h2&gt;使用&lt;/h2&gt;
+
+&lt;p&gt;我的封装主要是对消息处理的封装和页码计算的封装,使你只用写自己逻辑而不用管这些细节
+直接看代码, 首先是封装类&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;package com.louli.activity.louli;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+import android.app.Activity;
+import android.os.Message;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.louli.community.R;
+
+/**
+ * 带下拉刷新的activity 需要继承该类
+ * 
+ * @author KokerWang
+ * 
+ */
+public abstract class ListViewBaseActivity extends Activity {
+
+    /**
+     * 分页的页码，当前第几页
+     */
+    public int pageCount = 1;
+
+    /**
+     * 当前刷新状态　　-1　下拉　,　1　　上拉 , 0 默认值
+     */
+    public int status;
+
+    /**
+     * 获取页码   如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法,自己记录页码
+     * 
+     * @return
+     */
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    /**
+     * 设置页码  如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法,自己记录页码
+     * 
+     * @param pageCount
+     */
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    /**
+     * 返回数据内容的集合
+     * 
+     * @return
+     */
+    public abstract List&amp;lt;?&amp;gt; getList();
+
+    /**
+     * 返回ListView
+     * 
+     * @return
+     */
+    public abstract PullToRefreshListView getListView();
+
+    /**
+     * 返回适配器
+     * 
+     * @return
+     */
+    public abstract BaseAdapter getAdapter();
+
+    /**
+     * 该方法主要完成异步获取数据分别需要处理三种结果 获取成功 msg.what=LOAD_SUCCESS 获取失败
+     * msg.what=LOAD_FAIL 没有数据 msg.what=LOAD_NODATA 获取成功的数据放在msg.obj 里 ，List 类型
+     */
+    public abstract void loadData();
+
+    /**
+     * 初始化带刷新的ListView
+     * 
+     * @param id
+     *            组件id
+     * @return
+     */
+    protected PullToRefreshListView initListView(int id) {
+        PullToRefreshListView listView = (PullToRefreshListView) findViewById(id);
+        if (listView == null) {
+            return null;
+        }
+        return initListView(listView);
+    }
+
+    /**
+     * 初始化带刷新的ListView
+     * 
+     * @param listView
+     *            帅新组件
+     * @return
+     */
+    protected PullToRefreshListView initListView(PullToRefreshListView listView) {
+        if (listView == null) {
+            return null;
+        }
+        listView.setMode(Mode.BOTH);
+        //以下为自定义提示语 可以不写使用默认的
+        listView.getLoadingLayoutProxy(false, true).setPullLabel(getResources().getString(R.string.push_label));
+        listView.getLoadingLayoutProxy(false, true).setRefreshingLabel(getResources().getString(R.string.refreshing_label));
+        listView.getLoadingLayoutProxy(false, true).setReleaseLabel(getResources().getString(R.string.release_label));
+        listView.getLoadingLayoutProxy(true, false).setPullLabel(getResources().getString(R.string.pull_label));
+        listView.getLoadingLayoutProxy(true, false).setRefreshingLabel(getResources().getString(R.string.refreshing_label));
+        listView.getLoadingLayoutProxy(true, false).setReleaseLabel(getResources().getString(R.string.release_label));
+
+        listView.setOnRefreshListener(new OnRefreshListener2Impl());
+        return listView;
+    }
+
+    /**
+     * 获取成功的处理, 主要在handler 里面调用
+     * 
+     * @param msg
+     */
+    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+    protected void loadSucess(Message msg) {
+        List ls = (List) msg.obj;
+        if (getPageCount() == 1) {
+            getList().clear();
+            getListView().setMode(Mode.BOTH);
+        }
+        if (ls != null) {
+            getList().addAll(ls);
+        }
+        getAdapter().notifyDataSetChanged();
+        getListView().onRefreshComplete();
+    };
+
+    /**
+     * 获取成功但是没有数据的处理, 主要在handler 里面调用
+     * 
+     * @param msg
+     */
+    protected void loadZeroDate(Message msg) {
+        if (getPageCount() == 1) {
+            Toast.makeText(this, R.string.zero_date, Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, R.string.msg_last, Toast.LENGTH_SHORT).show();
+        }
+        getAdapter().notifyDataSetChanged();
+        getListView().onRefreshComplete();
+        getListView().setMode(Mode.PULL_FROM_START);
+    };
+
+    /**
+     * 获取失败的处理, 主要在handler 里面调用
+     * 
+     * @param msg
+     */
+    protected void loadFalt(Message msg) {
+        Toast.makeText(this, R.string.load_error, Toast.LENGTH_SHORT).show();
+        getAdapter().notifyDataSetChanged();
+        getListView().onRefreshComplete();
+    };
+
+    /**
+     * 上拉刷新及加载更多的回调接口实现类
+     * 
+     * @author tom
+     * 
+     */
+    private class OnRefreshListener2Impl implements OnRefreshListener2&amp;lt;ListView&amp;gt; {
+        SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.refresh_for) + &quot;:MM-dd hh:mm&quot;);
+
+        @Override
+        public void onPullDownToRefresh(PullToRefreshBase&amp;lt;ListView&amp;gt; refreshView) {
+            //下拉
+            status = 1;
+            setPageCount(1);
+            loadData();
+            String label = sdf.format(System.currentTimeMillis());
+            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+        }
+
+        @Override
+        public void onPullUpToRefresh(PullToRefreshBase&amp;lt;ListView&amp;gt; refreshView) {
+            //上拉
+            status = -1;
+            setPageCount(getPageCount() + 1);
+            loadData();
+            String label = sdf.format(System.currentTimeMillis());
+            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+        }
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果你的界面里有一个以上的PullToRefreshListView组件,那你需要额外重写getPageCount和setPageCount来自己控制页码,当然这个时候其他几个重写的方法也需要你加上判断,具体示例我会在文章最后附上&lt;/p&gt;
+
+&lt;p&gt;下面看例子代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;package com.test;
+
+import android.os.Message;
+
+
+public class ChannelExhibitionListActivity extends ListViewBaseActivity {
+
+    // 界面组件
+    PullToRefreshListView _listView;
+    List&amp;lt;ChannelExhibitionListItem&amp;gt; _list;
+    ChannelExhibitionListAdapter _adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.channel_exhibition_list_activity);
+        init();
+    }
+
+    private void init() {
+        // 初始化组件及适配器
+        _listView = initListView(R.id.listView);
+        // 获取内部listview 推荐这样用而不是直接给_listview设置参数
+        ListView actualListView = _listView.getRefreshableView();
+        _adapter = new ChannelExhibitionListAdapter(this);
+        _list = new ArrayList&amp;lt;ChannelExhibitionListItem&amp;gt;();
+        _adapter.setList(_list);
+        actualListView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView&amp;lt;?&amp;gt; parent, View view, int position, long id) {
+                // 不要忘了这一行代码　　因为自带了headview 所以postiton加了1 这里要减去
+                position--;
+            }
+        });
+        actualListView.setAdapter(_adapter);
+
+    }
+
+    // 异步任务接受处理
+    Handler _handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+            case LOAD_SUCCESS:
+                loadSucess(msg);
+                break;
+            case LOAD_FAIL:
+                loadFalt(msg);
+                break;
+            case LOAD_NODATA:
+                loadZeroDate(msg);
+                break;
+            }
+        }
+    };
+
+    // 获取数据的线程
+    Thread loadThread;
+
+    /**
+     * 更改数据并刷新adapter
+     */
+    @Override
+    public void loadData() {
+        createCountryThread();
+        loadThread.start();
+    }
+
+    /**
+     * 初始化线程
+     */
+    private void createCountryThread() {
+        loadThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                List&amp;lt;ChannelExhibitionListItem&amp;gt; channels = new ArrayList&amp;lt;ChannelExhibitionListItem&amp;gt;();
+                try {
+                    // 把页码拼接到url
+                    StringBuffer loadService = new StringBuffer(); 
+                    loadService.append(&quot;?r=findlist&amp;amp;pagesize=15&amp;amp;pagenow=&quot; + getPageCount());
+
+                    String res = HttpConstants.getPHPRequest(&quot;url&quot;, loadService.toString());
+                    if (res == null || res.equals(&quot;&quot;)) {
+                        throw new Exception(&quot;resoult=&quot; + res);
+                    }
+                    JSONObject resultJsonObject = new JSONObject(res);
+                    int code = resultJsonObject.getInt(&quot;returncode&quot;);
+                    if (code == 0) {
+                        // 业务处理　　大概就是解析出list
+                        JSONArray datas = resultJsonObject.getJSONArray(&quot;result&quot;);
+                        if (datas.length() == 0) {
+                            Message m = _handler.obtainMessage(LOAD_NODATA);
+                            _handler.sendMessage(m);
+                            return;
+                        }
+                        int size = datas.length();
+                        for (int i = 0; i &amp;lt; size; i++) {
+                            JSONObject obj = (JSONObject) datas.get(i);
+                            ChannelExhibitionListItem item = new ChannelExhibitionListItem();
+                            item.setId(&quot;&quot;);
+
+                            channels.add(item);
+                        }
+                        Message message = _handler.obtainMessage(LOAD_SUCCESS);
+                        message.obj = channels;
+                        _handler.sendMessage(message);
+                        return;
+                    }else if(code == 1){
+                        Message m = _handler.obtainMessage(LOAD_NODATA);
+                        _handler.sendMessage(m);
+                        return;
+                    }
+                    // 获取失败
+                    Message m = _handler.obtainMessage(LOAD_FAIL);
+                    _handler.sendMessage(m);
+                } catch (Exception e) {
+                    Message m = _handler.obtainMessage(LOAD_FAIL);
+                    _handler.sendMessage(m);
+                } finally {
+                    //关闭进度条
+                    //Util.dismissWaitingDialog(pd);
+                }
+            }
+        });
+    }
+
+    @Override
+    public List&amp;lt;?&amp;gt; getList() {
+        return _list;
+    }
+
+    @Override
+    public PullToRefreshListView getListView() {
+        return _listView;
+    }
+
+    @Override
+    public BaseAdapter getAdapter() {
+        return _adapter;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上代码只是逻辑代码,复制在自己的项目中是不能运行的,参考着就可以写了,因为我们的项目是使用的httpClient+Handler回调,所以用这个特别方便, 如果你们项目使用Volley 那就更简单了,稍微修改一下就能用&lt;/p&gt;
+
+&lt;p&gt;最后是布局  布局只需要把ListView替换实现就可以 其他的一下属性和ListView通用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;  &amp;lt;com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id=&quot;@+id/listView&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:cacheColorHint=&quot;#00000000&quot;
+        android:divider=&quot;#19000000&quot;
+        android:dividerHeight=&quot;1dp&quot;
+        android:fadingEdge=&quot;none&quot;
+        android:fastScrollEnabled=&quot;false&quot;
+        android:footerDividersEnabled=&quot;true&quot;
+        android:headerDividersEnabled=&quot;true&quot;
+        android:smoothScrollbar=&quot;true&quot; &amp;gt;
+    &amp;lt;/com.handmark.pulltorefresh.library.PullToRefreshListView&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;附&lt;/h2&gt;
+
+&lt;p&gt;多个PullToRefreshListView组件时的示例代码 , 其他几个重写的方法也要这样修改&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/**
+ *当前第几个PullToRefreshListView的标示
+ */
+int num=1;
+/**
+ * 页码
+ */
+private int count_p = 1;
+private int count_r = 1;
+
+
+/**
+ * 获取页码
+ * 
+ * @return
+ */
+public int getPageCount() {
+    if (num ==1) {
+        return count_p;
+    }else{
+        return count_r;
+    }
+}
+
+/**
+ * 设置页码
+ * 
+ * @param pageCount
+ */
+public void setPageCount(int pageCount) {
+    if (num ==1) {
+        this.count_p = pageCount;
+    }else{
+        this.count_r = pageCount;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;写完啦 ,我要去腐败喽&lt;/p&gt;
+
+&lt;hr /&gt;
+</summary>
+    </entry>
     
     <entry>
         <title>Android简单实现圆形头像(续)</title>
