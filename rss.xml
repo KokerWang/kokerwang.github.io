@@ -4,7 +4,7 @@
     <title>KokerWang‘s bloggg</title>
     <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
     <link href="http://www.kokerwang.com/"/>
-    <updated>2014-11-02T15:02:47+08:00</updated>
+    <updated>2014-11-02T15:42:51+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>kokerwang</name>
@@ -13,10 +13,10 @@
 
     
     <entry>
-        <title>关于Android中使用commons-codec-1.6.jar出现方法找不到的问题</title>
-        <link href="http://www.kokerwang.com/android/%E5%85%B3%E4%BA%8EAndroid%E4%B8%AD%E4%BD%BF%E7%94%A8commons-codec-1.6.jar%E5%87%BA%E7%8E%B0%E6%96%B9%E6%B3%95%E6%89%BE%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html"/>
+        <title>关于使用commons-codec.jar出现方法找不到的问题</title>
+        <link href="http://www.kokerwang.com/android/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8commons-codec.jar%E5%87%BA%E7%8E%B0%E6%96%B9%E6%B3%95%E6%89%BE%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html"/>
         <updated>2014-11-02T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/android/关于Android中使用commons-codec-1.6.jar出现方法找不到的问题</id>
+        <id>http://www.kokerwang.com/android/关于使用commons-codec.jar出现方法找不到的问题</id>
         <content type="html">&lt;hr /&gt;
 
 &lt;h2&gt;起因&lt;/h2&gt;
