@@ -9,7 +9,7 @@
     <link rel="canonical" href=""/>
     <!--<link href="http://liyouhai.com/rss.xml" title="RSS 2.0" type="application/rss+xml" rel="alternate"/>-->
     <link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
-    <title>博文分类 - KokerWang's blog</title>
+    <title>解决Android因重定向而导致WebView无法goBack的问题 - KokerWang's blog</title>
     <link rel="stylesheet" href="/css/min/pure-min.css"/>
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="/css/min/grids-responsive-old-ie-min.css">
@@ -87,73 +87,95 @@
         <div>
             <div class="posts">
 
-                <div class="f3">
-    
-    <div class="column fJqueryba">
-        <h2 class=""><a href="/others/" class="gray_2">others</a></h2>
-        <ul class="columnUl">
-            
-            <li>
-                <b><a href="/others/My%20first%20blog.html" title="" class="gray_2" target="_blank">My first blog</a></b>
-                <span>27 Sep 2014</span>
-            </li>
-            
+                <div class="qrcodeTable"></div>
+<header class="post-header">
+    <img class="post-avatar" height="48" width="48"
+         src="/img/8.jpeg">
 
-        </ul>
-    </div>
-    
-    <div class="column fJqueryba">
-        <h2 class=""><a href="/android/" class="gray_2">android</a></h2>
-        <ul class="columnUl">
-            
-            <li>
-                <b><a href="/android/%E8%A7%A3%E5%86%B3Android%E5%9B%A0%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4WebView%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html" title="" class="gray_2" target="_blank">解决Android因重定向而导致WebView无法goBack的问题</a></b>
-                <span>16 Nov 2014</span>
-            </li>
-            
-            <li>
-                <b><a href="/android/Android%E5%BA%94%E7%94%A8%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%AF%BC%E8%87%B4%E5%BA%94%E7%94%A8%E9%80%80%E5%87%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html" title="" class="gray_2" target="_blank">Android应用内存溢出导致应用退出的解决方案</a></b>
-                <span>11 Nov 2014</span>
-            </li>
-            
-            <li>
-                <b><a href="/android/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8commons-codec.jar%E5%87%BA%E7%8E%B0%E6%96%B9%E6%B3%95%E6%89%BE%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html" title="" class="gray_2" target="_blank">关于使用commons-codec.jar出现方法找不到的问题</a></b>
-                <span>02 Nov 2014</span>
-            </li>
-            
-            <li>
-                <b><a href="/android/%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E5%B0%81%E8%A3%85.html" title="" class="gray_2" target="_blank">下拉刷新封装</a></b>
-                <span>21 Oct 2014</span>
-            </li>
-            
-            <li>
-                <b><a href="/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F(%E7%BB%AD).html" title="" class="gray_2" target="_blank">Android简单实现圆形头像(续)</a></b>
-                <span>11 Oct 2014</span>
-            </li>
-            
-            <li>
-                <b><a href="/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F.html" title="" class="gray_2" target="_blank">Android简单实现圆形头像</a></b>
-                <span>30 Sep 2014</span>
-            </li>
-            
-            <li>
-                <b><a href="/android/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html" title="" class="gray_2" target="_blank">Android BroadcastReceiver 接收顺序</a></b>
-                <span>28 Sep 2014</span>
-            </li>
-            
+    <h2 class="post-title">解决Android因重定向而导致WebView无法goBack的问题</h2>
 
-        </ul>
-    </div>
-    
+    <p class="post-meta">By 11月16日  2014  <a
+            class="post-categorybut " href="/type/#">android</a><a
+            class="post-category " href="/tag/#WebView"> WebView</a><a
+            class="post-category " href="/tag/#工作总结">  工作总结</a>
+    </p>
+</header>
+<div class="article pure-u-22-24">
+    <hr />
+
+<p>最近项目中有一些界面需要嵌入<code>wap</code>页，在按返回键的时候让<code>WebView</code> <code>goBack</code>, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常<code>goBack</code>,原因是,退回重定向之前的<code>url</code> 又被重定向了回来,网上的解决办法是自己控制一个<code>url</code>集合,我试了一下非常麻烦,因为我们还需要<code>goForward</code> 功能,仅仅使用一个<code>LinkedList</code>还满足不了需求.最终还是放弃了这样的做法,后来终于在<code>stackOverflow</code> 上找到了解决的办法,解决的方法真是格外的简单.直接看代码</p>
+
+<p>为了让<code>WebView</code>控制界面里面的<code>url</code>跳转,我们一般都会设置<code>WebViewClient</code> ，并重写<code>shouldOverrideUrlLoading</code>方法，让<code>webView</code>加载点击<code>url</code>,一般的例子代码如下:</p>
+
+<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+         view.loadUrl(url);
+        return true;
+    }
+});
+</code></pre>
+
+<p>解决办法:</p>
+
+<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+        return false;
+    }
+});
+</code></pre>
+
+<p>万万没想到解决办法就在<code>api</code>里面,<code>shouldOverrideUrlLoading</code>这个方法的 <code>api</code> 如下:</p>
+
+<p>Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.</p>
+
+<p>就是说如果<code>application</code>处理这个url则返回<code>true</code>,如果<code>WebView</code>处理这个<code>url</code>则返回<code>false</code>.我们让<code>WebView</code>处理了这个<code>url</code>就应该返回<code>false</code>,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.</p>
+
+<p>后来我又看了一下<code>WebViewClient</code>的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:</p>
+
+<blockquote><ul>
+<li>onPageStarted 在页面加载开始时调用.</li>
+<li>onPageFinished 在页面加载结束时调用.</li>
+<li>onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.</li>
+</ul>
+</blockquote>
+
+<p>如果你还需要更丰富的处理效果那么推荐你用<code>WebChromeClient</code>.</p>
+
+<p>ps: 最近国内github好不稳定啊，这让我们怎么活</p>
+
+<hr />
+
 </div>
+    <div class="pure-g pagination">
+        
+        <a class="pure-u-1-2 pagination-item " href="/android/Android%E5%BA%94%E7%94%A8%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%AF%BC%E8%87%B4%E5%BA%94%E7%94%A8%E9%80%80%E5%87%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html" title="Android应用内存溢出导致应用退出的解决方案 "><p> <i class="fa fa-mail-reply"></i>&nbsp;Android应用内存溢出导致应用退出的解决方案</p></a>
+        
+        
+        <span class="pure-u-1-2 pagination-item "><p>下一篇&nbsp;<i class="fa fa-chain-broken"></i></p></span>
+        
+    </div>
+    <link href="/css/code.css" rel="stylesheet">
+    <link href="/css/min/fancybox.css" rel="stylesheet">
+    <script src="/js/min/jquery.toc.min.js" ></script>
+    <script src="/js/min/jquery.qrcode.min.js" ></script>
+    <script src="/js/min/jquery.fancybox.pack.js" ></script>
+    <!--<script src="/js/page.js" ></script>-->
 
-<link rel="stylesheet" href="/css/min/type.css" type="text/css" media="screen" />
-<script src="/js/min/jquery.highight.min.js"></script>
-<script type="text/javascript">
-    $(function(){
-        $(".f3").jquerybaHighlight({HighlightClass:"Highlight"});
-    });
-</script>
+    
+    
+
+    
+    
+
+
+
+
+
 
             </div>
             </div>

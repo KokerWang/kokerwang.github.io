@@ -93,6 +93,79 @@
     <section class="post">
         <header class="post-header">
             <img class="post-avatar" height="48" width="48"
+                 src="/img/8.jpeg">
+
+            <h2 class="post-title">解决Android因重定向而导致WebView无法goBack的问题</h2>
+
+            <p class="post-meta">By 11月16日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > WebView</a><a
+                    class="post-category " >  工作总结</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<p>最近项目中有一些界面需要嵌入<code>wap</code>页，在按返回键的时候让<code>WebView</code> <code>goBack</code>, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常<code>goBack</code>,原因是,退回重定向之前的<code>url</code> 又被重定向了回来,网上的解决办法是自己控制一个<code>url</code>集合,我试了一下非常麻烦,因为我们还需要<code>goForward</code> 功能,仅仅使用一个<code>LinkedList</code>还满足不了需求.最终还是放弃了这样的做法,后来终于在<code>stackOverflow</code> 上找到了解决的办法,解决的方法真是格外的简单.直接看代码</p>
+
+<p>为了让<code>WebView</code>控制界面里面的<code>url</code>跳转,我们一般都会设置<code>WebViewClient</code> ，并重写<code>shouldOverrideUrlLoading</code>方法，让<code>webView</code>加载点击<code>url</code>,一般的例子代码如下:</p>
+
+<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+         view.loadUrl(url);
+        return true;
+    }
+});
+</code></pre>
+
+<p>解决办法:</p>
+
+<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+        return false;
+    }
+});
+</code></pre>
+
+<p>万万没想到解决办法就在<code>api</code>里面,<code>shouldOverrideUrlLoading</code>这个方法的 <code>api</code> 如下:</p>
+
+<p>Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.</p>
+
+<p>就是说如果<code>application</code>处理这个url则返回<code>true</code>,如果<code>WebView</code>处理这个<code>url</code>则返回<code>false</code>.我们让<code>WebView</code>处理了这个<code>url</code>就应该返回<code>false</code>,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.</p>
+
+<p>后来我又看了一下<code>WebViewClient</code>的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:</p>
+
+<blockquote><ul>
+<li>onPageStarted 在页面加载开始时调用.</li>
+<li>onPageFinished 在页面加载结束时调用.</li>
+<li>onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.</li>
+</ul>
+</blockquote>
+
+<p>如果你还需要更丰富的处理效果那么推荐你用<code>WebChromeClient</code>.</p>
+
+<p>ps: 最近国内github好不稳定啊，这让我们怎么活</p>
+
+<hr />
+
+
+
+            <a href="/android/%E8%A7%A3%E5%86%B3Android%E5%9B%A0%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4WebView%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
                  src="/img/7.jpeg">
 
             <h2 class="post-title">Android应用内存溢出导致应用退出的解决方案</h2>
@@ -997,50 +1070,6 @@ String[] files = file.list();
     </section>
 
 
-
-
-    <section class="post">
-        <header class="post-header">
-            <img class="post-avatar" height="48" width="48"
-                 src="/img/1.jpeg">
-
-            <h2 class="post-title">My first blog</h2>
-
-            <p class="post-meta">By 09月27日  2014  <a
-                    class="post-categorybut " href="/type/#others">others</a><a
-                    class="post-category " > on the way</a><a
-                    class="post-category " >  process</a>
-            </p>
-        </header>
-
-        <div class="post-description">
-            <hr />
-
-<h2>历程</h2>
-
-<p>一直以来我都是只写笔记不写博客，总以为写博客很无聊。直到后来接触到了github，接触到了开源，我才发现了分享的乐趣，我想我的那些笔记一定也不喜欢孤独，那我也加入开源的世界吧。搭建自己的博客，分享自己在工作中的问题，这本身不就是一件快乐的事情么？从有想法到实现，辛辛苦苦花费了将近一周的时间，终于把博客搭建了起来，中间的辛苦和快乐也只有自己最清楚。</p>
-
-<p>大概步骤记录下来</p>
-
-<blockquote><ul>
-<li>搭建ruby环境，搭建python环境，搭建jekyll环境</li>
-<li>找模板，改模板（最辛苦的一件事）</li>
-<li>添加统计，评论等小功能</li>
-<li>发布到github</li>
-</ul>
-</blockquote>
-
-<p>中途碰到了无数问题，只能自己解决，百度不行google，google不行，那就想别的办法，反正最后终于搞成了如今的样子，还有一些bug，慢慢在解决吧，重点应该是内容而不是界面。</p>
-
-<hr />
-
-
-
-            <a href="/others/My%20first%20blog.html" class="post-categorybut">阅读全文</a>
-        </div>
-    </section>
-
-
 <div class="pure-g pagination">
     
     <span class=" pure-u-1-2 pagination-item"><p>Newer</p></span>
@@ -1048,7 +1077,7 @@ String[] files = file.list();
 
 
     
-    <span class=" pure-u-1-2 pagination-item"><p>Older</p></span>
+    <a class=" pure-u-1-2 pagination-item" href="/page/2"><p>Older</p></a>
     
 </div>
 
