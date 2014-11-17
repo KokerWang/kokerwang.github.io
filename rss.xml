@@ -4,7 +4,7 @@
     <title>KokerWang‘s bloggg</title>
     <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
     <link href="http://www.kokerwang.com/"/>
-    <updated>2014-11-17T13:44:56+08:00</updated>
+    <updated>2014-11-17T14:02:20+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>kokerwang</name>
@@ -13,10 +13,10 @@
 
     
     <entry>
-        <title>解决Android因重定向而导致WebView无法goBack的问题</title>
-        <link href="http://www.kokerwang.com/android/%E8%A7%A3%E5%86%B3Android%E5%9B%A0%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4WebView%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html"/>
+        <title>关于WebView因url重定向而导致无法goBack的问题</title>
+        <link href="http://www.kokerwang.com/android/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html"/>
         <updated>2014-11-16T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/android/解决Android因重定向而导致WebView无法goBack的问题</id>
+        <id>http://www.kokerwang.com/android/关于WebView因url重定向而导致无法goBack的问题</id>
         <content type="html">&lt;hr /&gt;
 
 &lt;p&gt;最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在&lt;code&gt;stackOverflow&lt;/code&gt; 上找到了解决的办法,解决的方法真是格外的简单.直接看代码&lt;/p&gt;
@@ -62,7 +62,7 @@
 
 &lt;p&gt;如果你还需要更丰富的处理效果那么推荐你用&lt;code&gt;WebChromeClient&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;ps: 最近国内github好不稳定啊，这让我们怎么活&lt;/p&gt;
+&lt;p&gt;ps: 最近国内github好不稳定啊，大家还是翻墙吧.&lt;/p&gt;
 
 &lt;hr /&gt;
 </content>
@@ -111,7 +111,7 @@
 
 &lt;p&gt;如果你还需要更丰富的处理效果那么推荐你用&lt;code&gt;WebChromeClient&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;ps: 最近国内github好不稳定啊，这让我们怎么活&lt;/p&gt;
+&lt;p&gt;ps: 最近国内github好不稳定啊，大家还是翻墙吧.&lt;/p&gt;
 
 &lt;hr /&gt;
 </summary>
