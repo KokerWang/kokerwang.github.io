@@ -4,7 +4,7 @@
     <title>KokerWang‘s bloggg</title>
     <link href="http://www.kokerwang.com/rss.xml" rel="self"/>
     <link href="http://www.kokerwang.com/"/>
-    <updated>2014-11-17T13:37:24+08:00</updated>
+    <updated>2014-11-17T13:44:56+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>kokerwang</name>
@@ -19,9 +19,9 @@
         <id>http://www.kokerwang.com/android/解决Android因重定向而导致WebView无法goBack的问题</id>
         <content type="html">&lt;hr /&gt;
 
-&lt;p&gt;最近项目中有一些界面需要嵌入&lt;code&gt;wap&lt;/code&gt;页，在按返回键的时候让&lt;code&gt;WebView&lt;/code&gt; &lt;code&gt;goBack&lt;/code&gt;, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常&lt;code&gt;goBack&lt;/code&gt;,原因是,退回重定向之前的&lt;code&gt;url&lt;/code&gt; 又被重定向了回来,网上的解决办法是自己控制一个&lt;code&gt;url&lt;/code&gt;集合,我试了一下非常麻烦,因为我们还需要&lt;code&gt;goForward&lt;/code&gt; 功能,仅仅使用一个&lt;code&gt;LinkedList&lt;/code&gt;还满足不了需求.最终还是放弃了这样的做法,后来终于在&lt;code&gt;stackOverflow&lt;/code&gt; 上找到了解决的办法,解决的方法真是格外的简单.直接看代码&lt;/p&gt;
+&lt;p&gt;最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在&lt;code&gt;stackOverflow&lt;/code&gt; 上找到了解决的办法,解决的方法真是格外的简单.直接看代码&lt;/p&gt;
 
-&lt;p&gt;为了让&lt;code&gt;WebView&lt;/code&gt;控制界面里面的&lt;code&gt;url&lt;/code&gt;跳转,我们一般都会设置&lt;code&gt;WebViewClient&lt;/code&gt; ，并重写&lt;code&gt;shouldOverrideUrlLoading&lt;/code&gt;方法，让&lt;code&gt;webView&lt;/code&gt;加载点击&lt;code&gt;url&lt;/code&gt;,一般的例子代码如下:&lt;/p&gt;
+&lt;p&gt;为了让WebView控制界面里面的url跳转,我们一般都会设置&lt;code&gt;WebViewClient&lt;/code&gt; ，并重写shouldOverrideUrlLoading方法，让webView加载点击url,一般的例子代码如下:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;java&quot;&gt;webView.setWebViewClient(new WebViewClient() {
 
@@ -45,11 +45,11 @@
 });
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;万万没想到解决办法就在&lt;code&gt;api&lt;/code&gt;里面,&lt;code&gt;shouldOverrideUrlLoading&lt;/code&gt;这个方法的 &lt;code&gt;api&lt;/code&gt; 如下:&lt;/p&gt;
+&lt;p&gt;万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:&lt;/p&gt;
 
 &lt;p&gt;Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.&lt;/p&gt;
 
-&lt;p&gt;就是说如果&lt;code&gt;application&lt;/code&gt;处理这个url则返回&lt;code&gt;true&lt;/code&gt;,如果&lt;code&gt;WebView&lt;/code&gt;处理这个&lt;code&gt;url&lt;/code&gt;则返回&lt;code&gt;false&lt;/code&gt;.我们让&lt;code&gt;WebView&lt;/code&gt;处理了这个&lt;code&gt;url&lt;/code&gt;就应该返回&lt;code&gt;false&lt;/code&gt;,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.&lt;/p&gt;
+&lt;p&gt;就是说如果application处理这个url则返回&lt;code&gt;true&lt;/code&gt;,如果WebView处理这个url则返回&lt;code&gt;false&lt;/code&gt;.我们让WebView处理了这个url就应该返回&lt;code&gt;false&lt;/code&gt;,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.&lt;/p&gt;
 
 &lt;p&gt;后来我又看了一下&lt;code&gt;WebViewClient&lt;/code&gt;的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:&lt;/p&gt;
 
@@ -68,9 +68,9 @@
 </content>
         <summary type="html">&lt;hr /&gt;
 
-&lt;p&gt;最近项目中有一些界面需要嵌入&lt;code&gt;wap&lt;/code&gt;页，在按返回键的时候让&lt;code&gt;WebView&lt;/code&gt; &lt;code&gt;goBack&lt;/code&gt;, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常&lt;code&gt;goBack&lt;/code&gt;,原因是,退回重定向之前的&lt;code&gt;url&lt;/code&gt; 又被重定向了回来,网上的解决办法是自己控制一个&lt;code&gt;url&lt;/code&gt;集合,我试了一下非常麻烦,因为我们还需要&lt;code&gt;goForward&lt;/code&gt; 功能,仅仅使用一个&lt;code&gt;LinkedList&lt;/code&gt;还满足不了需求.最终还是放弃了这样的做法,后来终于在&lt;code&gt;stackOverflow&lt;/code&gt; 上找到了解决的办法,解决的方法真是格外的简单.直接看代码&lt;/p&gt;
+&lt;p&gt;最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在&lt;code&gt;stackOverflow&lt;/code&gt; 上找到了解决的办法,解决的方法真是格外的简单.直接看代码&lt;/p&gt;
 
-&lt;p&gt;为了让&lt;code&gt;WebView&lt;/code&gt;控制界面里面的&lt;code&gt;url&lt;/code&gt;跳转,我们一般都会设置&lt;code&gt;WebViewClient&lt;/code&gt; ，并重写&lt;code&gt;shouldOverrideUrlLoading&lt;/code&gt;方法，让&lt;code&gt;webView&lt;/code&gt;加载点击&lt;code&gt;url&lt;/code&gt;,一般的例子代码如下:&lt;/p&gt;
+&lt;p&gt;为了让WebView控制界面里面的url跳转,我们一般都会设置&lt;code&gt;WebViewClient&lt;/code&gt; ，并重写shouldOverrideUrlLoading方法，让webView加载点击url,一般的例子代码如下:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;java&quot;&gt;webView.setWebViewClient(new WebViewClient() {
 
@@ -94,11 +94,11 @@
 });
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;万万没想到解决办法就在&lt;code&gt;api&lt;/code&gt;里面,&lt;code&gt;shouldOverrideUrlLoading&lt;/code&gt;这个方法的 &lt;code&gt;api&lt;/code&gt; 如下:&lt;/p&gt;
+&lt;p&gt;万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:&lt;/p&gt;
 
 &lt;p&gt;Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.&lt;/p&gt;
 
-&lt;p&gt;就是说如果&lt;code&gt;application&lt;/code&gt;处理这个url则返回&lt;code&gt;true&lt;/code&gt;,如果&lt;code&gt;WebView&lt;/code&gt;处理这个&lt;code&gt;url&lt;/code&gt;则返回&lt;code&gt;false&lt;/code&gt;.我们让&lt;code&gt;WebView&lt;/code&gt;处理了这个&lt;code&gt;url&lt;/code&gt;就应该返回&lt;code&gt;false&lt;/code&gt;,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.&lt;/p&gt;
+&lt;p&gt;就是说如果application处理这个url则返回&lt;code&gt;true&lt;/code&gt;,如果WebView处理这个url则返回&lt;code&gt;false&lt;/code&gt;.我们让WebView处理了这个url就应该返回&lt;code&gt;false&lt;/code&gt;,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.&lt;/p&gt;
 
 &lt;p&gt;后来我又看了一下&lt;code&gt;WebViewClient&lt;/code&gt;的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:&lt;/p&gt;
 
