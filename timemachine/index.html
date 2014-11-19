@@ -9,7 +9,7 @@
     <link rel="canonical" href=""/>
     <!--<link href="http://liyouhai.com/rss.xml" title="RSS 2.0" type="application/rss+xml" rel="alternate"/>-->
     <link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
-    <title>kokerWang - KokerWang's blog</title>
+    <title>timemachine - KokerWang's blog</title>
     <link rel="stylesheet" href="/css/min/pure-min.css"/>
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="/css/min/grids-responsive-old-ie-min.css">
@@ -87,31 +87,48 @@
         <div>
             <div class="posts">
 
-                <h2 id="">关于我</h2>
+                <link rel="stylesheet" href="/css/min/pointtime.css" type="text/css" media="screen" />
+<script language="javascript">
+    $(function(){
+        var tags_a = $(".point-time");
+        tags_a.each(function(){
+            var x = 5;
+            var y = 0;
+            var rand = parseInt(Math.random() * (x - y + 1) + y);
+            $(this).addClass("point"+rand);
+        });
+    });
 
-<p>Android开发者，J2EE开发者，Go爱好者</p>
+</script>
+<div class="archive" >
 
-<img src="/img/blog_2code.png" style="width:200px; height:200px; ">
+ <article>
+        <h3 class="year">2014</h3>
+        <section>
+        <span class="point-time "></span>
+        <time datetime="11-17">
+        <span>11月17日</span>
+        </time>
+        <aside>
+            <p class="things"><a href="http://item.jd.com/11390372.html">Go语言程序设计</a></p>
+        </aside>
+    </section>
+    </article>
 
-<h2 id="">关于这里</h2>
+    <article>
+        <h3 class="year">2014</h3>
+        <section>
+        <span class="point-time "></span>
+        <time datetime="11-05">
+        <span>11月05日</span>
+        </time>
+        <aside>
+            <p class="things"><a href="http://item.jd.com/11431447.html">50 Android Hacks</a></p>
+        </aside>
+    </section>
+    </article>
 
-<p>本blog主要分享我在工作中遇到的技术难点，以及一些特殊需求的功能实现，我会认真写好每一篇blog，力求达到精益求精。</p>
-
-<p>目前第一季目标是35篇blog，因为这一系列的title图片我只有35个哈~   等第二季我会加入一些其他的元素，让blog更好玩一些。</p>
-
-<p>分享成果，让我每天都很开心</p>
-
-<h2 id="">我的作品</h2>
-
-<p>1.<a href="http://www.bpmasa.org/">北京市物业监理协会</a>客户端, <a href="http://fir.im/bpmasa">下载地址</a></p>
-
-<p>2.<a href="http://www.louli.com.cn/">楼里</a>客户端, <a href="http://fir.im/haye">下载地址</a></p>
-
-<h2 id="">时光机</h2>
-
-<p>最近看到有人晒自己Github的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，取个名字，就叫<a href="/timemachine">时光机</a></p>
-
-
+</div>
 
 
             </div>

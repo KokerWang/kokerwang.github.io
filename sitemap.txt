@@ -5,6 +5,7 @@ http://www.kokerwang.com//rss.xml
 http://www.kokerwang.com//search/
 http://www.kokerwang.com//sitemap.txt
 http://www.kokerwang.com//tag/
+http://www.kokerwang.com//timemachine/
 http://www.kokerwang.com//timing/
 http://www.kokerwang.com//type/
 http://www.kokerwang.com//page/2/index.html
