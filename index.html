@@ -93,6 +93,72 @@
     <section class="post">
         <header class="post-header">
             <img class="post-avatar" height="48" width="48"
+                 src="/img/9.jpeg">
+
+            <h2 class="post-title">从Framework层看Android启动</h2>
+
+            <p class="post-meta">By 12月04日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > Framework</a><a
+                    class="post-category " >  读书笔记</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<h2>序：</h2>
+
+<p><code>众所周知，Linux中所有的进程都是有init进程创建并运行的，Android系统基于Linux内核，所以也存在着init进程。
+init进程启动的过程比较复杂，但是在准备工作做好之后，会通过jni创建Dalvik虚拟机，然后启动Android的核心Zygote进程，这个进程将成为所有应用进程的孵化器存在。下面我通过几个图来说明这个过程。</code></p>
+
+<h2>Init进程启动以及Zygote启动</h2>
+
+<p><img src="/img/20141204181105.jpg" alt="tool-editor" /></p>
+
+<p>上图是启动Android设备之后的进程，可以明显看到在init进程启动之后启动了Zygote进程，而Zygote作为之后的大部分进程的父进程存在。</p>
+
+<h2>Zygote启动应用程序</h2>
+
+<p><img src="/img/20141204181056.jpg" alt="tool-editor" /></p>
+
+<p>上图是Zygote进程启动应用程序的流程图，Zygote进程调用fork（）函数创建出Zygote‘子进程，子进程共享父进程的代码区和链接信息，但是注意，新的Android应用程序并非通过fork（）来重新装载已有的进程代码区，而是动态的加载到复制出的Dalvik虚拟机上，而后，Zygote`进程将执行流程交给应用程序，Android应用程序开始运行，新生的应用程序拥有Zygote的进程库和资源的链接信息，所以运行速度很快。</p>
+
+<h2>Android Framework的启动过程</h2>
+
+<p><img src="/img/20141204181100.jpg" alt="tool-editor" /></p>
+
+<p>上图是Android Framework的启动过程，Zygote启动Dalvik虚拟机后，会在生成一个Dalvik虚拟机示例，以便运行名称为SystemServer的java服务，SystemServer用于运行Audio Flinger与Surface Flinger本地服务，运行完本地服务之后开始运行Android Framework的java服务，也就是我们在Android系统架构图中Application Framework中的各种Manager Server
+下图我们从代码层看Android Framework 的启动过程</p>
+
+<p><img src="/img/20141204181052.jpg" alt="tool-editor" /></p>
+
+<h2>Binder IPC 机制</h2>
+
+<p><img src="/img/20141204181047.jpg" alt="tool-editor" /></p>
+
+<p>由于Android应用程序与系统服务不在同一个系统进程中，这里就引入的Binder IPC 机制，服务使用者调用foo（）服务代理函数，而后foo（）服务代理函数通过Binder RPC调用Foo服务的foo（）服务Stub函数</p>
+
+<p>首先服务使用者调用foo（）代理函数，传递Binder RPC数据，该数据包含引用Foo服务的请求。Binder RPC数据经过Marshalling处理后，由Service Framework生成Binder IPC数据，然后通过Binder Driver 传递给Service Server端</p>
+
+<p>Service Server端收到Binder IPC 数据后，由 Service Framework对数据进行UnMarshalling处理，然后传递给Service Stub的onTransact（）函数，Service Stub根据Binder IPC数据中的RPC代码判断它是一个针对Foo服务的foo（）服务Stub函数的Binder RPC，最后， 以Binder IPC数据中包含的Binder RPC数据为参数，调用foo（）服务的Stub函数。至此，就是Binder IPC 的整个流程。</p>
+
+<p>————摘自《Android框架揭秘》 以上部分是这本书中的大部分知识的总结，其中的这几幅图更是这些重点简单明了的描述。当然Binder 机制只看图还是不能深入了解的，因为内容比较多，所以还是推荐看书，写的不错。</p>
+
+<hr />
+
+
+
+            <a href="/android/%E4%BB%8EFramework%E5%B1%82%E7%9C%8BAndroid%E5%90%AF%E5%8A%A8.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
                  src="/img/8.jpeg">
 
             <h2 class="post-title">关于WebView因url重定向而导致无法goBack的问题</h2>
@@ -205,7 +271,7 @@
 然后在退出应用的时候遍历集合逐个调用finish方法,以此来达到退出整个应用,这些方法在网上很多写法,也是大多数人推荐的做法,但我如今碰到的问题就是这里导致的.我的测试结果是,虽然在每个activity的finish方法里把自己从容器里移除自己,但依然因为这个导致activity不能释放,如此循环往复导致了内存溢出.找到了问题所在就好解决多了,就怕有问题自己也摸不到头绪.其实如果自己控制好每个界面的启动和销毁,这样的做法完全是多此一举的,如果你实在想这样做,推荐的是使用广播的方法,在每个activity里面注册一个广播,应用退出的时候通过广播来关闭所有activity,不要忘了在onDestroy里注销广播哟,</p>
 
 <p>ps:
-我曾经也深信不疑的使用网上的各种现成的代码,但如今,我想至少应该测试过会再使用才行,不要人云亦云,知其然知其所以然,才能最大的提升自己的能力.
+我曾经也深信不疑的使用网上的各种现成的代码,但如今,我想至少应该测试过会再使用才行,不要人云亦云,知其然知其所以然,才能最大的提升自己的能力.感谢项目经理的耐心教导。
 另外<strong>MAT</strong>工具推荐大家都学习一下,特别是大型项目一定要严格控制内存,否则会死的很惨.</p>
 
 <hr />
@@ -967,105 +1033,6 @@ imageScaleType:
 
 
             <a href="/android/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F.html" class="post-categorybut">阅读全文</a>
-        </div>
-    </section>
-
-
-
-
-    <section class="post">
-        <header class="post-header">
-            <img class="post-avatar" height="48" width="48"
-                 src="/img/2.jpeg">
-
-            <h2 class="post-title">Android BroadcastReceiver 接收顺序</h2>
-
-            <p class="post-meta">By 09月28日  2014  <a
-                    class="post-categorybut " href="/type/#android">android</a><a
-                    class="post-category " > BroadcastReceiver</a><a
-                    class="post-category " >  工作总结</a>
-            </p>
-        </header>
-
-        <div class="post-description">
-            <hr />
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天项目里有这样一个需求，访问一个请求并把手机号作为参数传过去，同时拦截收到的短信验证码，自动填进EditText，一个看似很简单的功能。然而在真机上测试竟然没有拦截到，把优先级调到最大也无济于事。</p>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四处寻访，原来BroadcastReceiver除了有优先级顺序之外，还有注册的顺序。</p>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大家都知道广播分有序广播和无序广播，有序广播和无序广播的区别就是，有序广播可以被任何一个接受者消耗掉，而无序广播则不可以，注册的话既可以在代码里面动态注册，也可以在Manifest里面直接声明，屌丝青年大多会直接在Manifest里面定义注册，文艺青年一般使用代码动态注册。这两种方式接受的广播的顺序是不一样的。</p>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一般来说有序广播在同等优先级的情况下有这样的顺序</p>
-
-<blockquote><ul>
-<li>动态注册的BroadcastReceiver，先注册的先接收</li>
-<li>Manifest里注册的BroadcastReceiver，接收广播的顺序与String[] java.io.File.list()顺序一致</li>
-</ul>
-</blockquote>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在不同优先级的情况下</p>
-
-<blockquote><ul>
-<li>有序广播按优先级顺序接收</li>
-<li>无序广播因为是异步的所以接收broadcast的顺序不确定。</li>
-</ul>
-</blockquote>
-
-<table>
-<thead>
-<tr>
-<th> 假设有如下优先级的5个接收器  并且B先于C注册     </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 1.动态A（优先级=1）      </td>
-</tr>
-<tr>
-<td> 2.动态B（优先级=2）      </td>
-</tr>
-<tr>
-<td> 3.动态C（优先级=2）      </td>
-</tr>
-<tr>
-<td> 4.静态D（优先级=1)       </td>
-</tr>
-<tr>
-<td> 5.静态E（优先级=2）      </td>
-</tr>
-<tr>
-<td> 那么实际接收顺序应为：  B C E A D  </td>
-</tr>
-</tbody>
-</table>
-
-
-<hr />
-
-<h2>关于 String[] java.io.File.list()</h2>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们以开机时候发出的广播android.intent.action.BOOT_COMPLETED为例，这是个无序广播。如果应用想要开启自启动，那么就要监听这个广播，程序启动之前，动态广播接收器肯定是无法使用的，只能在XML中静态注册。大家都知道，第三方应用是存放在/data/app目录下，当安装完毕之后，你会找到一个文件，他的名字是以与安装的应用包名开始的，然后可能会跟着"-数字.apk"，比如：com.android.test-1.apk。接收的顺序与这个名字是有关的！那么关系是怎样的呢？</p>
-
-<blockquote><ul>
-<li>系统在开机的时候，会按着一个顺序解析apk，首先，会解析手机中的/system/framework这个目录，原生系统中，这下面就一个apk - framework-res.apk，当然各个厂商也会加入自己的内容</li>
-<li>然后受到重视的文件夹按顺序分别为：
-/system/app，
-/vendor/app，
-/data/app，
-/drm/app-private
-那么每个文件夹下解析的顺序是怎样的呢？我们先只看/data/app，也就是用户安装的第三方应用的存放位置，这与下面代码返回结果的顺序是一致的
-File file = new File("/data/app/");
-String[] files = file.list();
-也就是说，我们按顺序打印这个数组，就能知道哪个接收器会先接收到这个广播，哪个会后接收到</li>
-</ul>
-</blockquote>
-
-<hr />
-
-
-
-            <a href="/android/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html" class="post-categorybut">阅读全文</a>
         </div>
     </section>
 

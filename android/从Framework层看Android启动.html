@@ -9,7 +9,7 @@
     <link rel="canonical" href=""/>
     <!--<link href="http://liyouhai.com/rss.xml" title="RSS 2.0" type="application/rss+xml" rel="alternate"/>-->
     <link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
-    <title>关于WebView因url重定向而导致无法goBack的问题 - KokerWang's blog</title>
+    <title>从Framework层看Android启动 - KokerWang's blog</title>
     <link rel="stylesheet" href="/css/min/pure-min.css"/>
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="/css/min/grids-responsive-old-ie-min.css">
@@ -90,73 +90,66 @@
                 <div class="qrcodeTable"></div>
 <header class="post-header">
     <img class="post-avatar" height="48" width="48"
-         src="/img/8.jpeg">
+         src="/img/9.jpeg">
 
-    <h2 class="post-title">关于WebView因url重定向而导致无法goBack的问题</h2>
+    <h2 class="post-title">从Framework层看Android启动</h2>
 
-    <p class="post-meta">By 11月16日  2014  <a
+    <p class="post-meta">By 12月04日  2014  <a
             class="post-categorybut " href="/type/#">android</a><a
-            class="post-category " href="/tag/#WebView"> WebView</a><a
-            class="post-category " href="/tag/#工作总结">  工作总结</a>
+            class="post-category " href="/tag/#Framework"> Framework</a><a
+            class="post-category " href="/tag/#读书笔记">  读书笔记</a>
     </p>
 </header>
 <div class="article pure-u-22-24">
     <hr />
 
-<p>最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在<code>stackOverflow</code> 上找到了解决的办法,解决的方法真是格外的简单.直接看代码</p>
+<h2>序：</h2>
 
-<p>为了让WebView控制界面里面的url跳转,我们一般都会设置<code>WebViewClient</code> ，并重写shouldOverrideUrlLoading方法，让webView加载点击url,一般的例子代码如下:</p>
+<p><code>众所周知，Linux中所有的进程都是有init进程创建并运行的，Android系统基于Linux内核，所以也存在着init进程。
+init进程启动的过程比较复杂，但是在准备工作做好之后，会通过jni创建Dalvik虚拟机，然后启动Android的核心Zygote进程，这个进程将成为所有应用进程的孵化器存在。下面我通过几个图来说明这个过程。</code></p>
 
-<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+<h2>Init进程启动以及Zygote启动</h2>
 
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-         view.loadUrl(url);
-        return true;
-    }
-});
-</code></pre>
+<p><img src="/img/20141204181105.jpg" alt="tool-editor" /></p>
 
-<p>解决办法:</p>
+<p>上图是启动Android设备之后的进程，可以明显看到在init进程启动之后启动了Zygote进程，而Zygote作为之后的大部分进程的父进程存在。</p>
 
-<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+<h2>Zygote启动应用程序</h2>
 
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+<p><img src="/img/20141204181056.jpg" alt="tool-editor" /></p>
 
-        return false;
-    }
-});
-</code></pre>
+<p>上图是Zygote进程启动应用程序的流程图，Zygote进程调用fork（）函数创建出Zygote‘子进程，子进程共享父进程的代码区和链接信息，但是注意，新的Android应用程序并非通过fork（）来重新装载已有的进程代码区，而是动态的加载到复制出的Dalvik虚拟机上，而后，Zygote`进程将执行流程交给应用程序，Android应用程序开始运行，新生的应用程序拥有Zygote的进程库和资源的链接信息，所以运行速度很快。</p>
 
-<p>万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:</p>
+<h2>Android Framework的启动过程</h2>
 
-<p>Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.</p>
+<p><img src="/img/20141204181100.jpg" alt="tool-editor" /></p>
 
-<p>就是说如果application处理这个url则返回<code>true</code>,如果WebView处理这个url则返回<code>false</code>.我们让WebView处理了这个url就应该返回<code>false</code>,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.</p>
+<p>上图是Android Framework的启动过程，Zygote启动Dalvik虚拟机后，会在生成一个Dalvik虚拟机示例，以便运行名称为SystemServer的java服务，SystemServer用于运行Audio Flinger与Surface Flinger本地服务，运行完本地服务之后开始运行Android Framework的java服务，也就是我们在Android系统架构图中Application Framework中的各种Manager Server
+下图我们从代码层看Android Framework 的启动过程</p>
 
-<p>后来我又看了一下<code>WebViewClient</code>的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:</p>
+<p><img src="/img/20141204181052.jpg" alt="tool-editor" /></p>
 
-<blockquote><ul>
-<li>onPageStarted 在页面加载开始时调用.</li>
-<li>onPageFinished 在页面加载结束时调用.</li>
-<li>onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.</li>
-</ul>
-</blockquote>
+<h2>Binder IPC 机制</h2>
 
-<p>如果你还需要更丰富的处理效果那么推荐你用<code>WebChromeClient</code>.</p>
+<p><img src="/img/20141204181047.jpg" alt="tool-editor" /></p>
 
-<p>ps: 最近国内github好不稳定啊，大家还是翻墙吧.</p>
+<p>由于Android应用程序与系统服务不在同一个系统进程中，这里就引入的Binder IPC 机制，服务使用者调用foo（）服务代理函数，而后foo（）服务代理函数通过Binder RPC调用Foo服务的foo（）服务Stub函数</p>
+
+<p>首先服务使用者调用foo（）代理函数，传递Binder RPC数据，该数据包含引用Foo服务的请求。Binder RPC数据经过Marshalling处理后，由Service Framework生成Binder IPC数据，然后通过Binder Driver 传递给Service Server端</p>
+
+<p>Service Server端收到Binder IPC 数据后，由 Service Framework对数据进行UnMarshalling处理，然后传递给Service Stub的onTransact（）函数，Service Stub根据Binder IPC数据中的RPC代码判断它是一个针对Foo服务的foo（）服务Stub函数的Binder RPC，最后， 以Binder IPC数据中包含的Binder RPC数据为参数，调用foo（）服务的Stub函数。至此，就是Binder IPC 的整个流程。</p>
+
+<p>————摘自《Android框架揭秘》 以上部分是这本书中的大部分知识的总结，其中的这几幅图更是这些重点简单明了的描述。当然Binder 机制只看图还是不能深入了解的，因为内容比较多，所以还是推荐看书，写的不错。</p>
 
 <hr />
 
 </div>
     <div class="pure-g pagination">
         
-        <a class="pure-u-1-2 pagination-item " href="/android/Android%E5%BA%94%E7%94%A8%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%AF%BC%E8%87%B4%E5%BA%94%E7%94%A8%E9%80%80%E5%87%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html" title="Android应用内存溢出导致应用退出的解决方案 "><p> <i class="fa fa-mail-reply"></i>&nbsp;Android应用内存溢出导致应用退出的解决方案</p></a>
+        <a class="pure-u-1-2 pagination-item " href="/android/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html" title="关于WebView因url重定向而导致无法goBack的问题 "><p> <i class="fa fa-mail-reply"></i>&nbsp;关于WebView因url重定向而导致无法goBack的问题</p></a>
         
         
-        <a class="pure-u-1-2 pagination-item " href="/android/%E4%BB%8EFramework%E5%B1%82%E7%9C%8BAndroid%E5%90%AF%E5%8A%A8.html" title="从Framework层看Android启动"><p>从Framework层看Android启动&nbsp;<i class="fa fa-mail-forward"></i></p></a>
+        <span class="pure-u-1-2 pagination-item "><p>下一篇&nbsp;<i class="fa fa-chain-broken"></i></p></span>
         
     </div>
     <link href="/css/code.css" rel="stylesheet">
