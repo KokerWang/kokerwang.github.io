@@ -9,7 +9,7 @@
     <link rel="canonical" href=""/>
     <!--<link href="http://liyouhai.com/rss.xml" title="RSS 2.0" type="application/rss+xml" rel="alternate"/>-->
     <link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
-    <title>从Framework层看Android启动 - KokerWang's blog</title>
+    <title>为Context-Menu.Android库增加用户体验 - KokerWang's blog</title>
     <link rel="stylesheet" href="/css/min/pure-min.css"/>
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="/css/min/grids-responsive-old-ie-min.css">
@@ -90,14 +90,14 @@
                 <div class="qrcodeTable"></div>
 <header class="post-header">
     <img class="post-avatar" height="48" width="48"
-         src="/img/9.jpeg">
+         src="/img/10.jpeg">
 
-    <h2 class="post-title">从Framework层看Android启动</h2>
+    <h2 class="post-title">为Context-Menu.Android库增加用户体验</h2>
 
-    <p class="post-meta">By 12月04日  2014  <a
+    <p class="post-meta">By 01月25日  2015  <a
             class="post-categorybut " href="/type/#">android</a><a
-            class="post-category " href="/tag/#Framework"> Framework</a><a
-            class="post-category " href="/tag/#读书笔记">  读书笔记</a>
+            class="post-category " href="/tag/#开源库"> 开源库</a><a
+            class="post-category " href="/tag/#工作总结">  工作总结</a>
     </p>
 </header>
 <div class="article pure-u-22-24">
@@ -105,51 +105,56 @@
 
 <h2>序：</h2>
 
-<p><code>众所周知，Linux中所有的进程都是有init进程创建并运行的，Android系统基于Linux内核，所以也存在着init进程。
-init进程启动的过程比较复杂，但是在准备工作做好之后，会通过jni创建Dalvik虚拟机，然后启动Android的核心Zygote进程，这个进程将成为所有应用进程的孵化器存在。下面我通过几个图来说明这个过程。</code></p>
+<p><code>Github上面有很多的开源库，除了工具库之外，还有大量的UI库供我们使用，在使用这些UI库的时候开源者本人可能会给我们一些可以自定义的功能，可是在某种情况下，我们还需要对一些作者没有开放的功能进行定制，那我们就只能通过修改源码的方式来实现了，今天我介绍一下我对开源项目Context-Menu.Android的部分定制过程</code></p>
 
-<h2>Init进程启动以及Zygote启动</h2>
+<h2>介绍</h2>
 
-<p><img src="/img/20141204181105.jpg" alt="tool-editor" /></p>
+<p><a href="https://github.com/Yalantis/Context-Menu.Android">Context-Menu.Android</a>是由<code>Yalantis</code>开源的一个上下文菜单的UI库，如下图，非常的酷炫。</p>
 
-<p>上图是启动Android设备之后的进程，可以明显看到在init进程启动之后启动了Zygote进程，而Zygote作为之后的大部分进程的父进程存在。</p>
+<p><img src="https://d13yacurqjgara.cloudfront.net/users/125056/screenshots/1785274/99miles-profile-light_1-1-4.gif" alt="ContextMenu" /></p>
 
-<h2>Zygote启动应用程序</h2>
+<p>使用起来也非常的简单，具体使用大家可以在Github上看作者的使用介绍，我在这里就不在赘述。</p>
 
-<p><img src="/img/20141204181056.jpg" alt="tool-editor" /></p>
+<h2>问题</h2>
 
-<p>上图是Zygote进程启动应用程序的流程图，Zygote进程调用fork（）函数创建出Zygote‘子进程，子进程共享父进程的代码区和链接信息，但是注意，新的Android应用程序并非通过fork（）来重新装载已有的进程代码区，而是动态的加载到复制出的Dalvik虚拟机上，而后，Zygote`进程将执行流程交给应用程序，Android应用程序开始运行，新生的应用程序拥有Zygote的进程库和资源的链接信息，所以运行速度很快。</p>
+<p>在使用这个库的时候，我遇到了如下问题：</p>
 
-<h2>Android Framework的启动过程</h2>
+<blockquote><ul>
+<li>当菜单打开的时候点击旁边灰色的部分该菜单Menu不能消失，只能点击任意一个Item 或者点击返回键才能让其隐藏，那么我认为这样的体验是不好的。</li>
+</ul>
+</blockquote>
 
-<p><img src="/img/20141204181100.jpg" alt="tool-editor" /></p>
+<h2>解决</h2>
 
-<p>上图是Android Framework的启动过程，Zygote启动Dalvik虚拟机后，会在生成一个Dalvik虚拟机示例，以便运行名称为SystemServer的java服务，SystemServer用于运行Audio Flinger与Surface Flinger本地服务，运行完本地服务之后开始运行Android Framework的java服务，也就是我们在Android系统架构图中Application Framework中的各种Manager Server
-下图我们从代码层看Android Framework 的启动过程</p>
+<p>思路：给灰色背景布局加一个点击事件，该事件的处理就是Menu的点击处理，只不过不调用item的回调方法，有了思路，那么找起来就简单的多了。</p>
 
-<p><img src="/img/20141204181052.jpg" alt="tool-editor" /></p>
+<blockquote><ul>
+<li>首先我们需要找到完成点击动画的代码。打开<code>ContextMenuDialogFragment.java</code>我们可以轻易找到点击事件是在实现了<code>MenuAdapter.OnItemClickListener</code>接口的<code>onClick</code>方法中。那么我们进入<code>MenuAdapter.java</code>，在这里我们终于找到了点击事件的代码。
+<img src="/img/20150125161035.png" alt="tool-editor" />
+从代码中可以看出，只要我们给灰色的布局加上一个这个事件调用该方法就能达到我们的目的。</li>
+<li><p>其次我们需要找到灰色的布局组件。接下来进入该Fragment 的布局文件<code>fragment_menu.xml</code>在这里我们发现了背景其实就是一个RelativeLayout，那事情就好办多了，给这个RelativeLayout加上id，在ContextMenuDialogFragment的<code>initViews</code>方法中初始化一下该组件
+<img src="/img/20150125161418.png" alt="tool-editor" /></p></li>
+<li><p>最后 给<code>RelativeLayout</code>加上<code>OnClickListener</code>事件,然后调用之前关闭动画的那个方法。我的做法是直接给MenuAdapter新增加一个dismissMenu方法，去除无用的代码并指定默认点击的是第一个组件，因为出现的动画是由第一个Item开始的，所以这里把默认的执行动画由第一个来结束也最合理，代码如下
+<img src="/img/20150125161919.png" alt="tool-editor" />
+<img src="/img/20150125162038.png" alt="tool-editor" /></p></li>
+</ul>
+</blockquote>
 
-<h2>Binder IPC 机制</h2>
+<p>测试一下，大功告成</p>
 
-<p><img src="/img/20141204181047.jpg" alt="tool-editor" /></p>
+<h2>遗留问题</h2>
 
-<p>由于Android应用程序与系统服务不在同一个系统进程中，这里就引入的Binder IPC 机制，服务使用者调用foo（）服务代理函数，而后foo（）服务代理函数通过Binder RPC调用Foo服务的foo（）服务Stub函数</p>
+<p>点击手机返回键的时候Menu是直接消失的，并没有执行结束动画，由于Fragment没有OnKeyDown方法，并且该组件继承自DialogFragment，我在使尝试了几种办法之后最终无果，只好暂时放弃。等以后有时间再解决这个问题</p>
 
-<p>首先服务使用者调用foo（）代理函数，传递Binder RPC数据，该数据包含引用Foo服务的请求。Binder RPC数据经过Marshalling处理后，由Service Framework生成Binder IPC数据，然后通过Binder Driver 传递给Service Server端</p>
-
-<p>Service Server端收到Binder IPC 数据后，由 Service Framework对数据进行UnMarshalling处理，然后传递给Service Stub的onTransact（）函数，Service Stub根据Binder IPC数据中的RPC代码判断它是一个针对Foo服务的foo（）服务Stub函数的Binder RPC，最后， 以Binder IPC数据中包含的Binder RPC数据为参数，调用foo（）服务的Stub函数。至此，就是Binder IPC 的整个流程。</p>
-
-<p>————摘自《Android框架揭秘》 以上部分是这本书中的大部分知识的总结，其中的这几幅图更是这些重点简单明了的描述。当然Binder 机制只看图还是不能深入了解的，因为内容比较多，所以还是推荐看书，写的不错。</p>
-
-<hr />
+<p>项目的话由于涉及到开源协议，而我又不想弄分支所以就不发布修改版的库了，不过看上面的介绍大家也足可以做到我说的效果，还能帮助大家理解这个库，何乐而不为。如果实在有困难你可以联系我。</p>
 
 </div>
     <div class="pure-g pagination">
         
-        <a class="pure-u-1-2 pagination-item " href="/android/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html" title="关于WebView因url重定向而导致无法goBack的问题 "><p> <i class="fa fa-mail-reply"></i>&nbsp;关于WebView因url重定向而导致无法goBack的问题</p></a>
+        <a class="pure-u-1-2 pagination-item " href="/android/%E4%BB%8EFramework%E5%B1%82%E7%9C%8BAndroid%E5%90%AF%E5%8A%A8.html" title="从Framework层看Android启动 "><p> <i class="fa fa-mail-reply"></i>&nbsp;从Framework层看Android启动</p></a>
         
         
-        <a class="pure-u-1-2 pagination-item " href="/android/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C.html" title="为Context-Menu.Android库增加用户体验"><p>为Context-Menu.Android库增加用户体验&nbsp;<i class="fa fa-mail-forward"></i></p></a>
+        <span class="pure-u-1-2 pagination-item "><p>下一篇&nbsp;<i class="fa fa-chain-broken"></i></p></span>
         
     </div>
     <link href="/css/code.css" rel="stylesheet">
