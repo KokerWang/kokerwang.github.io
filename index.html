@@ -1,0 +1,432 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="我大步走大步跑，我没有追我不会累"/>
+    <meta name="keywords" content="android,github,Open Source,kokerwang"/>
+    <meta name="author" content="www.kokerwang.com"/> 
+    <link rel="canonical" href=""/>
+    <!--<link href="http://liyouhai.com/rss.xml" title="RSS 2.0" type="application/rss+xml" rel="alternate"/>-->
+    <link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
+    <title>KokerWang's blog</title>
+    <link rel="stylesheet" href="/css/min/pure-min.css"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/min/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/css/min/grids-responsive-min.css"/>
+    <!--<![endif]-->
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/JekyllPure-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/css/JekyllPure.css"/>
+    <!--<![endif]-->
+
+    <link href="/css/min/font-awesome.min.css" rel="stylesheet"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/min/font-awesome-ie7.min.css">
+    <![endif]-->
+    <script src="/js/min/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <div class="headerpic">
+                <a href="/">
+                    <img src="/img/kokerwang.jpg" alt="Profile Picture" style="width: 140px;" title="KokerWang's blog">
+                </a>
+            </div>
+            <h1 class="brand-title">KokerWang</h1>
+            <h2 class="brand-tagline">on the way  don't weary</h2>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="pure-button" href="/timing">时间轴</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/tag">标签库</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="/about">关于我</a>
+                    </li>
+                </ul>
+            </nav>
+            <!--<div class="search">
+                <form action="/search">
+                    <input type="text" class="search-query" placeholder="Search Blog" name="query" title="全站搜索-只支持英文">
+                </form>
+            </div>-->
+            <div id="toc"></div>
+            <nav id="nav">
+                <ul class="nav-list">
+                    <li class="nav-link">
+                    <a class="weibo "  href="http://kokerwang.lofter.com/" ><i class="fa fa-weibo fa-2x"></i></a>
+                    </li>
+                    <li class="nav-link">
+                    <a class="github" href="https://github.com/kokerwang"><i class="fa fa-github fa-2x"></i></a>
+                    </li>
+                    <li class="nav-link">
+                    <a class="rss" href="/rss.xml" ><i class="fa fa-rss fa-2x"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <!--[if lt IE 8]>
+        <i class="label label-danger">亲爱的用户，您的浏览器版本过低，建议您升级浏览器获得更好的用户体验</i>
+        <![endif]-->
+        <div>
+            <div class="posts">
+
+                
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="/img/10.jpeg">
+
+            <h2 class="post-title">为Context-Menu.Android库增加用户体验</h2>
+
+            <p class="post-meta">By 01月25日  2015  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > 开源库</a><a
+                    class="post-category " >  工作总结</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<h2>序：</h2>
+
+<p><code>Github上面有很多的开源库，除了工具库之外，还有大量的UI库供我们使用，在使用这些UI库的时候开源者本人可能会给我们一些可以自定义的功能，可是在某种情况下，我们还需要对一些作者没有开放的功能进行定制，那我们就只能通过修改源码的方式来实现了，今天我介绍一下我对开源项目Context-Menu.Android的部分定制过程</code></p>
+
+<h2>介绍</h2>
+
+<p><a href="https://github.com/Yalantis/Context-Menu.Android">Context-Menu.Android</a>是由<code>Yalantis</code>开源的一个上下文菜单的UI库，如下图，非常的酷炫。</p>
+
+<p><img src="https://d13yacurqjgara.cloudfront.net/users/125056/screenshots/1785274/99miles-profile-light_1-1-4.gif" alt="ContextMenu" /></p>
+
+<p>使用起来也非常的简单，具体使用大家可以在Github上看作者的使用介绍，我在这里就不在赘述。</p>
+
+<h2>问题</h2>
+
+<p>在使用这个库的时候，我遇到了如下问题：</p>
+
+<blockquote><ul>
+<li>当菜单打开的时候点击旁边灰色的部分该菜单Menu不能消失，只能点击任意一个Item 或者点击返回键才能让其隐藏，那么我认为这样的体验是不好的。</li>
+</ul>
+</blockquote>
+
+<h2>解决</h2>
+
+<p>思路：给灰色背景布局加一个点击事件，该事件的处理就是Menu的点击处理，只不过不调用item的回调方法，有了思路，那么找起来就简单的多了。</p>
+
+<blockquote><ul>
+<li>首先我们需要找到完成点击动画的代码。打开<code>ContextMenuDialogFragment.java</code>我们可以轻易找到点击事件是在实现了<code>MenuAdapter.OnItemClickListener</code>接口的<code>onClick</code>方法中。那么我们进入<code>MenuAdapter.java</code>，在这里我们终于找到了点击事件的代码。
+<img src="/img/20150125161035.png" alt="tool-editor" />
+从代码中可以看出，只要我们给灰色的布局加上一个这个事件调用该方法就能达到我们的目的。</li>
+<li><p>其次我们需要找到灰色的布局组件。接下来进入该Fragment 的布局文件<code>fragment_menu.xml</code>在这里我们发现了背景其实就是一个RelativeLayout，那事情就好办多了，给这个RelativeLayout加上id，在ContextMenuDialogFragment的<code>initViews</code>方法中初始化一下该组件
+<img src="/img/20150125161418.png" alt="tool-editor" /></p></li>
+<li><p>最后 给<code>RelativeLayout</code>加上<code>OnClickListener</code>事件,然后调用之前关闭动画的那个方法。我的做法是直接给MenuAdapter新增加一个dismissMenu方法，去除无用的代码并指定默认点击的是第一个组件，因为出现的动画是由第一个Item开始的，所以这里把默认的执行动画由第一个来结束也最合理，代码如下
+<img src="/img/20150125161919.png" alt="tool-editor" />
+<img src="/img/20150125162038.png" alt="tool-editor" /></p></li>
+</ul>
+</blockquote>
+
+<p>测试一下，大功告成</p>
+
+<h2>遗留问题</h2>
+
+<p>点击手机返回键的时候Menu是直接消失的，并没有执行结束动画，由于Fragment没有OnKeyDown方法，并且该组件继承自DialogFragment，我在使尝试了几种办法之后最终无果，只好暂时放弃。等以后有时间再解决这个问题</p>
+
+<p>项目的话由于涉及到开源协议，而我又不想弄分支所以就不发布修改版的库了，不过看上面的介绍大家也足可以做到我说的效果，还能帮助大家理解这个库，何乐而不为。如果实在有困难你可以联系我。</p>
+
+
+
+            <a href="/android/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="/img/9.jpeg">
+
+            <h2 class="post-title">从Framework层看Android启动</h2>
+
+            <p class="post-meta">By 12月04日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > Framework</a><a
+                    class="post-category " >  读书笔记</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<h2>序：</h2>
+
+<p><code>众所周知，Linux中所有的进程都是有init进程创建并运行的，Android系统基于Linux内核，所以也存在着init进程。
+init进程启动的过程比较复杂，但是在准备工作做好之后，会通过jni创建Dalvik虚拟机，然后启动Android的核心Zygote进程，这个进程将成为所有应用进程的孵化器存在。下面我通过几个图来说明这个过程。</code></p>
+
+<h2>Init进程启动以及Zygote启动</h2>
+
+<p><img src="/img/20141204181105.jpg" alt="tool-editor" /></p>
+
+<p>上图是启动Android设备之后的进程，可以明显看到在init进程启动之后启动了Zygote进程，而Zygote作为之后的大部分进程的父进程存在。</p>
+
+<h2>Zygote启动应用程序</h2>
+
+<p><img src="/img/20141204181056.jpg" alt="tool-editor" /></p>
+
+<p>上图是Zygote进程启动应用程序的流程图，Zygote进程调用fork（）函数创建出Zygote‘子进程，子进程共享父进程的代码区和链接信息，但是注意，新的Android应用程序并非通过fork（）来重新装载已有的进程代码区，而是动态的加载到复制出的Dalvik虚拟机上，而后，Zygote`进程将执行流程交给应用程序，Android应用程序开始运行，新生的应用程序拥有Zygote的进程库和资源的链接信息，所以运行速度很快。</p>
+
+<h2>Android Framework的启动过程</h2>
+
+<p><img src="/img/20141204181100.jpg" alt="tool-editor" /></p>
+
+<p>上图是Android Framework的启动过程，Zygote启动Dalvik虚拟机后，会在生成一个Dalvik虚拟机示例，以便运行名称为SystemServer的java服务，SystemServer用于运行Audio Flinger与Surface Flinger本地服务，运行完本地服务之后开始运行Android Framework的java服务，也就是我们在Android系统架构图中Application Framework中的各种Manager Server
+下图我们从代码层看Android Framework 的启动过程</p>
+
+<p><img src="/img/20141204181052.jpg" alt="tool-editor" /></p>
+
+<h2>Binder IPC 机制</h2>
+
+<p><img src="/img/20141204181047.jpg" alt="tool-editor" /></p>
+
+<p>由于Android应用程序与系统服务不在同一个系统进程中，这里就引入的Binder IPC 机制，服务使用者调用foo（）服务代理函数，而后foo（）服务代理函数通过Binder RPC调用Foo服务的foo（）服务Stub函数</p>
+
+<p>首先服务使用者调用foo（）代理函数，传递Binder RPC数据，该数据包含引用Foo服务的请求。Binder RPC数据经过Marshalling处理后，由Service Framework生成Binder IPC数据，然后通过Binder Driver 传递给Service Server端</p>
+
+<p>Service Server端收到Binder IPC 数据后，由 Service Framework对数据进行UnMarshalling处理，然后传递给Service Stub的onTransact（）函数，Service Stub根据Binder IPC数据中的RPC代码判断它是一个针对Foo服务的foo（）服务Stub函数的Binder RPC，最后， 以Binder IPC数据中包含的Binder RPC数据为参数，调用foo（）服务的Stub函数。至此，就是Binder IPC 的整个流程。</p>
+
+<p>————摘自《Android框架揭秘》 以上部分是这本书中的大部分知识的总结，其中的这几幅图更是这些重点简单明了的描述。当然Binder 机制只看图还是不能深入了解的，因为内容比较多，所以还是推荐看书，写的不错。</p>
+
+<hr />
+
+
+
+            <a href="/android/%E4%BB%8EFramework%E5%B1%82%E7%9C%8BAndroid%E5%90%AF%E5%8A%A8.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="/img/8.jpeg">
+
+            <h2 class="post-title">关于WebView因url重定向而导致无法goBack的问题</h2>
+
+            <p class="post-meta">By 11月16日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > WebView</a><a
+                    class="post-category " >  工作总结</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<p>最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在<code>stackOverflow</code> 上找到了解决的办法,解决的方法真是格外的简单.直接看代码</p>
+
+<p>为了让WebView控制界面里面的url跳转,我们一般都会设置<code>WebViewClient</code> ，并重写shouldOverrideUrlLoading方法，让webView加载点击url,一般的例子代码如下:</p>
+
+<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+         view.loadUrl(url);
+        return true;
+    }
+});
+</code></pre>
+
+<p>解决办法:</p>
+
+<pre><code class="java">webView.setWebViewClient(new WebViewClient() {
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+        return false;
+    }
+});
+</code></pre>
+
+<p>万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:</p>
+
+<p>Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.</p>
+
+<p>就是说如果application处理这个url则返回<code>true</code>,如果WebView处理这个url则返回<code>false</code>.我们让WebView处理了这个url就应该返回<code>false</code>,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.</p>
+
+<p>后来我又看了一下<code>WebViewClient</code>的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:</p>
+
+<blockquote><ul>
+<li>onPageStarted 在页面加载开始时调用.</li>
+<li>onPageFinished 在页面加载结束时调用.</li>
+<li>onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.</li>
+</ul>
+</blockquote>
+
+<p>如果你还需要更丰富的处理效果那么推荐你用<code>WebChromeClient</code>.</p>
+
+<p>ps: 最近国内github好不稳定啊，大家还是翻墙吧.</p>
+
+<hr />
+
+
+
+            <a href="/android/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="/img/7.jpeg">
+
+            <h2 class="post-title">Android应用内存溢出导致应用退出的解决方案</h2>
+
+            <p class="post-meta">By 11月11日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > 内存溢出</a><a
+                    class="post-category " >  工作总结</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<p>昨天项目里遇到了一个严重问题,用户在使用一段时间应用之后,便会非常慢,最终导致内存溢出而崩溃,这个问题几乎让我们的一切努力白费.我几乎花了一整天的时间才终于找到了问题所在.问题的原因让我完全意料不到.</p>
+
+<p>在分析原因的时候我使用的是 Eclipse 的 Memory AnalysisTools + DDMS,这套工具真是在关键时候救了我一命.
+附上Memory Analysis插件的<a href="http://www.eclipse.org/mat/downloads.php">下载地址</a>
+只使用DDMS也可以看出在activity切换过程中的内存变化,但是不能并发现问题的具体所在,所以我们需要MAT(<code>Memory AnalysisTools</code>)来分析具体是那个类引发的问题.上图</p>
+
+<p><img src="/img/20141111211142.png" alt="tool-editor" /></p>
+
+<p>上图大家应该都看的懂吧,不懂的我简单说一下,也不要嫌弃我啰嗦:</p>
+
+<blockquote><ul>
+<li>1位置是开始监控 一般在启动应用之后就可以点上来查看记录了</li>
+<li>2位置是保存分析到文件,装了Memory Analysis之后便可以直接打开分析界面</li>
+<li>3位置是查看内存数值的区域，内存变化的过程基本上就是在这里分析出来的</li>
+</ul>
+</blockquote>
+
+<p>具体的使用大家可以参考这篇文章<a href="http://www.360doc.com/content/12/1023/14/203871_243274421.shtml">http://www.360doc.com/content/12/1023/14/203871_243274421.shtml</a>,解决问题的过程真的是非常的快乐的,我希望大家也可以通过这个过程get新技能,而不是一味的copy.</p>
+
+<p>分析的过程我也就不多说了 好多次的分析才找到了问题所在,依然直接说结果:</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;现在大家在写app的时候通常会使用一个集合来保存整个activity.或放在BaseActivity里,或放在Application里,
+然后在退出应用的时候遍历集合逐个调用finish方法,以此来达到退出整个应用,这些方法在网上很多写法,也是大多数人推荐的做法,但我如今碰到的问题就是这里导致的.我的测试结果是,虽然在每个activity的finish方法里把自己从容器里移除自己,但依然因为这个导致activity不能释放,如此循环往复导致了内存溢出.找到了问题所在就好解决多了,就怕有问题自己也摸不到头绪.其实如果自己控制好每个界面的启动和销毁,这样的做法完全是多此一举的,如果你实在想这样做,推荐的是使用广播的方法,在每个activity里面注册一个广播,应用退出的时候通过广播来关闭所有activity,不要忘了在onDestroy里注销广播哟,</p>
+
+<p>ps:
+我曾经也深信不疑的使用网上的各种现成的代码,但如今,我想至少应该测试过会再使用才行,不要人云亦云,知其然知其所以然,才能最大的提升自己的能力.感谢项目经理的耐心教导。
+另外<strong>MAT</strong>工具推荐大家都学习一下,特别是大型项目一定要严格控制内存,否则会死的很惨.</p>
+
+<hr />
+
+
+
+            <a href="/android/Android%E5%BA%94%E7%94%A8%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%AF%BC%E8%87%B4%E5%BA%94%E7%94%A8%E9%80%80%E5%87%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+
+
+    <section class="post">
+        <header class="post-header">
+            <img class="post-avatar" height="48" width="48"
+                 src="/img/6.jpeg">
+
+            <h2 class="post-title">关于使用commons-codec.jar出现方法找不到的问题</h2>
+
+            <p class="post-meta">By 11月02日  2014  <a
+                    class="post-categorybut " href="/type/#android">android</a><a
+                    class="post-category " > Exception</a><a
+                    class="post-category " >  工作总结</a>
+            </p>
+        </header>
+
+        <div class="post-description">
+            <hr />
+
+<h2>起因</h2>
+
+<p>最近项目里要做非即时一对一消息功能,图省事我就直接用了友盟提供的sdk,接收直接用友盟提供的android的sdk,发送方使用友盟服务端java api,一个挺简单的功能,理论是可以行得通的,实践证明也是可以行得通的,只是中途出现一个很坑的问题让我不得不记录下来.</p>
+
+<h2>经过</h2>
+
+<p>事情是这样的,在我使用发送消息的api 的时候需要获得validationToken,而这个值是appkey + appMasterSecret + 时间戳 经过DigestUtils.md5Hex 算法得来的,而md5Hex这个方法在使用的时候竟然找不到,我看了一下在android.jar 文件里面只有声明却没有实现,这可苦了我了.于是乎我找来了commons-codec-1.6.jar心想这就可以了吧,结果又出了包名重复的错,这下难办了,我又不能修改android.jar.咋办呢,只能拿commons-codec的源码改包名了.果然,问题解决.</p>
+
+<h2>结果</h2>
+
+<p>写的很简单,可当时却足足花了我半天的时间才解决,如果你也碰到了这样的问题,直接下源码改包名便可轻松解决,包我就不传了,网上很多.顺便支持一下友盟,真的很方便!!</p>
+
+<hr />
+
+
+
+            <a href="/android/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8commons-codec.jar%E5%87%BA%E7%8E%B0%E6%96%B9%E6%B3%95%E6%89%BE%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html" class="post-categorybut">阅读全文</a>
+        </div>
+    </section>
+
+
+<div class="pure-g pagination">
+    
+    <span class=" pure-u-1-2 pagination-item"><p>Newer</p></span>
+    
+
+
+    
+    <a class=" pure-u-1-2 pagination-item" href="/page/2"><p>Older</p></a>
+    
+</div>
+
+
+
+
+
+
+
+
+            </div>
+            </div>
+           
+        <div class="footer" style="float:left" >
+                <a href="/about">About</a>
+                <a href="http://kokerwang.lofter.com/">LOFTER</a>
+                <a href="tencent://message/?uin=280995163">QQ</a>
+                <a href="https://github.com/kokerwang">GitHub</a>
+                <a href="http://www.kokerwang.com">Powered by KokerWang</a>
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253336121'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1253336121%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+            <script src="/js/min/nprogress.min.js"></script>
+            <script src="/js/index.js"></script>
+        </div>
+        <div class="topfade"><a href="javascript:;" title="返回顶部"></a></div>
+    </div>
+</div>
+</body>
+</html>
