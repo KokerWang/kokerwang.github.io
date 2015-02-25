@@ -5,7 +5,7 @@
     <subtitle>我大步走大步跑，我没有追我不会累</subtitle>
     <link href="http://www.kokerwang.com/atom.xml" rel="self"/>
     <link href="http://www.kokerwang.com"/>
-    <updated>2015-02-25T18:27:07+08:00</updated>
+    <updated>2015-02-25T19:57:48+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>KokerWang</name>
@@ -919,10 +919,10 @@ String[] files = file.list();
     </entry>
     
     <entry>
-        <title>My first blog</title>
-        <link href="http://www.kokerwang.com/2014/09/27/My%20first%20blog.html"/>
+        <title>My First Blog</title>
+        <link href="http://www.kokerwang.com/2014/09/27/My%20First%20Blog.html"/>
         <updated>2014-09-27T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/2014/09/27/My first blog</id>
+        <id>http://www.kokerwang.com/2014/09/27/My First Blog</id>
         <content type="html">&lt;h3&gt;历程&lt;/h3&gt;
 
 &lt;p&gt;一直以来我都是只写笔记不写博客，总以为写博客很无聊。直到后来接触到了github，接触到了开源，我才发现了分享的乐趣，我想我的那些笔记一定也不喜欢孤独，那我也加入开源的世界吧。搭建自己的博客，分享自己在工作中的问题，这本身不就是一件快乐的事情么？从有想法到实现，辛辛苦苦花费了将近一周的时间，终于把博客搭建了起来，中间的辛苦和快乐也只有自己最清楚。&lt;/p&gt;
