@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>关于我</title>
+<title>从Framework层看Android启动</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/about/">
+<link rel="canonical" href="http://www.kokerwang.com/2014/12/04/%E4%BB%8EFramework%E5%B1%82%E7%9C%8BAndroid%E5%90%AF%E5%8A%A8.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -73,40 +73,58 @@
 
 <div class="page-content">
     <div class="wrap">
-        <article class="post-content">
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2014/12/04/%E4%BB%8EFramework%E5%B1%82%E7%9C%8BAndroid%E5%90%AF%E5%8A%A8.html">从Framework层看Android启动</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2014-12-04&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#读书笔记">读书笔记</a></p>
+    </header>
+    <article class="post-content">
+        <h3>序：</h3>
 
-<h3 >关于我</h3>
+<p>众所周知，Linux中所有的进程都是有init进程创建并运行的，Android系统基于Linux内核，所以也存在着init进程。
+init进程启动的过程比较复杂，但是在准备工作做好之后，会通过jni创建Dalvik虚拟机，然后启动Android的核心Zygote进程，这个进程将成为所有应用进程的孵化器存在。下面我通过几个图来说明这个过程。</p>
 
-<ul class="posts">
-    <li class="listing-seperator">Android开发者，J2EE开发者，Go爱好者，果粉</li>
-    <li class="listing-seperator">我掌握的语言：<a>JAVA</a> &nbsp;&nbsp; <a>HTML</a>  &nbsp;&nbsp; <a>JAVASCRIPT</a>  &nbsp;&nbsp; <a>GO</a> &nbsp;&nbsp; <a>SWIFT</a></li>
-</ul>
+<h3>Init进程启动以及Zygote启动</h3>
 
-<h3 >关于这里</h3>
+<p><img src="/img/20141204181105.jpg" alt="tool-editor"></p>
 
-<ul class="posts">
-    <li class="listing-seperator">本blog主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇blog，力求达到精益求精。</li>
-    <li class="listing-seperator">分享成果，让我每天都很开心</li>
-</ul>
+<p>上图是启动Android设备之后的进程，可以明显看到在init进程启动之后启动了Zygote进程，而Zygote作为之后的大部分进程的父进程存在。</p>
 
-<h3 >个人微信</h3>
+<h3>Zygote启动应用程序</h3>
 
-<img src="/img/blog_2code.png" style="width:200px; height:200px; ">
+<p><img src="/img/20141204181056.jpg" alt="tool-editor"></p>
 
-<h3 >我的作品</h3>
+<p>上图是Zygote进程启动应用程序的流程图，Zygote进程调用fork（）函数创建出Zygote‘子进程，子进程共享父进程的代码区和链接信息，但是注意，新的Android应用程序并非通过fork（）来重新装载已有的进程代码区，而是动态的加载到复制出的Dalvik虚拟机上，而后，Zygote`进程将执行流程交给应用程序，Android应用程序开始运行，新生的应用程序拥有Zygote的进程库和资源的链接信息，所以运行速度很快。</p>
 
-<ul class="posts">
-    <li class="listing-seperator">1. <a href="http://www.bpmasa.org/">北京市物业监理协会</a>客户端, <a href="http://fir.im/bpmasa">下载地址</a></li>
-    <li class="listing-seperator">2. <a href="http://www.louli.com.cn/">楼里</a>客户端, <a href="http://fir.im/haye">下载地址</a></li>
-</ul>
+<h3>Android Framework的启动过程</h3>
 
-<h3 >读书</h3>
+<p><img src="/img/20141204181100.jpg" alt="tool-editor"></p>
 
-<ul class="posts">
-    <li class="listing-seperator">最近看到有人晒自己Github的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/reading">点击这里</a></li>
-</ul>
+<p>上图是Android Framework的启动过程，Zygote启动Dalvik虚拟机后，会在生成一个Dalvik虚拟机示例，以便运行名称为SystemServer的java服务，SystemServer用于运行Audio Flinger与Surface Flinger本地服务，运行完本地服务之后开始运行Android Framework的java服务，也就是我们在Android系统架构图中Application Framework中的各种Manager Server
+下图我们从代码层看Android Framework 的启动过程</p>
 
-</article>
+<p><img src="/img/20141204181052.jpg" alt="tool-editor"></p>
+
+<h3>Binder IPC 机制</h3>
+
+<p><img src="/img/20141204181047.jpg" alt="tool-editor"></p>
+
+<p>由于Android应用程序与系统服务不在同一个系统进程中，这里就引入的Binder IPC 机制，服务使用者调用foo（）服务代理函数，而后foo（）服务代理函数通过Binder RPC调用Foo服务的foo（）服务Stub函数</p>
+
+<p>首先服务使用者调用foo（）代理函数，传递Binder RPC数据，该数据包含引用Foo服务的请求。Binder RPC数据经过Marshalling处理后，由Service Framework生成Binder IPC数据，然后通过Binder Driver 传递给Service Server端</p>
+
+<p>Service Server端收到Binder IPC 数据后，由 Service Framework对数据进行UnMarshalling处理，然后传递给Service Stub的onTransact（）函数，Service Stub根据Binder IPC数据中的RPC代码判断它是一个针对Foo服务的foo（）服务Stub函数的Binder RPC，最后， 以Binder IPC数据中包含的Binder RPC数据为参数，调用foo（）服务的Stub函数。至此，就是Binder IPC 的整个流程。</p>
+
+<p>————摘自《Android框架揭秘》 以上部分是这本书中的大部分知识的总结，其中的这几幅图更是这些重点简单明了的描述。当然Binder 机制只看图还是不能深入了解的，因为内容比较多，所以还是推荐看书，写的不错。</p>
+
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2014/12/04/从Framework层看Android启动"  data-title="从Framework层看Android启动 - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
+</div>
+
     </div>
 </div>
 <footer class="site-footer">

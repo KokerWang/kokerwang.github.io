@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>关于我</title>
+<title>Android BroadcastReceiver 接收顺序</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/about/">
+<link rel="canonical" href="http://www.kokerwang.com/2014/09/28/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -73,40 +73,90 @@
 
 <div class="page-content">
     <div class="wrap">
-        <article class="post-content">
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2014/09/28/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html">Android BroadcastReceiver 接收顺序</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2014-09-28&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天项目里有这样一个需求，访问一个请求并把手机号作为参数传过去，同时拦截收到的短信验证码，自动填进EditText，一个看似很简单的功能。然而在真机上测试竟然没有拦截到，把优先级调到最大也无济于事。</p>
 
-<h3 >关于我</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四处寻访，原来BroadcastReceiver除了有优先级顺序之外，还有注册的顺序。</p>
 
-<ul class="posts">
-    <li class="listing-seperator">Android开发者，J2EE开发者，Go爱好者，果粉</li>
-    <li class="listing-seperator">我掌握的语言：<a>JAVA</a> &nbsp;&nbsp; <a>HTML</a>  &nbsp;&nbsp; <a>JAVASCRIPT</a>  &nbsp;&nbsp; <a>GO</a> &nbsp;&nbsp; <a>SWIFT</a></li>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大家都知道广播分有序广播和无序广播，有序广播和无序广播的区别就是，有序广播可以被任何一个接受者消耗掉，而无序广播则不可以，注册的话既可以在代码里面动态注册，也可以在Manifest里面直接声明，屌丝青年大多会直接在Manifest里面定义注册，文艺青年一般使用代码动态注册。这两种方式接受的广播的顺序是不一样的。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一般来说有序广播在同等优先级的情况下有这样的顺序</p>
+
+<blockquote>
+<ul>
+<li>动态注册的BroadcastReceiver，先注册的先接收</li>
+<li>Manifest里注册的BroadcastReceiver，接收广播的顺序与String[] java.io.File.list()顺序一致</li>
 </ul>
+</blockquote>
 
-<h3 >关于这里</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在不同优先级的情况下</p>
 
-<ul class="posts">
-    <li class="listing-seperator">本blog主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇blog，力求达到精益求精。</li>
-    <li class="listing-seperator">分享成果，让我每天都很开心</li>
+<blockquote>
+<ul>
+<li>有序广播按优先级顺序接收</li>
+<li>无序广播因为是异步的所以接收broadcast的顺序不确定。</li>
 </ul>
+</blockquote>
 
-<h3 >个人微信</h3>
+<table><thead>
+<tr>
+<th>假设有如下优先级的5个接收器  并且B先于C注册</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1.动态A（优先级=1）</td>
+</tr>
+<tr>
+<td>2.动态B（优先级=2）</td>
+</tr>
+<tr>
+<td>3.动态C（优先级=2）</td>
+</tr>
+<tr>
+<td>4.静态D（优先级=1)</td>
+</tr>
+<tr>
+<td>5.静态E（优先级=2）</td>
+</tr>
+<tr>
+<td>那么实际接收顺序应为：  B C E A D</td>
+</tr>
+</tbody></table>
 
-<img src="/img/blog_2code.png" style="width:200px; height:200px; ">
+<hr>
 
-<h3 >我的作品</h3>
+<h2>关于 String[] java.io.File.list()</h2>
 
-<ul class="posts">
-    <li class="listing-seperator">1. <a href="http://www.bpmasa.org/">北京市物业监理协会</a>客户端, <a href="http://fir.im/bpmasa">下载地址</a></li>
-    <li class="listing-seperator">2. <a href="http://www.louli.com.cn/">楼里</a>客户端, <a href="http://fir.im/haye">下载地址</a></li>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们以开机时候发出的广播android.intent.action.BOOT_COMPLETED为例，这是个无序广播。如果应用想要开启自启动，那么就要监听这个广播，程序启动之前，动态广播接收器肯定是无法使用的，只能在XML中静态注册。大家都知道，第三方应用是存放在/data/app目录下，当安装完毕之后，你会找到一个文件，他的名字是以与安装的应用包名开始的，然后可能会跟着&quot;-数字.apk&quot;，比如：com.android.test-1.apk。接收的顺序与这个名字是有关的！那么关系是怎样的呢？</p>
+
+<blockquote>
+<ul>
+<li>系统在开机的时候，会按着一个顺序解析apk，首先，会解析手机中的/system/framework这个目录，原生系统中，这下面就一个apk - framework-res.apk，当然各个厂商也会加入自己的内容</li>
+<li>然后受到重视的文件夹按顺序分别为：
+/system/app，
+/vendor/app，
+/data/app，
+/drm/app-private
+那么每个文件夹下解析的顺序是怎样的呢？我们先只看/data/app，也就是用户安装的第三方应用的存放位置，这与下面代码返回结果的顺序是一致的
+File file = new File(&quot;/data/app/&quot;);
+String[] files = file.list();
+也就是说，我们按顺序打印这个数组，就能知道哪个接收器会先接收到这个广播，哪个会后接收到</li>
 </ul>
+</blockquote>
 
-<h3 >读书</h3>
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2014/09/28/Android BroadcastReceiver 接收顺序"  data-title="Android BroadcastReceiver 接收顺序 - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
+</div>
 
-<ul class="posts">
-    <li class="listing-seperator">最近看到有人晒自己Github的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/reading">点击这里</a></li>
-</ul>
-
-</article>
     </div>
 </div>
 <footer class="site-footer">

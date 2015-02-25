@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 手机端页面 -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Android简单实现圆形头像</title>
+<link rel="shortcut icon" href=" /img/github.ico"/>
+<link rel="bookmark" href="/img/github.ico"/>
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="我大步走大步跑，我没有追我不会累">
+<link rel="canonical" href="http://www.kokerwang.com/2014/09/30/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F.html">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/github.css">
+<!-- 返回顶部 -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="/js/jquery.js"></script>
+<script src="/js/function_about.js"></script>
+<!--  -->
+</head>
+
+<body>
+<header class="site-header">
+    <div class="wrap">
+        <a class="site-title" href="/"><h1><strong> <font style="color:#39B3D7" >K</font><font style="color:#ED9C28">o</font><font style="color:#47A447">k</font><font style="color:#D9534F">e</font><font style="color:#3276B1">r</font><font style="color:#39B3D7" >W</font><font style="color:#ED9C28">a</font><font style="color:#47A447">n</font><font style="color:#D9534F">g</font>
+                </strong>
+        </h1></a>
+        <nav class="site-nav">
+            <a href="#" class="menu-icon">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+                    <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+                    h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                    <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+                    h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                    <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+                    c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                </svg>
+            </a>
+            <div class="trigger">
+                
+                
+                <a class="page-link" href="/about/">关于我</a>
+                
+                
+                
+                <a class="page-link" href="/archive/">时间轴</a>
+                
+                
+                
+                <a class="page-link" href="/categories/">归档</a>
+                
+                
+                
+                <a class="page-link" href="/tags/">标签</a>
+                
+                
+                
+                <a class="page-link" href="/reading/">读书</a>
+                
+                
+                
+                <a class="page-link" href="/atom.xml">订阅</a>
+                
+                
+            </div>
+        </nav>
+    </div>
+
+</header>
+
+<div class="page-content">
+    <div class="wrap">
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2014/09/30/Android%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E5%9C%86%E5%BD%A2%E5%A4%B4%E5%83%8F.html">Android简单实现圆形头像</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2014-09-30&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.</p>
+
+<p>在网上找了一番之后,大概解决方法有两种</p>
+
+<blockquote>
+<ul>
+<li>使用自定义组件继承ImageView</li>
+<li>通过对BitMap重绘得到</li>
+</ul>
+</blockquote>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一种方式,有许多开源框架可以实现,如<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>CircleImageView</strong></a>&nbsp;,由于我们项目中图片缓存及显示使用的是<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>Android-Universal-Image-Loader</strong></a>,而他本身支持在获取到网络图片之后增加回调,那我毫无疑问的选择了第二种方式实现,</p>
+
+<p>首先是圆形图片转换的方法</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * 将图片转为圆型  不标准的图形从中心截取</span>
+<span class="cm"> * </span>
+<span class="cm"> * @param bitmap</span>
+<span class="cm"> * @return</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">Bitmap</span> <span class="nf">getRoundedCornerBitmap</span><span class="o">(</span><span class="n">Bitmap</span> <span class="n">bitmap</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getWidth</span><span class="o">();</span>
+    <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getHeight</span><span class="o">();</span>
+    <span class="n">Bitmap</span> <span class="n">output</span> <span class="o">=</span> <span class="n">Bitmap</span><span class="o">.</span><span class="na">createBitmap</span><span class="o">(</span><span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span> <span class="n">Config</span><span class="o">.</span><span class="na">ARGB_8888</span><span class="o">);</span>
+    <span class="n">Canvas</span> <span class="n">canvas</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Canvas</span><span class="o">(</span><span class="n">output</span><span class="o">);</span>
+    <span class="c1">// 切圆的直径</span>
+    <span class="kt">int</span> <span class="n">minLength</span> <span class="o">=</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="n">height</span> <span class="o">?</span> <span class="n">height</span> <span class="o">:</span> <span class="n">width</span><span class="o">;</span>
+    <span class="kd">final</span> <span class="kt">int</span> <span class="n">color</span> <span class="o">=</span> <span class="mh">0xff424242</span><span class="o">;</span>
+    <span class="kd">final</span> <span class="n">Paint</span> <span class="n">paint</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Paint</span><span class="o">();</span>
+    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="o">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">minLength</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="o">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">minLength</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="kd">final</span> <span class="n">Rect</span> <span class="n">rect</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Rect</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">minLength</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">minLength</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">RectF</span> <span class="n">rectF</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">RectF</span><span class="o">(</span><span class="n">rect</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="kt">float</span> <span class="n">roundPx</span> <span class="o">=</span> <span class="n">minLength</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+
+    <span class="n">paint</span><span class="o">.</span><span class="na">setAntiAlias</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="na">drawARGB</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">paint</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">color</span><span class="o">);</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="na">drawRoundRect</span><span class="o">(</span><span class="n">rectF</span><span class="o">,</span> <span class="n">roundPx</span><span class="o">,</span> <span class="n">roundPx</span><span class="o">,</span> <span class="n">paint</span><span class="o">);</span>
+    <span class="n">paint</span><span class="o">.</span><span class="na">setXfermode</span><span class="o">(</span><span class="k">new</span> <span class="nf">PorterDuffXfermode</span><span class="o">(</span><span class="n">Mode</span><span class="o">.</span><span class="na">SRC_IN</span><span class="o">));</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="na">drawBitmap</span><span class="o">(</span><span class="n">bitmap</span><span class="o">,</span> <span class="n">rect</span><span class="o">,</span> <span class="n">rect</span><span class="o">,</span> <span class="n">paint</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">output</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>再然后是显示图片工具类</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">SimpleImageLoadingListener</span> <span class="n">listener</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ImageView</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">displayImage2Circle</span><span class="o">(</span><span class="n">T</span> <span class="n">container</span><span class="o">,</span> <span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">listener</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">listener</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SimpleImageLoadingListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onLoadingComplete</span><span class="o">(</span><span class="n">String</span> <span class="n">imageUri</span><span class="o">,</span> <span class="n">View</span> <span class="n">view</span><span class="o">,</span> <span class="n">Bitmap</span> <span class="n">loadedImage</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kd">super</span><span class="o">.</span><span class="na">onLoadingComplete</span><span class="o">(</span><span class="n">imageUri</span><span class="o">,</span> <span class="n">view</span><span class="o">,</span> <span class="n">loadedImage</span><span class="o">);</span>
+                <span class="o">((</span><span class="n">ImageView</span><span class="o">)</span> <span class="n">view</span><span class="o">).</span><span class="na">setImageBitmap</span><span class="o">(</span><span class="n">getRoundedCornerBitmap</span><span class="o">(</span><span class="n">loadedImage</span><span class="o">));</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+    <span class="o">}</span>
+    <span class="n">ImageLoader</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">displayImage</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">container</span><span class="o">,</span> <span class="n">listener</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>这样只要是需要把图片显示为圆形的地方直接调用displayImage2Circle这个方法即可</p>
+
+<hr>
+
+<p>本以为已经大功告成,没想到使用之后却发现图片四周仿佛被切掉一部分一样,如图:</p>
+
+<p><img src="/img/20140930151619.png" alt="tool-editor"></p>
+
+<blockquote>
+<ul>
+<li>起先以为是图片有白边,后来发现不是,<a href="http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg">图片地址</a></li>
+<li>然后又以为是半径没算对,验证之后再次被排除</li>
+<li>最终把原因定位到了Image-Loader上,解决办法如下:</li>
+</ul>
+</blockquote>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ImageLoaderConfiguration的defaultDisplayImageOptions方法需要一个DisplayImageOptions参数而DisplayImageOptions的参数的imageScaleType属性默认的是ImageScaleType.IN_SAMPLE_POWER_OF_2就是这个属性导致的图片不圆,查了一下文档</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/** </span>
+<span class="cm"> * 图片的缩放方式 </span>
+<span class="cm"> */</span>  
+<span class="n">imageScaleType</span><span class="o">(</span><span class="n">ImageScaleType</span> <span class="n">imageScaleType</span><span class="o">)</span>  
+<span class="nl">imageScaleType:</span>  
+    <span class="n">EXACTLY</span> <span class="o">:</span><span class="n">图像将完全按比例缩小的目标大小</span>  
+    <span class="nl">EXACTLY_STRETCHED:</span><span class="n">图片会完全缩放到目标大小</span>  
+    <span class="nl">IN_SAMPLE_INT:</span><span class="n">图像将被二次采样</span><span class="o">,</span><span class="n">并且倍数为整数倍</span>  
+    <span class="nl">IN_SAMPLE_POWER_OF_2:</span><span class="n">图片将降低2倍</span><span class="err">，</span><span class="n">直到下一减少步骤</span><span class="err">，</span><span class="n">使图像更小的目标大小</span>  
+    <span class="nl">NONE:</span><span class="n">图片不会调整</span>  
+</code></pre></div>
+<p>IN_SAMPLE_POWER_OF_2模式下缩放是成倍缩放的所以导致实际显示的要比我设定的宽一些,改成EXACTLY_STRETCHED之后问题得到解决</p>
+
+<p>最后展示一下最终效果</p>
+
+<p><img src="/img/20140930154619.png" alt="tool-editor"></p>
+
+<p>以及Image-Loader的完整设置</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">initImageLoader</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">DisplayImageOptions</span> <span class="n">options</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DisplayImageOptions</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">showImageForEmptyUri</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">default_image</span><span class="o">)</span> 
+    <span class="o">.</span><span class="na">showImageOnFail</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">default_image</span><span class="o">)</span> 
+    <span class="o">.</span><span class="na">imageScaleType</span><span class="o">(</span><span class="n">ImageScaleType</span><span class="o">.</span><span class="na">EXACTLY_STRETCHED</span><span class="o">)</span> 
+    <span class="o">.</span><span class="na">bitmapConfig</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">RGB_565</span><span class="o">)</span> 
+    <span class="o">.</span><span class="na">cacheInMemory</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">cacheOnDisk</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">resetViewBeforeLoading</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+    <span class="n">File</span> <span class="n">cacheDir</span> <span class="o">=</span> <span class="n">StorageUtils</span><span class="o">.</span><span class="na">getOwnCacheDirectory</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span> <span class="n">Util</span><span class="o">.</span><span class="na">getCachePath</span><span class="o">());</span> 
+
+    <span class="n">ImageLoaderConfiguration</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ImageLoaderConfiguration</span><span class="o">.</span><span class="na">Builder</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">denyCacheImageMultipleSizesInMemory</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">memoryCache</span><span class="o">(</span><span class="k">new</span> <span class="nf">LruMemoryCache</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">threadPoolSize</span><span class="o">(</span><span class="mi">4</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">memoryCacheSize</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">diskCache</span><span class="o">(</span><span class="k">new</span> <span class="nf">UnlimitedDiscCache</span><span class="o">(</span><span class="n">cacheDir</span><span class="o">))</span> <span class="c1">// 缓存路径</span>
+    <span class="o">.</span><span class="na">diskCacheSize</span><span class="o">(</span><span class="mi">50</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">diskCacheFileCount</span><span class="o">(</span><span class="mi">100</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">defaultDisplayImageOptions</span><span class="o">(</span><span class="n">options</span><span class="o">)</span> 
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+     <span class="n">ImageLoader</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">init</span><span class="o">(</span><span class="n">config</span><span class="o">);</span>  
+
+<span class="o">}</span>
+</code></pre></div>
+<p>公司项目我就不放源码了,核心代码都在上面了.有问题可以和我联系</p>
+
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2014/09/30/Android简单实现圆形头像"  data-title="Android简单实现圆形头像 - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
+</div>
+
+    </div>
+</div>
+<footer class="site-footer">
+
+    <div class="wrap">
+        <div class="footer-col-1 column">
+            <div class="github">
+                <!-- <span class="icon github"> -->
+                <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                    <path fill-rule="evenodd" clip-rule="evenodd" fill="#000" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                    c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                    c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                    c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                    C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                    c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                    c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                    c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                    c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+                <!-- </span> -->
+            </div>
+            <a href="https://github.com/kokerwang">
+                Fork me on github
+            </a>
+        </div>
+
+        <div class="footer-col-2">
+            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253336121'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1253336121%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+        
+        <div class="footer-col-2">
+            <p>© 2015 - 2019 by <font style="color:#f44336">❤ </font> <a href="http://www.kokerwang.com">KokerWang</a></p>
+        </div>
+        
+        <!-- <div class="footer-col-3 column">
+      <p class="text">我大步走大步跑，我没有追我不会累</p>
+    </div> -->
+    </div>
+    <div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div>
+</footer>
+
+
+<!-- mathjax -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- highlight -->
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- pleace change it! -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"kokerwang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0]
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- top-scrooll -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script type="text/javascript">
+
+$(window).scroll(function() {
+
+        if($(this).scrollTop() > 100) {
+        $('.scroll-top').fadeIn(200);
+        } else {
+        $('.scroll-top').fadeOut(200);
+        }
+        });
+
+$('.scroll-top').bind('click', function(e) {
+        e.preventDefault();
+        $('body,html').animate({scrollTop:0},200);
+        });
+</script>
+</body>
+</html>

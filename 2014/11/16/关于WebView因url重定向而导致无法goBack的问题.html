@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>关于我</title>
+<title>关于WebView因url重定向而导致无法goBack的问题</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/about/">
+<link rel="canonical" href="http://www.kokerwang.com/2014/11/16/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -73,40 +73,62 @@
 
 <div class="page-content">
     <div class="wrap">
-        <article class="post-content">
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2014/11/16/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html">关于WebView因url重定向而导致无法goBack的问题</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2014-11-16&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <p>最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在stackOverflow 上找到了解决的办法,解决的方法真是格外的简单.直接看代码</p>
 
-<h3 >关于我</h3>
+<p>为了让WebView控制界面里面的url跳转,我们一般都会设置WebViewClient ，并重写shouldOverrideUrlLoading方法，让webView加载点击url,一般的例子代码如下:</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">webView</span><span class="o">.</span><span class="na">setWebViewClient</span><span class="o">(</span><span class="k">new</span> <span class="nf">WebViewClient</span><span class="o">()</span> <span class="o">{</span>
 
-<ul class="posts">
-    <li class="listing-seperator">Android开发者，J2EE开发者，Go爱好者，果粉</li>
-    <li class="listing-seperator">我掌握的语言：<a>JAVA</a> &nbsp;&nbsp; <a>HTML</a>  &nbsp;&nbsp; <a>JAVASCRIPT</a>  &nbsp;&nbsp; <a>GO</a> &nbsp;&nbsp; <a>SWIFT</a></li>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">shouldOverrideUrlLoading</span><span class="o">(</span><span class="n">WebView</span> <span class="n">view</span><span class="o">,</span> <span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">view</span><span class="o">.</span><span class="na">loadUrl</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div>
+<p>解决办法:</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">webView</span><span class="o">.</span><span class="na">setWebViewClient</span><span class="o">(</span><span class="k">new</span> <span class="nf">WebViewClient</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">shouldOverrideUrlLoading</span><span class="o">(</span><span class="n">WebView</span> <span class="n">view</span><span class="o">,</span> <span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div>
+<p>万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:</p>
+
+<p>Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.</p>
+
+<p>就是说如果application处理这个url则返回true,如果WebView处理这个url则返回false.我们让WebView处理了这个url就应该返回false,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.</p>
+
+<p>后来我又看了一下WebViewClient的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:</p>
+
+<blockquote>
+<ul>
+<li>onPageStarted 在页面加载开始时调用.</li>
+<li>onPageFinished 在页面加载结束时调用.</li>
+<li>onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.</li>
 </ul>
+</blockquote>
 
-<h3 >关于这里</h3>
+<p>如果你还需要更丰富的处理效果那么推荐你用WebChromeClient.</p>
 
-<ul class="posts">
-    <li class="listing-seperator">本blog主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇blog，力求达到精益求精。</li>
-    <li class="listing-seperator">分享成果，让我每天都很开心</li>
-</ul>
+<p>ps: 最近国内github好不稳定啊，大家还是翻墙吧.</p>
 
-<h3 >个人微信</h3>
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2014/11/16/关于WebView因url重定向而导致无法goBack的问题"  data-title="关于WebView因url重定向而导致无法goBack的问题 - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
+</div>
 
-<img src="/img/blog_2code.png" style="width:200px; height:200px; ">
-
-<h3 >我的作品</h3>
-
-<ul class="posts">
-    <li class="listing-seperator">1. <a href="http://www.bpmasa.org/">北京市物业监理协会</a>客户端, <a href="http://fir.im/bpmasa">下载地址</a></li>
-    <li class="listing-seperator">2. <a href="http://www.louli.com.cn/">楼里</a>客户端, <a href="http://fir.im/haye">下载地址</a></li>
-</ul>
-
-<h3 >读书</h3>
-
-<ul class="posts">
-    <li class="listing-seperator">最近看到有人晒自己Github的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/reading">点击这里</a></li>
-</ul>
-
-</article>
     </div>
 </div>
 <footer class="site-footer">

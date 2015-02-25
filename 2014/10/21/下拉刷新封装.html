@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 手机端页面 -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>下拉刷新封装</title>
+<link rel="shortcut icon" href=" /img/github.ico"/>
+<link rel="bookmark" href="/img/github.ico"/>
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="我大步走大步跑，我没有追我不会累">
+<link rel="canonical" href="http://www.kokerwang.com/2014/10/21/%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E5%B0%81%E8%A3%85.html">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/github.css">
+<!-- 返回顶部 -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="/js/jquery.js"></script>
+<script src="/js/function_about.js"></script>
+<!--  -->
+</head>
+
+<body>
+<header class="site-header">
+    <div class="wrap">
+        <a class="site-title" href="/"><h1><strong> <font style="color:#39B3D7" >K</font><font style="color:#ED9C28">o</font><font style="color:#47A447">k</font><font style="color:#D9534F">e</font><font style="color:#3276B1">r</font><font style="color:#39B3D7" >W</font><font style="color:#ED9C28">a</font><font style="color:#47A447">n</font><font style="color:#D9534F">g</font>
+                </strong>
+        </h1></a>
+        <nav class="site-nav">
+            <a href="#" class="menu-icon">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+                    <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+                    h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                    <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+                    h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                    <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+                    c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                </svg>
+            </a>
+            <div class="trigger">
+                
+                
+                <a class="page-link" href="/about/">关于我</a>
+                
+                
+                
+                <a class="page-link" href="/archive/">时间轴</a>
+                
+                
+                
+                <a class="page-link" href="/categories/">归档</a>
+                
+                
+                
+                <a class="page-link" href="/tags/">标签</a>
+                
+                
+                
+                <a class="page-link" href="/reading/">读书</a>
+                
+                
+                
+                <a class="page-link" href="/atom.xml">订阅</a>
+                
+                
+            </div>
+        </nav>
+    </div>
+
+</header>
+
+<div class="page-content">
+    <div class="wrap">
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2014/10/21/%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E5%B0%81%E8%A3%85.html">下拉刷新封装</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2014-10-21&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <h2>前言</h2>
+
+<p>忙了两周,楼里app终于完成了,25号正式上线,顺便吐槽一下接私活果然好坑,特别是这种工期比较着急的,不过今天款项下来了,拿到money之后感觉整个人萌萌哒~~ 废话不多说,今天分享一下自己在工作中对<a href="https://github.com/chrisbanes/Android-PullToRefresh">Android-PullToRefresh</a>的封装</p>
+
+<h2>简介</h2>
+
+<p>目前Android上实现下拉刷新的方式主要有两种:</p>
+
+<blockquote>
+<ul>
+<li>通过修改HeaderView的Padding实现,常见作法是使用自定义组件继承ListView,一个类就可以搞定</li>
+<li>在listview底部套一层ScrollView或者LinearLayout,通过移动ListView来实现</li>
+</ul>
+</blockquote>
+
+<p>第一种方法简单但是碰到复杂的ListView,特别是带有图片的的item就会特别卡,因为主线程刷新界面也需要时间,而改变之后的效果只有刷新之后才能看到,所以给人的感觉是一顿一顿的.第二种方法就不会出现这样的效果,这里推荐的是Android-PullToRefresh,具体使用大家可以看该项目的demo,该项目对常见的带滑动的组件都有支持,很强大,而且可以定制.</p>
+
+<h2>使用</h2>
+
+<p>我的封装主要是对消息处理的封装和页码计算的封装,使你只用写自己逻辑而不用管这些细节
+直接看代码, 首先是封装类</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">louli</span><span class="o">.</span><span class="na">activity</span><span class="o">.</span><span class="na">louli</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.text.SimpleDateFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Message</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.BaseAdapter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.ListView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.Toast</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.handmark.pulltorefresh.library.PullToRefreshBase</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.handmark.pulltorefresh.library.PullToRefreshBase.Mode</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.handmark.pulltorefresh.library.PullToRefreshListView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.louli.community.R</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 带下拉刷新的activity 需要继承该类</span>
+<span class="cm"> * </span>
+<span class="cm"> * @author KokerWang</span>
+<span class="cm"> * </span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ListViewBaseActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 分页的页码，当前第几页</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">pageCount</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 当前刷新状态　　-1　下拉　,　1　　上拉 , 0 默认值</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">status</span><span class="o">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取页码   如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法,自己记录页码</span>
+<span class="cm">     * </span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPageCount</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">pageCount</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 设置页码  如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法,自己记录页码</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param pageCount</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPageCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">pageCount</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pageCount</span> <span class="o">=</span> <span class="n">pageCount</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 返回数据内容的集合</span>
+<span class="cm">     * </span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">List</span><span class="o">&lt;?&gt;</span> <span class="n">getList</span><span class="o">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 返回ListView</span>
+<span class="cm">     * </span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">PullToRefreshListView</span> <span class="nf">getListView</span><span class="o">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 返回适配器</span>
+<span class="cm">     * </span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">BaseAdapter</span> <span class="nf">getAdapter</span><span class="o">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 该方法主要完成异步获取数据分别需要处理三种结果 获取成功 msg.what=LOAD_SUCCESS 获取失败</span>
+<span class="cm">     * msg.what=LOAD_FAIL 没有数据 msg.what=LOAD_NODATA 获取成功的数据放在msg.obj 里 ，List 类型</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">loadData</span><span class="o">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 初始化带刷新的ListView</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param id</span>
+<span class="cm">     *            组件id</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">protected</span> <span class="n">PullToRefreshListView</span> <span class="nf">initListView</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">PullToRefreshListView</span> <span class="n">listView</span> <span class="o">=</span> <span class="o">(</span><span class="n">PullToRefreshListView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">listView</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">initListView</span><span class="o">(</span><span class="n">listView</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 初始化带刷新的ListView</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param listView</span>
+<span class="cm">     *            帅新组件</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">protected</span> <span class="n">PullToRefreshListView</span> <span class="nf">initListView</span><span class="o">(</span><span class="n">PullToRefreshListView</span> <span class="n">listView</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">listView</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">listView</span><span class="o">.</span><span class="na">setMode</span><span class="o">(</span><span class="n">Mode</span><span class="o">.</span><span class="na">BOTH</span><span class="o">);</span>
+        <span class="c1">//以下为自定义提示语 可以不写使用默认的</span>
+        <span class="n">listView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">).</span><span class="na">setPullLabel</span><span class="o">(</span><span class="n">getResources</span><span class="o">().</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">push_label</span><span class="o">));</span>
+        <span class="n">listView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">).</span><span class="na">setRefreshingLabel</span><span class="o">(</span><span class="n">getResources</span><span class="o">().</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">refreshing_label</span><span class="o">));</span>
+        <span class="n">listView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">).</span><span class="na">setReleaseLabel</span><span class="o">(</span><span class="n">getResources</span><span class="o">().</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">release_label</span><span class="o">));</span>
+        <span class="n">listView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">).</span><span class="na">setPullLabel</span><span class="o">(</span><span class="n">getResources</span><span class="o">().</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">pull_label</span><span class="o">));</span>
+        <span class="n">listView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">).</span><span class="na">setRefreshingLabel</span><span class="o">(</span><span class="n">getResources</span><span class="o">().</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">refreshing_label</span><span class="o">));</span>
+        <span class="n">listView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">).</span><span class="na">setReleaseLabel</span><span class="o">(</span><span class="n">getResources</span><span class="o">().</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">release_label</span><span class="o">));</span>
+
+        <span class="n">listView</span><span class="o">.</span><span class="na">setOnRefreshListener</span><span class="o">(</span><span class="k">new</span> <span class="nf">OnRefreshListener2Impl</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">listView</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取成功的处理, 主要在handler 里面调用</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param msg</span>
+<span class="cm">     */</span>
+    <span class="nd">@SuppressWarnings</span><span class="o">({</span> <span class="s">&quot;unchecked&quot;</span><span class="o">,</span> <span class="s">&quot;rawtypes&quot;</span> <span class="o">})</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">loadSucess</span><span class="o">(</span><span class="n">Message</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">List</span> <span class="n">ls</span> <span class="o">=</span> <span class="o">(</span><span class="n">List</span><span class="o">)</span> <span class="n">msg</span><span class="o">.</span><span class="na">obj</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">getPageCount</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">getList</span><span class="o">().</span><span class="na">clear</span><span class="o">();</span>
+            <span class="n">getListView</span><span class="o">().</span><span class="na">setMode</span><span class="o">(</span><span class="n">Mode</span><span class="o">.</span><span class="na">BOTH</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">ls</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">getList</span><span class="o">().</span><span class="na">addAll</span><span class="o">(</span><span class="n">ls</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">getAdapter</span><span class="o">().</span><span class="na">notifyDataSetChanged</span><span class="o">();</span>
+        <span class="n">getListView</span><span class="o">().</span><span class="na">onRefreshComplete</span><span class="o">();</span>
+    <span class="o">};</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取成功但是没有数据的处理, 主要在handler 里面调用</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param msg</span>
+<span class="cm">     */</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">loadZeroDate</span><span class="o">(</span><span class="n">Message</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">getPageCount</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">zero_date</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">msg_last</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">getAdapter</span><span class="o">().</span><span class="na">notifyDataSetChanged</span><span class="o">();</span>
+        <span class="n">getListView</span><span class="o">().</span><span class="na">onRefreshComplete</span><span class="o">();</span>
+        <span class="n">getListView</span><span class="o">().</span><span class="na">setMode</span><span class="o">(</span><span class="n">Mode</span><span class="o">.</span><span class="na">PULL_FROM_START</span><span class="o">);</span>
+    <span class="o">};</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取失败的处理, 主要在handler 里面调用</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param msg</span>
+<span class="cm">     */</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">loadFalt</span><span class="o">(</span><span class="n">Message</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">load_error</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+        <span class="n">getAdapter</span><span class="o">().</span><span class="na">notifyDataSetChanged</span><span class="o">();</span>
+        <span class="n">getListView</span><span class="o">().</span><span class="na">onRefreshComplete</span><span class="o">();</span>
+    <span class="o">};</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 上拉刷新及加载更多的回调接口实现类</span>
+<span class="cm">     * </span>
+<span class="cm">     * @author tom</span>
+<span class="cm">     * </span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">OnRefreshListener2Impl</span> <span class="kd">implements</span> <span class="n">OnRefreshListener2</span><span class="o">&lt;</span><span class="n">ListView</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SimpleDateFormat</span><span class="o">(</span><span class="n">getResources</span><span class="o">().</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">refresh_for</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;:MM-dd hh:mm&quot;</span><span class="o">);</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPullDownToRefresh</span><span class="o">(</span><span class="n">PullToRefreshBase</span><span class="o">&lt;</span><span class="n">ListView</span><span class="o">&gt;</span> <span class="n">refreshView</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">//下拉</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="n">setPageCount</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+            <span class="n">loadData</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">label</span> <span class="o">=</span> <span class="n">sdf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+            <span class="n">refreshView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">().</span><span class="na">setLastUpdatedLabel</span><span class="o">(</span><span class="n">label</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPullUpToRefresh</span><span class="o">(</span><span class="n">PullToRefreshBase</span><span class="o">&lt;</span><span class="n">ListView</span><span class="o">&gt;</span> <span class="n">refreshView</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">//上拉</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="n">setPageCount</span><span class="o">(</span><span class="n">getPageCount</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+            <span class="n">loadData</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">label</span> <span class="o">=</span> <span class="n">sdf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+            <span class="n">refreshView</span><span class="o">.</span><span class="na">getLoadingLayoutProxy</span><span class="o">().</span><span class="na">setLastUpdatedLabel</span><span class="o">(</span><span class="n">label</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div>
+<p>如果你的界面里有一个以上的PullToRefreshListView组件,那你需要额外重写getPageCount和setPageCount来自己控制页码,当然这个时候其他几个重写的方法也需要你加上判断,具体示例我会在文章最后附上</p>
+
+<p>下面看例子代码</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">test</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.os.Message</span><span class="o">;</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChannelExhibitionListActivity</span> <span class="kd">extends</span> <span class="n">ListViewBaseActivity</span> <span class="o">{</span>
+
+    <span class="c1">// 界面组件</span>
+    <span class="n">PullToRefreshListView</span> <span class="n">_listView</span><span class="o">;</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">ChannelExhibitionListItem</span><span class="o">&gt;</span> <span class="n">_list</span><span class="o">;</span>
+    <span class="n">ChannelExhibitionListAdapter</span> <span class="n">_adapter</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">channel_exhibition_list_activity</span><span class="o">);</span>
+        <span class="n">init</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 初始化组件及适配器</span>
+        <span class="n">_listView</span> <span class="o">=</span> <span class="n">initListView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">listView</span><span class="o">);</span>
+        <span class="c1">// 获取内部listview 推荐这样用而不是直接给_listview设置参数</span>
+        <span class="n">ListView</span> <span class="n">actualListView</span> <span class="o">=</span> <span class="n">_listView</span><span class="o">.</span><span class="na">getRefreshableView</span><span class="o">();</span>
+        <span class="n">_adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ChannelExhibitionListAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="n">_list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">ChannelExhibitionListItem</span><span class="o">&gt;();</span>
+        <span class="n">_adapter</span><span class="o">.</span><span class="na">setList</span><span class="o">(</span><span class="n">_list</span><span class="o">);</span>
+        <span class="n">actualListView</span><span class="o">.</span><span class="na">setOnItemClickListener</span><span class="o">(</span><span class="k">new</span> <span class="nf">OnItemClickListener</span><span class="o">()</span> <span class="o">{</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onItemClick</span><span class="o">(</span><span class="n">AdapterView</span><span class="o">&lt;?&gt;</span> <span class="n">parent</span><span class="o">,</span> <span class="n">View</span> <span class="n">view</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 不要忘了这一行代码　　因为自带了headview 所以postiton加了1 这里要减去</span>
+                <span class="n">position</span><span class="o">--;</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">actualListView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">_adapter</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+    <span class="c1">// 异步任务接受处理</span>
+    <span class="n">Handler</span> <span class="n">_handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Handler</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">os</span><span class="o">.</span><span class="na">Message</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">switch</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">what</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">case</span> <span class="nl">LOAD_SUCCESS:</span>
+                <span class="n">loadSucess</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="k">case</span> <span class="nl">LOAD_FAIL:</span>
+                <span class="n">loadFalt</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="k">case</span> <span class="nl">LOAD_NODATA:</span>
+                <span class="n">loadZeroDate</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+
+    <span class="c1">// 获取数据的线程</span>
+    <span class="n">Thread</span> <span class="n">loadThread</span><span class="o">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 更改数据并刷新adapter</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">loadData</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">createCountryThread</span><span class="o">();</span>
+        <span class="n">loadThread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 初始化线程</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">createCountryThread</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">loadThread</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nf">Runnable</span><span class="o">()</span> <span class="o">{</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">List</span><span class="o">&lt;</span><span class="n">ChannelExhibitionListItem</span><span class="o">&gt;</span> <span class="n">channels</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">ChannelExhibitionListItem</span><span class="o">&gt;();</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="c1">// 把页码拼接到url</span>
+                    <span class="n">StringBuffer</span> <span class="n">loadService</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuffer</span><span class="o">();</span> 
+                    <span class="n">loadService</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;?r=findlist&amp;pagesize=15&amp;pagenow=&quot;</span> <span class="o">+</span> <span class="n">getPageCount</span><span class="o">());</span>
+
+                    <span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="n">HttpConstants</span><span class="o">.</span><span class="na">getPHPRequest</span><span class="o">(</span><span class="s">&quot;url&quot;</span><span class="o">,</span> <span class="n">loadService</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">res</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">res</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="s">&quot;resoult=&quot;</span> <span class="o">+</span> <span class="n">res</span><span class="o">);</span>
+                    <span class="o">}</span>
+                    <span class="n">JSONObject</span> <span class="n">resultJsonObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">JSONObject</span><span class="o">(</span><span class="n">res</span><span class="o">);</span>
+                    <span class="kt">int</span> <span class="n">code</span> <span class="o">=</span> <span class="n">resultJsonObject</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">&quot;returncode&quot;</span><span class="o">);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">code</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="c1">// 业务处理　　大概就是解析出list</span>
+                        <span class="n">JSONArray</span> <span class="n">datas</span> <span class="o">=</span> <span class="n">resultJsonObject</span><span class="o">.</span><span class="na">getJSONArray</span><span class="o">(</span><span class="s">&quot;result&quot;</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">datas</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">Message</span> <span class="n">m</span> <span class="o">=</span> <span class="n">_handler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">(</span><span class="n">LOAD_NODATA</span><span class="o">);</span>
+                            <span class="n">_handler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+                            <span class="k">return</span><span class="o">;</span>
+                        <span class="o">}</span>
+                        <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">datas</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+                        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                            <span class="n">JSONObject</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">JSONObject</span><span class="o">)</span> <span class="n">datas</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                            <span class="n">ChannelExhibitionListItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ChannelExhibitionListItem</span><span class="o">();</span>
+                            <span class="n">item</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">);</span>
+
+                            <span class="n">channels</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+                        <span class="o">}</span>
+                        <span class="n">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="n">_handler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">(</span><span class="n">LOAD_SUCCESS</span><span class="o">);</span>
+                        <span class="n">message</span><span class="o">.</span><span class="na">obj</span> <span class="o">=</span> <span class="n">channels</span><span class="o">;</span>
+                        <span class="n">_handler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+                        <span class="k">return</span><span class="o">;</span>
+                    <span class="o">}</span><span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">code</span> <span class="o">==</span> <span class="mi">1</span><span class="o">){</span>
+                        <span class="n">Message</span> <span class="n">m</span> <span class="o">=</span> <span class="n">_handler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">(</span><span class="n">LOAD_NODATA</span><span class="o">);</span>
+                        <span class="n">_handler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+                        <span class="k">return</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="c1">// 获取失败</span>
+                    <span class="n">Message</span> <span class="n">m</span> <span class="o">=</span> <span class="n">_handler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">(</span><span class="n">LOAD_FAIL</span><span class="o">);</span>
+                    <span class="n">_handler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">Message</span> <span class="n">m</span> <span class="o">=</span> <span class="n">_handler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">(</span><span class="n">LOAD_FAIL</span><span class="o">);</span>
+                    <span class="n">_handler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                    <span class="c1">//关闭进度条</span>
+                    <span class="c1">//Util.dismissWaitingDialog(pd);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;?&gt;</span> <span class="n">getList</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">_list</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">PullToRefreshListView</span> <span class="nf">getListView</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">_listView</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">BaseAdapter</span> <span class="nf">getAdapter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">_adapter</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>以上代码只是逻辑代码,复制在自己的项目中是不能运行的,参考着就可以写了,因为我们的项目是使用的httpClient+Handler回调,所以用这个特别方便, 如果你们项目使用Volley 那就更简单了,稍微修改一下就能用</p>
+
+<p>最后是布局  布局只需要把ListView替换实现就可以 其他的一下属性和ListView通用</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">  <span class="nt">&lt;com.handmark.pulltorefresh.library.PullToRefreshListView</span>
+        <span class="na">android:id=</span><span class="s">&quot;@+id/listView&quot;</span>
+        <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+        <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
+        <span class="na">android:cacheColorHint=</span><span class="s">&quot;#00000000&quot;</span>
+        <span class="na">android:divider=</span><span class="s">&quot;#19000000&quot;</span>
+        <span class="na">android:dividerHeight=</span><span class="s">&quot;1dp&quot;</span>
+        <span class="na">android:fadingEdge=</span><span class="s">&quot;none&quot;</span>
+        <span class="na">android:fastScrollEnabled=</span><span class="s">&quot;false&quot;</span>
+        <span class="na">android:footerDividersEnabled=</span><span class="s">&quot;true&quot;</span>
+        <span class="na">android:headerDividersEnabled=</span><span class="s">&quot;true&quot;</span>
+        <span class="na">android:smoothScrollbar=</span><span class="s">&quot;true&quot;</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;/com.handmark.pulltorefresh.library.PullToRefreshListView&gt;</span>
+</code></pre></div>
+<h2>附</h2>
+
+<p>多个PullToRefreshListView组件时的示例代码 , 其他几个重写的方法也要这样修改</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> *当前第几个PullToRefreshListView的标示</span>
+<span class="cm"> */</span>
+<span class="kt">int</span> <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span>
+<span class="cm">/**</span>
+<span class="cm"> * 页码</span>
+<span class="cm"> */</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="n">count_p</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="n">count_r</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+
+<span class="cm">/**</span>
+<span class="cm"> * 获取页码</span>
+<span class="cm"> * </span>
+<span class="cm"> * @return</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPageCount</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">num</span> <span class="o">==</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">count_p</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="k">return</span> <span class="n">count_r</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 设置页码</span>
+<span class="cm"> * </span>
+<span class="cm"> * @param pageCount</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPageCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">pageCount</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">num</span> <span class="o">==</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">count_p</span> <span class="o">=</span> <span class="n">pageCount</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">count_r</span> <span class="o">=</span> <span class="n">pageCount</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>写完啦 ,我要去腐败喽</p>
+
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2014/10/21/下拉刷新封装"  data-title="下拉刷新封装 - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
+</div>
+
+    </div>
+</div>
+<footer class="site-footer">
+
+    <div class="wrap">
+        <div class="footer-col-1 column">
+            <div class="github">
+                <!-- <span class="icon github"> -->
+                <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                    <path fill-rule="evenodd" clip-rule="evenodd" fill="#000" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                    c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                    c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                    c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                    C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                    c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                    c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                    c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                    c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+                <!-- </span> -->
+            </div>
+            <a href="https://github.com/kokerwang">
+                Fork me on github
+            </a>
+        </div>
+
+        <div class="footer-col-2">
+            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253336121'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1253336121%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+        </div>
+        
+        <div class="footer-col-2">
+            <p>© 2015 - 2019 by <font style="color:#f44336">❤ </font> <a href="http://www.kokerwang.com">KokerWang</a></p>
+        </div>
+        
+        <!-- <div class="footer-col-3 column">
+      <p class="text">我大步走大步跑，我没有追我不会累</p>
+    </div> -->
+    </div>
+    <div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div>
+</footer>
+
+
+<!-- mathjax -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- highlight -->
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- pleace change it! -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"kokerwang"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0]
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+<!-- top-scrooll -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script type="text/javascript">
+
+$(window).scroll(function() {
+
+        if($(this).scrollTop() > 100) {
+        $('.scroll-top').fadeIn(200);
+        } else {
+        $('.scroll-top').fadeOut(200);
+        }
+        });
+
+$('.scroll-top').bind('click', function(e) {
+        e.preventDefault();
+        $('body,html').animate({scrollTop:0},200);
+        });
+</script>
+</body>
+</html>

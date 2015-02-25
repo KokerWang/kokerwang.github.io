@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>关于我</title>
+<title>关于使用commons-codec.jar出现方法找不到的问题</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/about/">
+<link rel="canonical" href="http://www.kokerwang.com/2014/11/02/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8commons-codec.jar%E5%87%BA%E7%8E%B0%E6%96%B9%E6%B3%95%E6%89%BE%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -73,40 +73,32 @@
 
 <div class="page-content">
     <div class="wrap">
-        <article class="post-content">
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2014/11/02/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8commons-codec.jar%E5%87%BA%E7%8E%B0%E6%96%B9%E6%B3%95%E6%89%BE%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html">关于使用commons-codec.jar出现方法找不到的问题</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2014-11-02&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <h3>起因</h3>
 
-<h3 >关于我</h3>
+<p>最近项目里要做非即时一对一消息功能,图省事我就直接用了友盟提供的sdk,接收直接用友盟提供的android的sdk,发送方使用友盟服务端java api,一个挺简单的功能,理论是可以行得通的,实践证明也是可以行得通的,只是中途出现一个很坑的问题让我不得不记录下来.</p>
 
-<ul class="posts">
-    <li class="listing-seperator">Android开发者，J2EE开发者，Go爱好者，果粉</li>
-    <li class="listing-seperator">我掌握的语言：<a>JAVA</a> &nbsp;&nbsp; <a>HTML</a>  &nbsp;&nbsp; <a>JAVASCRIPT</a>  &nbsp;&nbsp; <a>GO</a> &nbsp;&nbsp; <a>SWIFT</a></li>
-</ul>
+<h3>经过</h3>
 
-<h3 >关于这里</h3>
+<p>事情是这样的,在我使用发送消息的api 的时候需要获得validationToken,而这个值是appkey + appMasterSecret + 时间戳 经过DigestUtils.md5Hex 算法得来的,而md5Hex这个方法在使用的时候竟然找不到,我看了一下在android.jar 文件里面只有声明却没有实现,这可苦了我了.于是乎我找来了commons-codec-1.6.jar心想这就可以了吧,结果又出了包名重复的错,这下难办了,我又不能修改android.jar.咋办呢,只能拿commons-codec的源码改包名了.果然,问题解决.</p>
 
-<ul class="posts">
-    <li class="listing-seperator">本blog主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇blog，力求达到精益求精。</li>
-    <li class="listing-seperator">分享成果，让我每天都很开心</li>
-</ul>
+<h3>结果</h3>
 
-<h3 >个人微信</h3>
+<p>写的很简单,可当时却足足花了我半天的时间才解决,如果你也碰到了这样的问题,直接下源码改包名便可轻松解决,包我就不传了,网上很多.顺便支持一下友盟,真的很方便!!</p>
 
-<img src="/img/blog_2code.png" style="width:200px; height:200px; ">
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2014/11/02/关于使用commons-codec.jar出现方法找不到的问题"  data-title="关于使用commons-codec.jar出现方法找不到的问题 - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
+</div>
 
-<h3 >我的作品</h3>
-
-<ul class="posts">
-    <li class="listing-seperator">1. <a href="http://www.bpmasa.org/">北京市物业监理协会</a>客户端, <a href="http://fir.im/bpmasa">下载地址</a></li>
-    <li class="listing-seperator">2. <a href="http://www.louli.com.cn/">楼里</a>客户端, <a href="http://fir.im/haye">下载地址</a></li>
-</ul>
-
-<h3 >读书</h3>
-
-<ul class="posts">
-    <li class="listing-seperator">最近看到有人晒自己Github的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/reading">点击这里</a></li>
-</ul>
-
-</article>
     </div>
 </div>
 <footer class="site-footer">
