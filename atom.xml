@@ -5,11 +5,42 @@
     <subtitle>我大步走大步跑，我没有追我不会累</subtitle>
     <link href="http://www.kokerwang.com/atom.xml" rel="self"/>
     <link href="http://www.kokerwang.com"/>
-    <updated>2015-02-27T20:35:04+08:00</updated>
+    <updated>2015-02-27T21:13:34+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>KokerWang</name>
     </author>
+    
+    <entry>
+        <title>为DialogFragment添加OnKeyListener</title>
+        <link href="http://www.kokerwang.com/2015/02/27/%E4%B8%BADialogFragment%E6%B7%BB%E5%8A%A0OnKeyListener.html"/>
+        <updated>2015-02-27T00:00:00+08:00</updated>
+        <id>http://www.kokerwang.com/2015/02/27/为DialogFragment添加OnKeyListener</id>
+        <content type="html">&lt;h3&gt;前言：&lt;/h3&gt;
+
+&lt;p&gt;在我的另一篇博客&lt;a href=&quot;http://www.kokerwang.com/2015/01/25/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C.html&quot;&gt;为Context-Menu.Android库增加用户体验&lt;/a&gt;里面留下了一个遗留问题就是给DialogFragment添加OnKeyListener，当时朋友说这个很不好弄，加上当时项目比较紧自己也没有细细研究就把问题放了下来。今天在写PubDialog这个项目的时候又遇到了同样的问题，总不能再撂下吧，于是自己抱着试试的心态来解决这个问题，没想到这个问题原来如此简单。&lt;/p&gt;
+
+&lt;h3&gt;解决&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreateView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayoutInflater&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inflater&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+             &lt;span class=&quot;n&quot;&gt;ViewGroup&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* do something */&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;getDialog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setOnKeyListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DialogInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;OnKeyListener&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DialogInterface&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dialog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyCode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+                             &lt;span class=&quot;n&quot;&gt;KeyEvent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;cm&quot;&gt;/* 处理 */&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rootView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;就是如此简单！！&lt;/p&gt;
+</content>
+    </entry>
     
     <entry>
         <title>PubDialog ---- 一个简单的提示对话框</title>
@@ -916,83 +947,6 @@ init进程启动的过程比较复杂，但是在准备工作做好之后，会�
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;公司项目我就不放源码了,核心代码都在上面了.有问题可以和我联系&lt;/p&gt;
-</content>
-    </entry>
-    
-    <entry>
-        <title>Android BroadcastReceiver 接收顺序</title>
-        <link href="http://www.kokerwang.com/2014/09/28/Android%20BroadcastReceiver%20%E6%8E%A5%E6%94%B6%E9%A1%BA%E5%BA%8F.html"/>
-        <updated>2014-09-28T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/2014/09/28/Android BroadcastReceiver 接收顺序</id>
-        <content type="html">&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;今天项目里有这样一个需求，访问一个请求并把手机号作为参数传过去，同时拦截收到的短信验证码，自动填进EditText，一个看似很简单的功能。然而在真机上测试竟然没有拦截到，把优先级调到最大也无济于事。&lt;/p&gt;
-
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;四处寻访，原来BroadcastReceiver除了有优先级顺序之外，还有注册的顺序。&lt;/p&gt;
-
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;大家都知道广播分有序广播和无序广播，有序广播和无序广播的区别就是，有序广播可以被任何一个接受者消耗掉，而无序广播则不可以，注册的话既可以在代码里面动态注册，也可以在Manifest里面直接声明，屌丝青年大多会直接在Manifest里面定义注册，文艺青年一般使用代码动态注册。这两种方式接受的广播的顺序是不一样的。&lt;/p&gt;
-
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;一般来说有序广播在同等优先级的情况下有这样的顺序&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;动态注册的BroadcastReceiver，先注册的先接收&lt;/li&gt;
-&lt;li&gt;Manifest里注册的BroadcastReceiver，接收广播的顺序与String[] java.io.File.list()顺序一致&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在不同优先级的情况下&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;有序广播按优先级顺序接收&lt;/li&gt;
-&lt;li&gt;无序广播因为是异步的所以接收broadcast的顺序不确定。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;table&gt;&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;假设有如下优先级的5个接收器  并且B先于C注册&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;1.动态A（优先级=1）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;2.动态B（优先级=2）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;3.动态C（优先级=2）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;4.静态D（优先级=1)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;5.静态E（优先级=2）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;那么实际接收顺序应为：  B C E A D&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;
-
-&lt;hr&gt;
-
-&lt;h2&gt;关于 String[] java.io.File.list()&lt;/h2&gt;
-
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;我们以开机时候发出的广播android.intent.action.BOOT_COMPLETED为例，这是个无序广播。如果应用想要开启自启动，那么就要监听这个广播，程序启动之前，动态广播接收器肯定是无法使用的，只能在XML中静态注册。大家都知道，第三方应用是存放在/data/app目录下，当安装完毕之后，你会找到一个文件，他的名字是以与安装的应用包名开始的，然后可能会跟着&amp;quot;-数字.apk&amp;quot;，比如：com.android.test-1.apk。接收的顺序与这个名字是有关的！那么关系是怎样的呢？&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;系统在开机的时候，会按着一个顺序解析apk，首先，会解析手机中的/system/framework这个目录，原生系统中，这下面就一个apk - framework-res.apk，当然各个厂商也会加入自己的内容&lt;/li&gt;
-&lt;li&gt;然后受到重视的文件夹按顺序分别为：
-/system/app，
-/vendor/app，
-/data/app，
-/drm/app-private
-那么每个文件夹下解析的顺序是怎样的呢？我们先只看/data/app，也就是用户安装的第三方应用的存放位置，这与下面代码返回结果的顺序是一致的
-File file = new File(&amp;quot;/data/app/&amp;quot;);
-String[] files = file.list();
-也就是说，我们按顺序打印这个数组，就能知道哪个接收器会先接收到这个广播，哪个会后接收到&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
 </content>
     </entry>
     
