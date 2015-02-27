@@ -84,36 +84,36 @@
 <p>项目里需要做一个有多个选项的单选对话框，类似QQ的Dialog风格，实现起来倒是不难，只是这样的功能我在之前的项目里就写过一次，这次又要为一些小的改动再写一遍。干脆，我把这样的Dialog封装一下开源出来，也方便自己以后再用到的时候就不再需要做重复的工作。加上自己一直想写个开源项目，所以这次借着这股东风，PubDialog诞生了。PubDialog是一个类似IOS风格的对话框，我封装了一些简单的功能，方便在大部分场合快速实现选择对话框的功能。</p>
 
 <h3>使用</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java">    <span class="c1">//初始化一个字符数组</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="mi">3</span><span class="o">);</span>
-    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Send message&quot;</span><span class="o">);</span>
-    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Like profile&quot;</span><span class="o">);</span>
-    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Add to favorites&quot;</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//初始化一个字符数组</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="mi">3</span><span class="o">);</span>
+<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Send message&quot;</span><span class="o">);</span>
+<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Like profile&quot;</span><span class="o">);</span>
+<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Add to favorites&quot;</span><span class="o">);</span>
 
-    <span class="c1">//初始化PubDialogFragment</span>
-    <span class="n">PubDialogFragment</span> <span class="n">pubDialog</span> <span class="o">=</span> <span class="n">PubDialogFragment</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+<span class="c1">//初始化PubDialogFragment</span>
+<span class="n">PubDialogFragment</span> <span class="n">pubDialog</span> <span class="o">=</span> <span class="n">PubDialogFragment</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
 
-    <span class="c1">//设置回调(也可以不设置)</span>
-    <span class="n">pubDialog</span><span class="o">.</span><span class="na">setItemClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">PubDialogFragment</span><span class="o">.</span><span class="na">ItemClickListener</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//设置回调(也可以不设置)</span>
+<span class="n">pubDialog</span><span class="o">.</span><span class="na">setItemClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">PubDialogFragment</span><span class="o">.</span><span class="na">ItemClickListener</span><span class="o">()</span> <span class="o">{</span>
 
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onItemClick</span><span class="o">(</span><span class="n">View</span> <span class="n">clickedView</span><span class="o">,</span> <span class="n">DialogObject</span> <span class="n">dialogObject</span><span class="o">,</span> 
-            <span class="kt">int</span> <span class="n">groupIndex</span><span class="o">,</span> <span class="kt">int</span> <span class="n">itemIndex</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">//在回调中处理事件</span>
-            <span class="n">Intent</span> <span class="n">intent</span><span class="o">;</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">itemIndex</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;https://github.com/KokerWang/PubDialog&quot;</span><span class="o">);</span>
-                <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">uri</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://www.kokerwang.com&quot;</span><span class="o">);</span>
-                <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">uri</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onItemClick</span><span class="o">(</span><span class="n">View</span> <span class="n">clickedView</span><span class="o">,</span> <span class="n">DialogObject</span> <span class="n">dialogObject</span><span class="o">,</span> 
+        <span class="kt">int</span> <span class="n">groupIndex</span><span class="o">,</span> <span class="kt">int</span> <span class="n">itemIndex</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//在回调中处理事件</span>
+        <span class="n">Intent</span> <span class="n">intent</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">itemIndex</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;https://github.com/KokerWang/PubDialog&quot;</span><span class="o">);</span>
+            <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">uri</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://www.kokerwang.com&quot;</span><span class="o">);</span>
+            <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">uri</span><span class="o">);</span>
         <span class="o">}</span>
-    <span class="o">});</span>
+        <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">});</span>
 
-    <span class="c1">//在使用的地方</span>
-    <span class="n">pubDialog</span><span class="o">.</span><span class="na">show</span><span class="o">(</span><span class="n">getSupportFragmentManager</span><span class="o">(),</span> <span class="s">&quot;setting&quot;</span><span class="o">);</span>
+<span class="c1">//在使用的地方</span>
+<span class="n">pubDialog</span><span class="o">.</span><span class="na">show</span><span class="o">(</span><span class="n">getSupportFragmentManager</span><span class="o">(),</span> <span class="s">&quot;setting&quot;</span><span class="o">);</span>
 </code></pre></div>
 <h3>功能定制</h3>
 
@@ -124,11 +124,16 @@
 <li>多分组</li>
 </ul>
 
+<p>更多定制功能请留意API</p>
+
 <h3>效果</h3>
 
 <p><img src="/img/pubdialog_show_demo.gif" alt="PubDialog"></p>
 
-<p><a href="https://github.com/KokerWang/PubDialog">项目地址</a> (包含示例项目和lib库)</p>
+<ul>
+<li><p><a href="https://github.com/KokerWang/PubDialog">项目地址</a> (包含示例项目和lib库)</p></li>
+<li><p><a href="https://github.com/KokerWang/PubDialog/blob/master/apk/PubDialogExample-debug.apk?raw=true">下载Demo</a></p></li>
+</ul>
 
 <h1>License</h1>
 <div class="highlight"><pre><code class="language-text" data-lang="text">Copyright 2015 KokerWang
