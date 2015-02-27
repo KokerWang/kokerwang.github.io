@@ -6,8 +6,4 @@ You can visit [here](http://www.kokerwang.com)
 
 2015-02-25 I changed a new theme
 
-<<<<<<< HEAD
 Cool
-=======
-Cool
->>>>>>> origin/master
