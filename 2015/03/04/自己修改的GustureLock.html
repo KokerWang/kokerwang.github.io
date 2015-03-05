@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>KokerWang's Blog</title>
+<title>自己修改的GustureLock</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/">
+<link rel="canonical" href="http://www.kokerwang.com/2015/03/04/%E8%87%AA%E5%B7%B1%E4%BF%AE%E6%94%B9%E7%9A%84GustureLock.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -73,61 +73,63 @@
 
 <div class="page-content">
     <div class="wrap">
-        <div class="home">
-  
-  <header class="post-header">
-    <h1><a href="/2015/02/28/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C(%E7%BB%AD).html">为Context-Menu.Android库增加用户体验(续)</a></h1>
-    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-02-28&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#工作总结">工作总结</a></p>
-  </header>
-  <article class="post-content">
-  <h3>前言</h3>
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2015/03/04/%E8%87%AA%E5%B7%B1%E4%BF%AE%E6%94%B9%E7%9A%84GustureLock.html">自己修改的GustureLock</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-03-04&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <h3>前言</h3>
 
-<p>在我的另一篇博客<a href="http://www.kokerwang.com/2015/01/25/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C.html">为Context-Menu.Android库增加用户体验</a>里面留下了一个遗留问题就是给DialogFragment添加OnKeyListener，当时朋友说这个很不好弄，加上当时项目比较紧自己也没有细细研究就把问题放了下来。今天在写PubDialog这个项目的时候又遇到了同样的问题，总不能再撂下吧，于是自己抱着试试的心态来解决这个问题，没想到这个问题原来如此简单。</p>
+<p>今天分享一个我修改过样式的GustureLock的源码，该库的出处我已经找不到了，当时是我朋友给我的一个zip包，我拿到源码之后，做了一些样式的调整，具体逻辑没有做处理，风格是模仿的JDME软件的风格</p>
 
-<h3>解决</h3>
+<h3>使用</h3>
+
+<p>在需要检查手势锁的地方加入如下代码，考虑到会需要随时修改切换动画，我并没有吧跳转逻辑写死，而是添加了一个回调接口</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">LockUtil</span><span class="o">.</span><span class="na">checkLock</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="k">new</span> <span class="nf">OnCheckLockCallback</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onHasLockCallback</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LockActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">startActivityForResult</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">GO_LOCK</span><span class="o">);</span>
+        <span class="n">overridePendingTransition</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">anim</span><span class="o">.</span><span class="na">mi_right_in</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">anim</span><span class="o">.</span><span class="na">mi_left_out</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onUnHasLockCallback</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//do something</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div>
+<p>注意：一定要使用startActivityForResult方法来启动，该Activity会返回不同的resuldCode来通知你如何处理；</p>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
-<span class="kd">public</span> <span class="n">View</span> <span class="nf">onCreateView</span><span class="o">(</span><span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">,</span>
-             <span class="n">ViewGroup</span> <span class="n">container</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
-
-    <span class="cm">/* do something */</span>
-
-    <span class="n">getDialog</span><span class="o">().</span><span class="na">setOnKeyListener</span><span class="o">(</span><span class="k">new</span> <span class="n">DialogInterface</span><span class="o">.</span><span class="na">OnKeyListener</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onKey</span><span class="o">(</span><span class="n">DialogInterface</span> <span class="n">dialog</span><span class="o">,</span> <span class="kt">int</span> <span class="n">keyCode</span><span class="o">,</span>
-                             <span class="n">KeyEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
-            <span class="cm">/* 处理 */</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">});</span>
-    <span class="k">return</span> <span class="n">rootView</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resuldCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">404</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//无手势密码进不去而退出</span>
+        <span class="n">finish</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">200</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//解锁成功</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">401</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//忘记密码重新登录</span>
+    <span class="o">}</span> 
+    <span class="kd">super</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">requestCode</span><span class="o">,</span> <span class="n">resuldCode</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>就是如此简单！！</p>
+<p>设置手势密码的跳转代码如下</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LockSetupActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">startActivity</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</code></pre></div>
+<h3>效果</h3>
 
-<h3>拓展</h3>
+<p><img src="/img/20150304132203.jpg" alt="tool-editor"></p>
 
-<p>该Dialog 有大片的空白区域我顺便在下方做了一个小的Tip区，每次取出一条提示在里面展示。
-如图：</p>
+<p><a href="https://github.com/KokerWang/Sack">源码地址</a> </p>
 
-<p><img src="/img/20150228181307.jpg" alt="tool-editor"></p>
-
-<p>同时把这个项目放在Github上了</p>
-
-<p><a href="https://github.com/KokerWang/Sack">地址</a> </p>
-
-<p>需要的可以拿去</p>
-
-  </article>
-  
-  <ul class="posts">
-    <!-- <li class="listing-seperator">Yesterday you said tomorrow</li> -->
-  
-  
-    
-    
-    
-    <li class="listing-seperator"><a href="/archive/">Long ago</a></li>
-  </ul>
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2015/03/04/自己修改的GustureLock"  data-title="自己修改的GustureLock - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
 </div>
 
     </div>
