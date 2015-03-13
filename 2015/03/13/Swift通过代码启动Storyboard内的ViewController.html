@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>KokerWang's Blog</title>
+<title>Swift通过代码启动Storyboard内的ViewController</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/">
+<link rel="canonical" href="http://www.kokerwang.com/2015/03/13/Swift%E9%80%9A%E8%BF%87%E4%BB%A3%E7%A0%81%E5%90%AF%E5%8A%A8Storyboard%E5%86%85%E7%9A%84ViewController.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -73,76 +73,40 @@
 
 <div class="page-content">
     <div class="wrap">
-        <div class="home">
-  
-  <header class="post-header">
-    <h1><a href="/2015/03/04/%E8%87%AA%E5%B7%B1%E4%BF%AE%E6%94%B9%E7%9A%84GustureLock.html">自己修改的GustureLock</a></h1>
-    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-03-04&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#工作总结">工作总结</a></p>
-  </header>
-  <article class="post-content">
-  <h3>前言</h3>
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2015/03/13/Swift%E9%80%9A%E8%BF%87%E4%BB%A3%E7%A0%81%E5%90%AF%E5%8A%A8Storyboard%E5%86%85%E7%9A%84ViewController.html">Swift通过代码启动Storyboard内的ViewController</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-03-13&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#IOS">IOS</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#Swift">Swift</a></p>
+    </header>
+    <article class="post-content">
+        <h3>前言</h3>
 
-<p>今天分享一个我修改过样式的GustureLock的源码，该库的出处我已经找不到了，当时是我朋友给我的一个zip包，我拿到源码之后，做了一些样式的调整，具体逻辑没有做处理，风格是模仿的JDME软件的风格</p>
+<p>IOS设计布局的方式有3种，1、代码编写，2、xib文件，3、storyboard，三种方式的好坏及使用我就不细说了，网上资料很多，我这里主要说下我在使用storyboard中遇到的问题。</p>
 
-<h3>使用</h3>
+<h3>问题</h3>
 
-<p>在需要检查手势锁的地方加入如下代码，考虑到会需要随时修改切换动画，我并没有吧跳转逻辑写死，而是添加了一个回调接口</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">LockUtil</span><span class="o">.</span><span class="na">checkLock</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="k">new</span> <span class="nf">OnCheckLockCallback</span><span class="o">()</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onHasLockCallback</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LockActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-        <span class="n">startActivityForResult</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">GO_LOCK</span><span class="o">);</span>
-        <span class="n">overridePendingTransition</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">anim</span><span class="o">.</span><span class="na">mi_right_in</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">anim</span><span class="o">.</span><span class="na">mi_left_out</span><span class="o">);</span>
-    <span class="o">}</span>
+<p>storyboard是Apple最新的设计界面的方式。第一次使用我就被他的功能所吸引，简直比Android的方便了不止10倍，集设计和交互，编码为一身，基本上都可以作为原型开发工具了。作为初学者，我在选择界面开发的时候果断的选择了storyboard，可是在使用他的时候出现了问题，问题是这样的，启动应用首先是闪屏，然后根据是否登录分别进入登录页或者主页。这个时候我通过普通的方式启动ViewController发现一片漆黑。即使在storyboard里面绑定了对应的ViewController也是如此。</p>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onUnHasLockCallback</span><span class="o">()</span> <span class="o">{</span>
-        <span class="c1">//do something</span>
-    <span class="o">}</span>
-<span class="o">});</span>
+<h3>解决</h3>
+
+<p>现如今网上Swift的资料甚是稀缺，这个问题我解决了好久，后来想到通过xib方式启动ViewController的时候可以加一个xibname的属性来加载xib文件，那么有没有这样的一种方式也能启动ViewController的时候同时加载storyboard呢，后来我发现OC有这样的一种方式，我对着OC的代码又查了Swift的API发现果然不出我所料。具体代码如下：</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">story</span> <span class="o">=</span>  <span class="bp">UIStoryboard</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Main&quot;</span><span class="p">,</span> <span class="nl">bundle</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+<span class="k">var</span> <span class="n">controller</span> <span class="o">=</span> <span class="n">story</span><span class="p">.</span><span class="n">instantiateViewControllerWithIdentifier</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span> 
+                <span class="kt">as</span> <span class="bp">UIViewController</span>
+<span class="nb">self</span><span class="p">.</span><span class="n">presentViewController</span><span class="p">(</span><span class="n">controller</span><span class="p">,</span> <span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">nil</span><span class="p">)</span>
 </code></pre></div>
-<p>注意：一定要使用startActivityForResult方法来启动，该Activity会返回不同的resuldCode来通知你如何处理；</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resuldCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">404</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">//无手势密码进不去而退出</span>
-        <span class="n">finish</span><span class="o">();</span>
-    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">200</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">//解锁成功</span>
-    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">401</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">//忘记密码重新登录</span>
-    <span class="o">}</span> 
-    <span class="kd">super</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">requestCode</span><span class="o">,</span> <span class="n">resuldCode</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>设置手势密码的跳转代码如下</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LockSetupActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-<span class="n">startActivity</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-</code></pre></div>
-<h3>效果</h3>
+<p>其中id为UIViewController在storyboard属性面板中的Storyboard ID， 这样就可以实现一个storyboard文件设计所有的UIViewController了 在跳转的时候需要逻辑的时候就使用代码的方式，不需要逻辑的时候就直接使用Segue。这样的方式适合一个人开发，或者前期设计的时候使用。因为所有的布局在一个文件里面多人操作提交的时候容易出错。不过好像新版的已经解决的git提交识别问题了。不过这也不是什么大问题啦。</p>
 
-<p><img src="/img/20150304132203.jpg" alt="tool-editor"></p>
+<h3>Ps</h3>
 
-<p><a href="https://github.com/KokerWang/Sack">源码地址</a> </p>
+<p>其实我在想到这样的解决方案的时候没有写的这么简单的，在弄了好久没有解决的时候我临时的方案是使用xib，类似Android的布局与代码解耦的方式类似。布局在xib文件里面，逻辑在UIViewController里面，这样也解决了本文的问题，只是有好东西不能用心里不舒服啊，终于在昨晚3点的时候灵光一闪想到了解决方法。今天一来测试，果然不出所料。至此我可以正式踏入IOS的大门啦，甚是欢喜。</p>
 
-  </article>
-  
-  <ul class="posts">
-    <!-- <li class="listing-seperator">Yesterday you said tomorrow</li> -->
-  
-  
-    
-    
-    <li class="listing-item">
-      <time datetime="2015-03-04">2015-03-04</time>
-      <a href="/2015/03/04/%E8%87%AA%E5%B7%B1%E4%BF%AE%E6%94%B9%E7%9A%84GustureLock.html" title="自己修改的GustureLock">自己修改的GustureLock</a>
-    </li>
-  
-    
-    
-    
-    <li class="listing-seperator"><a href="/archive/">Long ago</a></li>
-  </ul>
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2015/03/13/Swift通过代码启动Storyboard内的ViewController"  data-title="Swift通过代码启动Storyboard内的ViewController - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
 </div>
 
     </div>
