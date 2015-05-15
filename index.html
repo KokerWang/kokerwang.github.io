@@ -78,60 +78,38 @@
         <div class="home">
   
   <header class="post-header">
-    <h1><a href="/2015/03/04/%E8%87%AA%E5%B7%B1%E4%BF%AE%E6%94%B9%E7%9A%84GustureLock.html">自己修改的GustureLock</a></h1>
-    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-03-04&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#工作总结">工作总结</a></p>
+    <h1><a href="/2015/05/15/%E4%B8%80%E6%8B%9B%E6%90%9E%E5%AE%9AIOS%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html">一招搞定IOS屏幕适配</a></h1>
+    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-05-15&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#IOS">IOS</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#Swift">Swift</a></p>
   </header>
   <article class="post-content">
-  <h3>前言</h3>
+  <h3>首先从一首歌说起</h3>
 
-<p>今天分享一个我修改过样式的GustureLock的源码，该库的出处我已经找不到了，当时是我朋友给我的一个zip包，我拿到源码之后，做了一些样式的调整，具体逻辑没有做处理，风格是模仿的JDME软件的风格</p>
+<p>你还在，你还在，头悬梁，锥刺股，做做做做适配么？你还以为使用宏定义，纯代码编写，就能高枕无忧么？你还把分辨率转像素当成当成卖身资本么？你还在格子间码子冲刺过劳死么？no no no no no no no no no no no no ~ ~ 。人生苦短，IOS应用适配所有iPhone的梦想，你可以复制。------<a href="http://www.bilibili.com/video/av1572046/">挖掘机技术哪家强</a></p>
 
-<h3>使用</h3>
+<h3>一个图</h3>
 
-<p>在需要检查手势锁的地方加入如下代码，考虑到会需要随时修改切换动画，我并没有吧跳转逻辑写死，而是添加了一个回调接口</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">LockUtil</span><span class="o">.</span><span class="na">checkLock</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="k">new</span> <span class="nf">OnCheckLockCallback</span><span class="o">()</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onHasLockCallback</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LockActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-        <span class="n">startActivityForResult</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">GO_LOCK</span><span class="o">);</span>
-        <span class="n">overridePendingTransition</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">anim</span><span class="o">.</span><span class="na">mi_right_in</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">anim</span><span class="o">.</span><span class="na">mi_left_out</span><span class="o">);</span>
-    <span class="o">}</span>
+<p><img src="/img/20150515173315.png" alt="PubDialog"></p>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onUnHasLockCallback</span><span class="o">()</span> <span class="o">{</span>
-        <span class="c1">//do something</span>
-    <span class="o">}</span>
-<span class="o">});</span>
-</code></pre></div>
-<p>注意：一定要使用startActivityForResult方法来启动，该Activity会返回不同的resuldCode来通知你如何处理；</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resuldCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">404</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">//无手势密码进不去而退出</span>
-        <span class="n">finish</span><span class="o">();</span>
-    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">200</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">//解锁成功</span>
-    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">GO_LOCK</span> <span class="o">&amp;&amp;</span> <span class="n">resuldCode</span> <span class="o">==</span> <span class="mi">401</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">//忘记密码重新登录</span>
-    <span class="o">}</span> 
-    <span class="kd">super</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">requestCode</span><span class="o">,</span> <span class="n">resuldCode</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>设置手势密码的跳转代码如下</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LockSetupActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-<span class="n">startActivity</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-</code></pre></div>
-<h3>效果</h3>
+<h3>一段话</h3>
 
-<p><img src="/img/20150304132203.jpg" alt="tool-editor"></p>
+<p>第一步，第二步，就不多说了，重点是第三部。一般先点 Add Missing Constraints 增加约束，加完之后就可以适配所有的设备了。如果你动了布局点 Update Constraints 更新约束，如果布局和约束不符点 Update Frames 更新布局，如果添加了新的组件之后接着点 Add Missing Constraints 添加新的约束即可。</p>
 
-<p><a href="https://github.com/KokerWang/Sack">源码地址</a> </p>
+<h3>结束</h3>
+
+<p>好了，就是这么简单（纯代码编写UI的请略过）。</p>
 
   </article>
   
   <ul class="posts">
     <!-- <li class="listing-seperator">Yesterday you said tomorrow</li> -->
   
+  
+    
+    
+    <li class="listing-item">
+      <time datetime="2015-05-15">2015-05-15</time>
+      <a href="/2015/05/15/%E4%B8%80%E6%8B%9B%E6%90%9E%E5%AE%9AIOS%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html" title="一招搞定IOS屏幕适配">一招搞定IOS屏幕适配</a>
+    </li>
   
     
     

@@ -5,11 +5,34 @@
     <subtitle>我大步走大步跑，我没有追我不会累</subtitle>
     <link href="http://www.kokerwang.com/atom.xml" rel="self"/>
     <link href="http://www.kokerwang.com"/>
-    <updated>2015-05-04T21:12:26+08:00</updated>
+    <updated>2015-05-15T18:11:01+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>KokerWang</name>
     </author>
+    
+    <entry>
+        <title>一招搞定IOS屏幕适配</title>
+        <link href="http://www.kokerwang.com/2015/05/15/%E4%B8%80%E6%8B%9B%E6%90%9E%E5%AE%9AIOS%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html"/>
+        <updated>2015-05-15T00:00:00+08:00</updated>
+        <id>http://www.kokerwang.com/2015/05/15/一招搞定IOS屏幕适配</id>
+        <content type="html">&lt;h3&gt;首先从一首歌说起&lt;/h3&gt;
+
+&lt;p&gt;你还在，你还在，头悬梁，锥刺股，做做做做适配么？你还以为使用宏定义，纯代码编写，就能高枕无忧么？你还把分辨率转像素当成当成卖身资本么？你还在格子间码子冲刺过劳死么？no no no no no no no no no no no no ~ ~ 。人生苦短，IOS应用适配所有iPhone的梦想，你可以复制。------&lt;a href=&quot;http://www.bilibili.com/video/av1572046/&quot;&gt;挖掘机技术哪家强&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;一个图&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20150515173315.png&quot; alt=&quot;PubDialog&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;一段话&lt;/h3&gt;
+
+&lt;p&gt;第一步，第二步，就不多说了，重点是第三部。一般先点 Add Missing Constraints 增加约束，加完之后就可以适配所有的设备了。如果你动了布局点 Update Constraints 更新约束，如果布局和约束不符点 Update Frames 更新布局，如果添加了新的组件之后接着点 Add Missing Constraints 添加新的约束即可。&lt;/p&gt;
+
+&lt;h3&gt;结束&lt;/h3&gt;
+
+&lt;p&gt;好了，就是这么简单（纯代码编写UI的请略过）。&lt;/p&gt;
+</content>
+    </entry>
     
     <entry>
         <title>爬坑IOS——第一季</title>
@@ -742,42 +765,6 @@ init进程启动的过程比较复杂，但是在准备工作做好之后，会�
 &lt;p&gt;如果你还需要更丰富的处理效果那么推荐你用WebChromeClient.&lt;/p&gt;
 
 &lt;p&gt;ps: 最近国内github好不稳定啊，大家还是翻墙吧.&lt;/p&gt;
-</content>
-    </entry>
-    
-    <entry>
-        <title>Android应用内存溢出导致应用退出的解决方案</title>
-        <link href="http://www.kokerwang.com/2014/11/11/Android%E5%BA%94%E7%94%A8%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%AF%BC%E8%87%B4%E5%BA%94%E7%94%A8%E9%80%80%E5%87%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html"/>
-        <updated>2014-11-11T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/2014/11/11/Android应用内存溢出导致应用退出的解决方案</id>
-        <content type="html">&lt;p&gt;昨天项目里遇到了一个严重问题,用户在使用一段时间应用之后,便会非常慢,最终导致内存溢出而崩溃,这个问题几乎让我们的一切努力白费.我几乎花了一整天的时间才终于找到了问题所在.问题的原因让我完全意料不到.&lt;/p&gt;
-
-&lt;p&gt;在分析原因的时候我使用的是 Eclipse 的 Memory AnalysisTools + DDMS,这套工具真是在关键时候救了我一命.
-附上Memory Analysis插件的&lt;a href=&quot;http://www.eclipse.org/mat/downloads.php&quot;&gt;下载地址&lt;/a&gt;
-只使用DDMS也可以看出在activity切换过程中的内存变化,但是不能并发现问题的具体所在,所以我们需要MAT(Memory AnalysisTools)来分析具体是那个类引发的问题.上图&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20141111211142.png&quot; alt=&quot;tool-editor&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;上图大家应该都看的懂吧,不懂的我简单说一下,也不要嫌弃我啰嗦:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;1位置是开始监控 一般在启动应用之后就可以点上来查看记录了&lt;/li&gt;
-&lt;li&gt;2位置是保存分析到文件,装了Memory Analysis之后便可以直接打开分析界面&lt;/li&gt;
-&lt;li&gt;3位置是查看内存数值的区域，内存变化的过程基本上就是在这里分析出来的&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;具体的使用大家可以参考这篇文章&lt;a href=&quot;http://www.360doc.com/content/12/1023/14/203871_243274421.shtml&quot;&gt;http://www.360doc.com/content/12/1023/14/203871_243274421.shtml&lt;/a&gt;,解决问题的过程真的是非常的快乐的,我希望大家也可以通过这个过程get新技能,而不是一味的copy.&lt;/p&gt;
-
-&lt;p&gt;分析的过程我也就不多说了 好多次的分析才找到了问题所在,依然直接说结果:&lt;/p&gt;
-
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;现在大家在写app的时候通常会使用一个集合来保存整个activity.或放在BaseActivity里,或放在Application里,
-然后在退出应用的时候遍历集合逐个调用finish方法,以此来达到退出整个应用,这些方法在网上很多写法,也是大多数人推荐的做法,但我如今碰到的问题就是这里导致的.我的测试结果是,虽然在每个activity的finish方法里把自己从容器里移除自己,但依然因为这个导致activity不能释放,如此循环往复导致了内存溢出.找到了问题所在就好解决多了,就怕有问题自己也摸不到头绪.其实如果自己控制好每个界面的启动和销毁,这样的做法完全是多此一举的,如果你实在想这样做,推荐的是使用广播的方法,在每个activity里面注册一个广播,应用退出的时候通过广播来关闭所有activity,不要忘了在onDestroy里注销广播哟,&lt;/p&gt;
-
-&lt;p&gt;ps:
-我曾经也深信不疑的使用网上的各种现成的代码,但如今,我想至少应该测试过会再使用才行,不要人云亦云,知其然知其所以然,才能最大的提升自己的能力.感谢项目经理的耐心教导。
-另外&lt;strong&gt;MAT&lt;/strong&gt;工具推荐大家都学习一下,特别是大型项目一定要严格控制内存,否则会死的很惨.  &lt;/p&gt;
 </content>
     </entry>
     
