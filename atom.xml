@@ -5,11 +5,40 @@
     <subtitle>我大步走大步跑，我没有追我不会累</subtitle>
     <link href="http://www.kokerwang.com/atom.xml" rel="self"/>
     <link href="http://www.kokerwang.com"/>
-    <updated>2015-06-18T21:00:56+08:00</updated>
+    <updated>2015-06-30T11:16:34+08:00</updated>
     <id>http://www.kokerwang.com</id>
     <author>
         <name>KokerWang</name>
     </author>
+    
+    <entry>
+        <title>使用Shell来编译Android项目</title>
+        <link href="http://www.kokerwang.com/2015/06/30/%E4%BD%BF%E7%94%A8Shell%E6%9D%A5%E7%BC%96%E8%AF%91Android%E9%A1%B9%E7%9B%AE.html"/>
+        <updated>2015-06-30T00:00:00+08:00</updated>
+        <id>http://www.kokerwang.com/2015/06/30/使用Shell来编译Android项目</id>
+        <content type="html">&lt;h3&gt;序&lt;/h3&gt;
+
+&lt;p&gt;使用Gradle构建项目很久了，为了少敲命令行，我自己写了个简单的Shell脚本来Help me，Ha Ha Ha。。。&lt;/p&gt;
+
+&lt;h3&gt;脚本&lt;/h3&gt;
+
+&lt;p&gt;在项目目录下(不是app moudle目录下) 建一个Shell脚本b.sh,内容如下:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;清理缓存...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clean&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;清理成功&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;开始编译...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;编译成功&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;注：如果你的moudle名字不是app 那你就把脚本里面的app 改名成你自己的moudle名字&lt;/p&gt;
+
+&lt;p&gt;以后需要构建项目的话直接在Terminal里面敲sh b.sh就可以啦&lt;/p&gt;
+
+&lt;p&gt;刚开始学Shell,脚本比较简单，不过也算是学以致用了。&lt;/p&gt;
+</content>
+    </entry>
     
     <entry>
         <title>一招搞定IOS屏幕适配</title>
@@ -716,55 +745,6 @@ init进程启动的过程比较复杂，但是在准备工作做好之后，会�
 &lt;p&gt;Service Server端收到Binder IPC 数据后，由 Service Framework对数据进行UnMarshalling处理，然后传递给Service Stub的onTransact（）函数，Service Stub根据Binder IPC数据中的RPC代码判断它是一个针对Foo服务的foo（）服务Stub函数的Binder RPC，最后， 以Binder IPC数据中包含的Binder RPC数据为参数，调用foo（）服务的Stub函数。至此，就是Binder IPC 的整个流程。&lt;/p&gt;
 
 &lt;p&gt;————摘自《Android框架揭秘》 以上部分是这本书中的大部分知识的总结，其中的这几幅图更是这些重点简单明了的描述。当然Binder 机制只看图还是不能深入了解的，因为内容比较多，所以还是推荐看书，写的不错。&lt;/p&gt;
-</content>
-    </entry>
-    
-    <entry>
-        <title>关于WebView因url重定向而导致无法goBack的问题</title>
-        <link href="http://www.kokerwang.com/2014/11/16/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html"/>
-        <updated>2014-11-16T00:00:00+08:00</updated>
-        <id>http://www.kokerwang.com/2014/11/16/关于WebView因url重定向而导致无法goBack的问题</id>
-        <content type="html">&lt;p&gt;最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在stackOverflow 上找到了解决的办法,解决的方法真是格外的简单.直接看代码&lt;/p&gt;
-
-&lt;p&gt;为了让WebView控制界面里面的url跳转,我们一般都会设置WebViewClient ，并重写shouldOverrideUrlLoading方法，让webView加载点击url,一般的例子代码如下:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;webView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setWebViewClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;WebViewClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shouldOverrideUrlLoading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WebView&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;loadUrl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;解决办法:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;webView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setWebViewClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;WebViewClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shouldOverrideUrlLoading&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WebView&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:&lt;/p&gt;
-
-&lt;p&gt;Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.&lt;/p&gt;
-
-&lt;p&gt;就是说如果application处理这个url则返回true,如果WebView处理这个url则返回false.我们让WebView处理了这个url就应该返回false,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.&lt;/p&gt;
-
-&lt;p&gt;后来我又看了一下WebViewClient的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;onPageStarted 在页面加载开始时调用.&lt;/li&gt;
-&lt;li&gt;onPageFinished 在页面加载结束时调用.&lt;/li&gt;
-&lt;li&gt;onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;如果你还需要更丰富的处理效果那么推荐你用WebChromeClient.&lt;/p&gt;
-
-&lt;p&gt;ps: 最近国内github好不稳定啊，大家还是翻墙吧.&lt;/p&gt;
 </content>
     </entry>
     
