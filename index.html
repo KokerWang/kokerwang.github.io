@@ -78,37 +78,47 @@
         <div class="home">
   
   <header class="post-header">
-    <h1><a href="/2015/06/30/%E4%BD%BF%E7%94%A8Shell%E6%9D%A5%E7%BC%96%E8%AF%91Android%E9%A1%B9%E7%9B%AE.html">使用Shell来编译Android项目</a></h1>
-    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-06-30&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#Shell">Shell</a></p>
+    <h1><a href="/2015/07/25/%E4%BD%A0%E8%AF%95%E8%BF%87%E8%BF%99%E6%A0%B7%E5%88%86%E6%9E%90Android%E7%95%8C%E9%9D%A2%E4%B9%88.html">你试过这样分析Android界面么</a></h1>
+    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-07-25&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#工作总结">工作总结</a></p>
   </header>
   <article class="post-content">
-  <h3>序</h3>
+  <h3>前言</h3>
 
-<p>使用Gradle构建项目很久了，为了少敲命令行，我自己写了个简单的Shell脚本来Help me，Ha Ha Ha。。。</p>
+<p>常常有时候界面不是我们自己写的需要我们去改，常常有时候我们需要参考别人的APP的布局来写自己的应用，常常有时候我们自己写的界面需要调试一些隐藏界面。难，怎么办，我来教你一个办法。</p>
 
-<h3>脚本</h3>
+<h3>正题</h3>
 
-<p>在项目目录下(不是app moudle目录下) 建一个Shell脚本b.sh,内容如下:</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/bin/sh</span>
-<span class="n">echo</span> <span class="s">&quot;清理缓存...&quot;</span>
-<span class="o">./</span><span class="n">gradlew</span> <span class="n">clean</span>
-<span class="n">echo</span> <span class="s">&quot;清理成功&quot;</span>
-<span class="n">echo</span> <span class="s">&quot;开始编译...&quot;</span>
-<span class="o">./</span><span class="n">gradlew</span> <span class="n">build</span>
-<span class="n">echo</span> <span class="s">&quot;编译成功&quot;</span>
-<span class="nb">open</span> <span class="o">./</span><span class="n">app</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">outputs</span><span class="o">/</span><span class="n">apk</span><span class="o">/</span>
-</code></pre></div>
-<p>注：如果你的moudle名字不是app 那你就把脚本里面的app 改名成你自己的moudle名字</p>
+<p>在Android开发者选项里面有几个设置大家可能没注意到过，我要说的就是通过那里面的设置来分析，首先打开开发者选项，勾上显示布局界限，然后如下图：</p>
 
-<p>以后需要构建项目的话直接在Terminal里面敲sh b.sh就可以啦</p>
+<p><img src="/img/20150725141853.png" alt=""></p>
 
-<p>刚开始学Shell,脚本比较简单，不过也算是学以致用了。</p>
+<p>上图中图四个蓝色尖角包着的就是这个组件的大小，矩形外面的紫色（粉色）部分就是margin的宽度，而组件内部如果有空白的话一般就是padding，但是不排除是图片的白色边框，同时，如果有隐藏组件的话也会在这个模式下显示出来，读者可以自己亲自测试一下，另外呢，也可以用这个模式来区分组件是原生的还是嵌进去的web页，查看组件变化的时候的移动过程等，尤其是在UI显示异常的时候特别有用。总之，用处多多。</p>
+
+<h3>其他</h3>
+
+<p>除了这个功能，在开发者选项里面还有一些其他的功能也挺有用的，比如:</p>
+
+<blockquote>
+<ul>
+<li>保持唤醒状态———— 可以让你在测试的实惠手机不锁屏。</li>
+<li>指针位置————这个不多说啦，除了位置还可以看出来速度，比自己用Log看方便些。</li>
+<li>显示所有ANR————这个我觉得还是有用的，要不只是一闪而过。</li>
+<li>不保持活动项————这个建议不要开，因为有时候需要调试一些后台的程序。</li>
+</ul>
+</blockquote>
 
   </article>
   
   <ul class="posts">
     <!-- <li class="listing-seperator">Yesterday you said tomorrow</li> -->
   
+  
+    
+    
+    <li class="listing-item">
+      <time datetime="2015-07-25">2015-07-25</time>
+      <a href="/2015/07/25/%E4%BD%A0%E8%AF%95%E8%BF%87%E8%BF%99%E6%A0%B7%E5%88%86%E6%9E%90Android%E7%95%8C%E9%9D%A2%E4%B9%88.html" title="你试过这样分析Android界面么">你试过这样分析Android界面么</a>
+    </li>
   
     
     
