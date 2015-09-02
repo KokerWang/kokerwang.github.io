@@ -81,7 +81,7 @@
         <p class="meta"><i class="fa fa-calendar"></i> 2014-09-30&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
     </header>
     <article class="post-content">
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.</p>
+        <p>今天项目中即时通信工具部分要把好友头像由方形转换成圆形,大概也是跟上时代的潮流吧,毕竟连qq都开始使用圆形头像了,我在这里记录一下修改过程.</p>
 
 <p>在网上找了一番之后,大概解决方法有两种</p>
 
@@ -92,7 +92,7 @@
 </ul>
 </blockquote>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一种方式,有许多开源框架可以实现,如<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>CircleImageView</strong></a>&nbsp;,由于我们项目中图片缓存及显示使用的是<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>Android-Universal-Image-Loader</strong></a>,而他本身支持在获取到网络图片之后增加回调,那我毫无疑问的选择了第二种方式实现,</p>
+<p>第一种方式,有许多开源框架可以实现,如<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>CircleImageView</strong></a>&nbsp;,由于我们项目中图片缓存及显示使用的是<a href="https://github.com/nostra13/Android-Universal-Image-Loader"><strong>Android-Universal-Image-Loader</strong></a>,而他本身支持在获取到网络图片之后增加回调,那我毫无疑问的选择了第二种方式实现,</p>
 
 <p>首先是圆形图片转换的方法</p>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
