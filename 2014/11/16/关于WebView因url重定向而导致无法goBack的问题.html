@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>KokerWang's Blog</title>
+<title>关于WebView因url重定向而导致无法goBack的问题</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="keywords" content="android,Open Source,kokerwang,swift"/>
 <meta name="author" content="KokerWang"/> 
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/">
+<link rel="canonical" href="http://www.kokerwang.com/2014/11/16/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -75,49 +75,60 @@
 
 <div class="page-content">
     <div class="wrap">
-        <div class="home">
-  
-  <header class="post-header">
-    <h1><a href="/2015/07/25/%E4%BD%A0%E8%AF%95%E8%BF%87%E8%BF%99%E6%A0%B7%E5%88%86%E6%9E%90Android%E7%95%8C%E9%9D%A2%E4%B9%88.html">你试过这样分析Android界面么</a></h1>
-    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-07-25&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#工作总结">工作总结</a></p>
-  </header>
-  <article class="post-content">
-  <h3>前言</h3>
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2014/11/16/%E5%85%B3%E4%BA%8EWebView%E5%9B%A0url%E9%87%8D%E5%AE%9A%E5%90%91%E8%80%8C%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95goBack%E7%9A%84%E9%97%AE%E9%A2%98.html">关于WebView因url重定向而导致无法goBack的问题</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2014-11-16&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <p>最近项目中有一些界面需要嵌入wap页，在按返回键的时候让WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常goBack,原因是,退回重定向之前的url又被重定向了回来,网上的解决办法是自己控制一个url集合,我试了一下非常麻烦,因为我们还需要goForward 功能,仅仅使用一个LinkedList还满足不了需求.最终还是放弃了这样的做法,后来终于在stackOverflow 上找到了解决的办法,解决的方法真是格外的简单.直接看代码</p>
 
-<p>常常有时候界面不是我们自己写的需要我们去改，常常有时候我们需要参考别人的APP的布局来写自己的应用，常常有时候我们自己写的界面需要调试一些隐藏界面。难，怎么办，我来教你一个办法。</p>
+<p>为了让WebView控制界面里面的url跳转,我们一般都会设置WebViewClient ，并重写shouldOverrideUrlLoading方法，让webView加载点击url,一般的例子代码如下:</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">webView</span><span class="o">.</span><span class="na">setWebViewClient</span><span class="o">(</span><span class="k">new</span> <span class="nf">WebViewClient</span><span class="o">()</span> <span class="o">{</span>
 
-<h3>正题</h3>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">shouldOverrideUrlLoading</span><span class="o">(</span><span class="n">WebView</span> <span class="n">view</span><span class="o">,</span> <span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">view</span><span class="o">.</span><span class="na">loadUrl</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div>
+<p>解决办法:</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">webView</span><span class="o">.</span><span class="na">setWebViewClient</span><span class="o">(</span><span class="k">new</span> <span class="nf">WebViewClient</span><span class="o">()</span> <span class="o">{</span>
 
-<p>在Android开发者选项里面有几个设置大家可能没注意到过，我要说的就是通过那里面的设置来分析，首先打开开发者选项，勾上显示布局界限，然后如下图：</p>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">shouldOverrideUrlLoading</span><span class="o">(</span><span class="n">WebView</span> <span class="n">view</span><span class="o">,</span> <span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
 
-<p><img src="/img/20150725141853.png" alt=""></p>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div>
+<p>万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:</p>
 
-<p>上图中图四个蓝色尖角包着的就是这个组件的大小，矩形外面的紫色（粉色）部分就是margin的宽度，而组件内部如果有空白的话一般就是padding，但是不排除是图片的白色边框，同时，如果有隐藏组件的话也会在这个模式下显示出来，读者可以自己亲自测试一下，另外呢，也可以用这个模式来区分组件是原生的还是嵌进去的web页，查看组件变化的时候的移动过程等，尤其是在UI显示异常的时候特别有用。总之，用处多多。</p>
+<p>Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.</p>
 
-<h3>其他</h3>
+<p>就是说如果application处理这个url则返回true,如果WebView处理这个url则返回false.我们让WebView处理了这个url就应该返回false,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.</p>
 
-<p>除了这个功能，在开发者选项里面还有一些其他的功能也挺有用的，比如:</p>
+<p>后来我又看了一下WebViewClient的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:</p>
 
 <blockquote>
 <ul>
-<li>保持唤醒状态———— 可以让你在测试的实惠手机不锁屏。</li>
-<li>指针位置————这个不多说啦，除了位置还可以看出来速度，比自己用Log看方便些。</li>
-<li>显示所有ANR————这个我觉得还是有用的，要不只是一闪而过。</li>
-<li>不保持活动项————这个建议不要开，因为有时候需要调试一些后台的程序。</li>
+<li>onPageStarted 在页面加载开始时调用.</li>
+<li>onPageFinished 在页面加载结束时调用.</li>
+<li>onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.</li>
 </ul>
 </blockquote>
 
-  </article>
-  
-  <ul class="posts">
-    <!-- <li class="listing-seperator">Yesterday you said tomorrow</li> -->
-  
-  
-    
-    
-    
-    <li class="listing-seperator"><a href="/archive/">Long ago</a></li>
-  </ul>
+<p>如果你还需要更丰富的处理效果那么推荐你用WebChromeClient.</p>
+
+<p>ps: 最近国内github好不稳定啊，大家还是翻墙吧.</p>
+
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2014/11/16/关于WebView因url重定向而导致无法goBack的问题"  data-title="关于WebView因url重定向而导致无法goBack的问题 - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
 </div>
 
     </div>

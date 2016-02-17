@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>KokerWang's Blog</title>
+<title>Swift通过代码启动Storyboard内的ViewController</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="keywords" content="android,Open Source,kokerwang,swift"/>
 <meta name="author" content="KokerWang"/> 
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/">
+<link rel="canonical" href="http://www.kokerwang.com/2015/03/13/Swift%E9%80%9A%E8%BF%87%E4%BB%A3%E7%A0%81%E5%90%AF%E5%8A%A8Storyboard%E5%86%85%E7%9A%84ViewController.html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -75,49 +75,40 @@
 
 <div class="page-content">
     <div class="wrap">
-        <div class="home">
-  
-  <header class="post-header">
-    <h1><a href="/2015/07/25/%E4%BD%A0%E8%AF%95%E8%BF%87%E8%BF%99%E6%A0%B7%E5%88%86%E6%9E%90Android%E7%95%8C%E9%9D%A2%E4%B9%88.html">你试过这样分析Android界面么</a></h1>
-    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-07-25&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#工作总结">工作总结</a></p>
-  </header>
-  <article class="post-content">
-  <h3>前言</h3>
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2015/03/13/Swift%E9%80%9A%E8%BF%87%E4%BB%A3%E7%A0%81%E5%90%AF%E5%8A%A8Storyboard%E5%86%85%E7%9A%84ViewController.html">Swift通过代码启动Storyboard内的ViewController</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-03-13&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#IOS">IOS</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#Swift">Swift</a></p>
+    </header>
+    <article class="post-content">
+        <h3>前言</h3>
 
-<p>常常有时候界面不是我们自己写的需要我们去改，常常有时候我们需要参考别人的APP的布局来写自己的应用，常常有时候我们自己写的界面需要调试一些隐藏界面。难，怎么办，我来教你一个办法。</p>
+<p>IOS设计布局的方式有3种，1、代码编写，2、xib文件，3、storyboard，三种方式的好坏及使用我就不细说了，网上资料很多，我这里主要说下我在使用storyboard中遇到的问题。</p>
 
-<h3>正题</h3>
+<h3>问题</h3>
 
-<p>在Android开发者选项里面有几个设置大家可能没注意到过，我要说的就是通过那里面的设置来分析，首先打开开发者选项，勾上显示布局界限，然后如下图：</p>
+<p>storyboard是Apple最新的设计界面的方式。第一次使用我就被他的功能所吸引，简直比Android的方便了不止10倍，集设计和交互，编码为一身，基本上都可以作为原型开发工具了。作为初学者，我在选择界面开发的时候果断的选择了storyboard，可是在使用他的时候出现了问题，问题是这样的，启动应用首先是闪屏，然后根据是否登录分别进入登录页或者主页。这个时候我通过普通的方式启动ViewController发现一片漆黑。即使在storyboard里面绑定了对应的ViewController也是如此。</p>
 
-<p><img src="/img/20150725141853.png" alt=""></p>
+<h3>解决</h3>
 
-<p>上图中图四个蓝色尖角包着的就是这个组件的大小，矩形外面的紫色（粉色）部分就是margin的宽度，而组件内部如果有空白的话一般就是padding，但是不排除是图片的白色边框，同时，如果有隐藏组件的话也会在这个模式下显示出来，读者可以自己亲自测试一下，另外呢，也可以用这个模式来区分组件是原生的还是嵌进去的web页，查看组件变化的时候的移动过程等，尤其是在UI显示异常的时候特别有用。总之，用处多多。</p>
+<p>现如今网上Swift的资料甚是稀缺，这个问题我解决了好久，后来想到通过xib方式启动ViewController的时候可以加一个xibname的属性来加载xib文件，那么有没有这样的一种方式也能启动ViewController的时候同时加载storyboard呢，后来我发现OC有这样的一种方式，我对着OC的代码又查了Swift的API发现果然不出我所料。具体代码如下：</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="n">story</span> <span class="o">=</span>  <span class="bp">UIStoryboard</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Main&quot;</span><span class="p">,</span> <span class="nl">bundle</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+<span class="k">var</span> <span class="n">controller</span> <span class="o">=</span> <span class="n">story</span><span class="p">.</span><span class="n">instantiateViewControllerWithIdentifier</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span> 
+                <span class="kt">as</span> <span class="bp">UIViewController</span>
+<span class="nb">self</span><span class="p">.</span><span class="n">presentViewController</span><span class="p">(</span><span class="n">controller</span><span class="p">,</span> <span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">nil</span><span class="p">)</span>
+</code></pre></div>
+<p>其中id为UIViewController在storyboard属性面板中的Storyboard ID， 这样就可以实现一个storyboard文件设计所有的UIViewController了 在跳转的时候需要逻辑的时候就使用代码的方式，不需要逻辑的时候就直接使用Segue。这样的方式适合一个人开发，或者前期设计的时候使用。因为所有的布局在一个文件里面多人操作提交的时候容易出错。不过好像新版的已经解决的git提交识别问题了。不过这也不是什么大问题啦。</p>
 
-<h3>其他</h3>
+<h3>Ps</h3>
 
-<p>除了这个功能，在开发者选项里面还有一些其他的功能也挺有用的，比如:</p>
+<p>其实我在想到这样的解决方案的时候没有写的这么简单的，在弄了好久没有解决的时候我临时的方案是使用xib，类似Android的布局与代码解耦的方式类似。布局在xib文件里面，逻辑在UIViewController里面，这样也解决了本文的问题，只是有好东西不能用心里不舒服啊，终于在昨晚3点的时候灵光一闪想到了解决方法。今天一来测试，果然不出所料。至此我可以正式踏入IOS的大门啦，甚是欢喜。</p>
 
-<blockquote>
-<ul>
-<li>保持唤醒状态———— 可以让你在测试的实惠手机不锁屏。</li>
-<li>指针位置————这个不多说啦，除了位置还可以看出来速度，比自己用Log看方便些。</li>
-<li>显示所有ANR————这个我觉得还是有用的，要不只是一闪而过。</li>
-<li>不保持活动项————这个建议不要开，因为有时候需要调试一些后台的程序。</li>
-</ul>
-</blockquote>
-
-  </article>
-  
-  <ul class="posts">
-    <!-- <li class="listing-seperator">Yesterday you said tomorrow</li> -->
-  
-  
-    
-    
-    
-    <li class="listing-seperator"><a href="/archive/">Long ago</a></li>
-  </ul>
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2015/03/13/Swift通过代码启动Storyboard内的ViewController"  data-title="Swift通过代码启动Storyboard内的ViewController - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
 </div>
 
     </div>

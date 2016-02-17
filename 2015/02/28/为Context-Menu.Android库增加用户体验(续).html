@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>KokerWang's Blog</title>
+<title>为Context-Menu.Android库增加用户体验(续)</title>
 <link rel="shortcut icon" href=" /img/github.ico"/>
 <link rel="bookmark" href="/img/github.ico"/>
 <meta name="keywords" content="android,Open Source,kokerwang,swift"/>
 <meta name="author" content="KokerWang"/> 
 <meta name="viewport" content="width=device-width">
 <meta name="description" content="我大步走大步跑，我没有追我不会累">
-<link rel="canonical" href="http://www.kokerwang.com/">
+<link rel="canonical" href="http://www.kokerwang.com/2015/02/28/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C(%E7%BB%AD).html">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/github.css">
@@ -75,49 +75,55 @@
 
 <div class="page-content">
     <div class="wrap">
-        <div class="home">
-  
-  <header class="post-header">
-    <h1><a href="/2015/07/25/%E4%BD%A0%E8%AF%95%E8%BF%87%E8%BF%99%E6%A0%B7%E5%88%86%E6%9E%90Android%E7%95%8C%E9%9D%A2%E4%B9%88.html">你试过这样分析Android界面么</a></h1>
-    <p class="meta"><i class="fa fa-calendar"></i>&nbsp;2015-07-25&nbsp;&nbsp;&nbsp;<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;<a href="/tags/#工作总结">工作总结</a></p>
-  </header>
-  <article class="post-content">
-  <h3>前言</h3>
+        <div class="post">
+    <header class="post-header">
+        <h1><a href="/2015/02/28/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C(%E7%BB%AD).html">为Context-Menu.Android库增加用户体验(续)</a></h1>
+        <p class="meta"><i class="fa fa-calendar"></i> 2015-02-28&nbsp&nbsp&nbsp<i class="fa fa-folder-open"></i> <a href="/categories/#Android">Android</a> &nbsp&nbsp&nbsp<i class="fa fa-tags"></i>&nbsp&nbsp<a href="/tags/#工作总结">工作总结</a></p>
+    </header>
+    <article class="post-content">
+        <h3>前言</h3>
 
-<p>常常有时候界面不是我们自己写的需要我们去改，常常有时候我们需要参考别人的APP的布局来写自己的应用，常常有时候我们自己写的界面需要调试一些隐藏界面。难，怎么办，我来教你一个办法。</p>
+<p>在我的另一篇博客<a href="http://www.kokerwang.com/2015/01/25/%E4%B8%BAContext-Menu.Android%E5%BA%93%E5%A2%9E%E5%8A%A0%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C.html">为Context-Menu.Android库增加用户体验</a>里面留下了一个遗留问题就是给DialogFragment添加OnKeyListener，当时朋友说这个很不好弄，加上当时项目比较紧自己也没有细细研究就把问题放了下来。今天在写PubDialog这个项目的时候又遇到了同样的问题，总不能再撂下吧，于是自己抱着试试的心态来解决这个问题，没想到这个问题原来如此简单。</p>
 
-<h3>正题</h3>
+<h3>解决</h3>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="n">View</span> <span class="nf">onCreateView</span><span class="o">(</span><span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">,</span>
+             <span class="n">ViewGroup</span> <span class="n">container</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
 
-<p>在Android开发者选项里面有几个设置大家可能没注意到过，我要说的就是通过那里面的设置来分析，首先打开开发者选项，勾上显示布局界限，然后如下图：</p>
+    <span class="cm">/* do something */</span>
 
-<p><img src="/img/20150725141853.png" alt=""></p>
+    <span class="n">getDialog</span><span class="o">().</span><span class="na">setOnKeyListener</span><span class="o">(</span><span class="k">new</span> <span class="n">DialogInterface</span><span class="o">.</span><span class="na">OnKeyListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onKey</span><span class="o">(</span><span class="n">DialogInterface</span> <span class="n">dialog</span><span class="o">,</span> <span class="kt">int</span> <span class="n">keyCode</span><span class="o">,</span>
+                             <span class="n">KeyEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+            <span class="cm">/* 处理 */</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+    <span class="k">return</span> <span class="n">rootView</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>就是如此简单！！</p>
 
-<p>上图中图四个蓝色尖角包着的就是这个组件的大小，矩形外面的紫色（粉色）部分就是margin的宽度，而组件内部如果有空白的话一般就是padding，但是不排除是图片的白色边框，同时，如果有隐藏组件的话也会在这个模式下显示出来，读者可以自己亲自测试一下，另外呢，也可以用这个模式来区分组件是原生的还是嵌进去的web页，查看组件变化的时候的移动过程等，尤其是在UI显示异常的时候特别有用。总之，用处多多。</p>
+<h3>拓展</h3>
 
-<h3>其他</h3>
+<p>该Dialog 有大片的空白区域我顺便在下方做了一个小的Tip区，每次取出一条提示在里面展示。
+如图：</p>
 
-<p>除了这个功能，在开发者选项里面还有一些其他的功能也挺有用的，比如:</p>
+<p><img src="/img/20150228181307.jpg" alt="tool-editor"></p>
 
-<blockquote>
-<ul>
-<li>保持唤醒状态———— 可以让你在测试的实惠手机不锁屏。</li>
-<li>指针位置————这个不多说啦，除了位置还可以看出来速度，比自己用Log看方便些。</li>
-<li>显示所有ANR————这个我觉得还是有用的，要不只是一闪而过。</li>
-<li>不保持活动项————这个建议不要开，因为有时候需要调试一些后台的程序。</li>
-</ul>
-</blockquote>
+<p>同时把这个项目放在Github上了</p>
 
-  </article>
-  
-  <ul class="posts">
-    <!-- <li class="listing-seperator">Yesterday you said tomorrow</li> -->
-  
-  
-    
-    
-    
-    <li class="listing-seperator"><a href="/archive/">Long ago</a></li>
-  </ul>
+<p><a href="https://github.com/KokerWang/Sack">地址</a> </p>
+
+<p>需要的可以拿去</p>
+
+    </article>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments">
+        <div class="ds-thread" data-thread-key="/2015/02/28/为Context-Menu.Android库增加用户体验(续)"  data-title="为Context-Menu.Android库增加用户体验(续) - KokerWang's Blog"></div>
+    </div>
+<!-- Duoshuo Comment END -->
 </div>
 
     </div>
