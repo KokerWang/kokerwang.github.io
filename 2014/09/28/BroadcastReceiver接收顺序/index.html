@@ -10,7 +10,7 @@
     
     <title>
         
-            关于我 | 
+            BroadcastReceiver 接收顺序 | 
         
         Benjy&#39;s blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Benjy">
     <meta name="description" content="null">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,工作总结">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://benjyair.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="关于我 | Benjy&#39;s blog">
+    <meta property="og:title" content="BroadcastReceiver 接收顺序 | Benjy&#39;s blog">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="工作总结"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -61,8 +61,8 @@
     <![endif]-->
 
     <!-- Import CSS -->
-    <link rel="stylesheet" href="../css/material.min.css">
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
     <!-- Config CSS -->
 
 
@@ -161,14 +161,14 @@
 
 
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/queue.js"></script>
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
 
     <!-- UC Browser Compatible -->
     <script>
         var agent = navigator.userAgent.toLowerCase();
         if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../css/uc.css\">");
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
             alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
         }
     </script>
@@ -205,6 +205,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于-String-java-io-File-list"><span class="post-toc-number">1.</span> <span class="post-toc-text">关于 String[] java.io.File.list()</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -230,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                关于我
+                BroadcastReceiver 接收顺序
             </p>
         </div>
 
@@ -249,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Benjy</strong>
-        <span>3月 25, 2017</span>
+        <span>9月 28, 2014</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -273,7 +308,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="../../../../tags/工作总结/">工作总结</a>
     </ul>
     
 
@@ -289,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于我&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=BroadcastReceiver 接收顺序&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -298,7 +333,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于我&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=BroadcastReceiver 接收顺序&url=http://benjyair.github.io/&via=Benjy" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -334,19 +369,58 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>Android 开发者，J2EE 开发者，Go 爱好者，果粉。<br>喜欢不同的语言处理不同的工作。</p>
-<h3 id="关于这里"><a href="#关于这里" class="headerlink" title="关于这里"></a>关于这里</h3><p>本 Blog 主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇 Blog，力求达到精益求精。<br>分享成果，让我每天都很开心。<br>我的开源</p>
-<ol>
-<li>PubDialog<br>一款 Android 上常用的列表对话框，使用简单，功能强大，可定制性强，类似 IOS 上的 UIActionSheet。</li>
-<li>PDEXChart<br>IOS 上用 Swift 开发的图表库，在 PDChart 的基础上二次开发，支持多线图，多柱形图，不过已经废弃，改用 ios-charts 吧。</li>
-</ol>
-<h3 id="我的作品"><a href="#我的作品" class="headerlink" title="我的作品"></a>我的作品</h3><ol>
-<li>楼里</li>
-<li>京东金融数据分析 Android</li>
-<li>京东金融数据分析 IOS</li>
-<li>红茶漫游</li>
-</ol>
-<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。</p>
+        <p>今天项目里有这样一个需求，访问一个请求并把手机号作为参数传过去，同时拦截收到的短信验证码，自动填进 EditText，一个看似很简单的功能。然而在真机上测试竟然没有拦截到，把优先级调到最大也无济于事。</p>
+<p>四处寻访，原来 BroadcastReceiver 除了有优先级顺序之外，还有注册的顺序。</p>
+<p>大家都知道广播分有序广播和无序广播，有序广播和无序广播的区别就是，有序广播可以被任何一个接受者消耗掉，而无序广播则不可以，注册的话既可以在代码里面动态注册，也可以在 Manifest 里面直接声明，屌丝青年大多会直接在 Manifest 里面定义注册，文艺青年一般使用代码动态注册。这两种方式接受的广播的顺序是不一样的。</p>
+<p>一般来说有序广播在同等优先级的情况下有这样的顺序</p>
+<blockquote>
+<ul>
+<li>动态注册的 BroadcastReceiver，先注册的先接收</li>
+<li>Manifest 里注册的 BroadcastReceiver，接收广播的顺序与 String[] java.io.File.list() 顺序一致</li>
+</ul>
+</blockquote>
+<p>在不同优先级的情况下</p>
+<blockquote>
+<ul>
+<li>有序广播按优先级顺序接收</li>
+<li>无序广播因为是异步的所以接收 Broadcast 的顺序不确定。</li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>假设有如下优先级的 5 个接收器  并且 B 先于 C 注册</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.动态A（优先级=1）</td>
+</tr>
+<tr>
+<td>2.动态B（优先级=2）</td>
+</tr>
+<tr>
+<td>3.动态C（优先级=2）</td>
+</tr>
+<tr>
+<td>4.静态D（优先级=1)</td>
+</tr>
+<tr>
+<td>5.静态E（优先级=2）</td>
+</tr>
+<tr>
+<td>那么实际接收顺序应为：  B C E A D</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="关于-String-java-io-File-list"><a href="#关于-String-java-io-File-list" class="headerlink" title="关于 String[] java.io.File.list()"></a>关于 String[] java.io.File.list()</h2><p>我们以开机时候发出的广播 android.intent.action.BOOT_COMPLETED 为例，这是个无序广播。如果应用想要开启自启动，那么就要监听这个广播，程序启动之前，动态广播接收器肯定是无法使用的，只能在 XML 中静态注册。大家都知道，第三方应用是存放在 /data/app 目录下，当安装完毕之后，你会找到一个文件，他的名字是以与安装的应用包名开始的，然后可能会跟着”-数字.apk”，比如：com.android.test-1.apk。接收的顺序与这个名字是有关的！那么关系是怎样的呢？</p>
+<blockquote>
+<ul>
+<li>系统在开机的时候，会按着一个顺序解析apk，首先，会解析手机中的 /system/framework 这个目录，原生系统中，这下面就一个 apk - framework-res.apk，当然各个厂商也会加入自己的内容</li>
+<li>然后受到重视的文件夹按顺序分别为：<br>/system/app，<br>/vendor/app，<br>/data/app，<br>/drm/app-private<br>那么每个文件夹下解析的顺序是怎样的呢？我们先只看 /data/app，也就是用户安装的第三方应用的存放位置，这与下面代码返回结果的顺序是一致的<br>File file = new File(“/data/app/“);<br>String[] files = file.list();<br>也就是说，我们按顺序打印这个数组，就能知道哪个接收器会先接收到这个广播，哪个会后接收到。</li>
+</ul>
+</blockquote>
 
     
 
@@ -369,6 +443,14 @@
             <!-- Post Prev & Next Nav -->
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
+    
+        <a href="/2014/09/30/Android简单实现圆形头像/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
     
 
     <!-- Section Spacer -->
@@ -460,7 +542,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
             </ul>
         </li>
         
@@ -586,6 +668,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -664,9 +754,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                     <!-- Import File -->
-<script src="../js/lazyload.min.js"></script>
-<script src="../js/js.min.js"></script>
-<script src="../js/nprogress.js"></script>
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
 
 <script type="text/javascript">
     NProgress.configure({

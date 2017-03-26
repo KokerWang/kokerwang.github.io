@@ -10,7 +10,7 @@
     
     <title>
         
-            关于我 | 
+            策略枚举 | 
         
         Benjy&#39;s blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Benjy">
     <meta name="description" content="null">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,读书笔记">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://benjyair.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="关于我 | Benjy&#39;s blog">
+    <meta property="og:title" content="策略枚举 | Benjy&#39;s blog">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="读书笔记"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -61,8 +61,8 @@
     <![endif]-->
 
     <!-- Import CSS -->
-    <link rel="stylesheet" href="../css/material.min.css">
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
     <!-- Config CSS -->
 
 
@@ -161,14 +161,14 @@
 
 
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/queue.js"></script>
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
 
     <!-- UC Browser Compatible -->
     <script>
         var agent = navigator.userAgent.toLowerCase();
         if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../css/uc.css\">");
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
             alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
         }
     </script>
@@ -205,6 +205,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#举个栗子"><span class="post-toc-number">1.</span> <span class="post-toc-text">举个栗子</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -230,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                关于我
+                策略枚举
             </p>
         </div>
 
@@ -249,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Benjy</strong>
-        <span>3月 25, 2017</span>
+        <span>2月 27, 2015</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -273,7 +308,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="../../../../tags/读书笔记/">读书笔记</a>
     </ul>
     
 
@@ -289,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于我&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=策略枚举&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -298,7 +333,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于我&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=策略枚举&url=http://benjyair.github.io/&via=Benjy" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -334,19 +369,16 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>Android 开发者，J2EE 开发者，Go 爱好者，果粉。<br>喜欢不同的语言处理不同的工作。</p>
-<h3 id="关于这里"><a href="#关于这里" class="headerlink" title="关于这里"></a>关于这里</h3><p>本 Blog 主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇 Blog，力求达到精益求精。<br>分享成果，让我每天都很开心。<br>我的开源</p>
-<ol>
-<li>PubDialog<br>一款 Android 上常用的列表对话框，使用简单，功能强大，可定制性强，类似 IOS 上的 UIActionSheet。</li>
-<li>PDEXChart<br>IOS 上用 Swift 开发的图表库，在 PDChart 的基础上二次开发，支持多线图，多柱形图，不过已经废弃，改用 ios-charts 吧。</li>
-</ol>
-<h3 id="我的作品"><a href="#我的作品" class="headerlink" title="我的作品"></a>我的作品</h3><ol>
-<li>楼里</li>
-<li>京东金融数据分析 Android</li>
-<li>京东金融数据分析 IOS</li>
-<li>红茶漫游</li>
-</ol>
-<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。</p>
+        <p>搞 Java 的一定听说过设计模式中的策略模式，具体这个模式的优点我就不细说了，这里讲的并非策略模式而是和策略模式类同却比策略模式简便的东西————策略枚举（strategy enum）</p>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><p>考虑用一个枚举表示薪资包中的工作天数，这个枚举有一个方法，根据给定某工人的基本工资(按小时)以及当天的工作时间，来计算他当天的报酬。在五个工作日中，超过正常八个小时的工作时间都会产生加班工资；在双休日中，所有的工作都产生加班工资。利用 switch 语句，很容易将多个 case 标签分别应用到两个代码片段中，来完成这一计算。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">enum</span> PayrollDay &#123;</div><div class="line">    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HOURS_PER_SHIFT = <span class="number">8</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">pay</span><span class="params">(<span class="keyword">double</span> hoursWorked, <span class="keyword">double</span> payRate)</span> </span>&#123;</div><div class="line">        <span class="keyword">double</span> basePay = hoursWorked * payRate;</div><div class="line">        <span class="keyword">double</span> overtimePay;</div><div class="line">        <span class="keyword">switch</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            <span class="keyword">case</span> SATURDAY:</div><div class="line">            <span class="keyword">case</span> SUNDAY:</div><div class="line">                overtimePay = hoursWorked * payRate / <span class="number">2</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                overtimePay = hoursWorked &lt;= HOURS_PER_SHIFT ?</div><div class="line">                <span class="number">0</span> : (hoursWorked - HOURS_PER_SHIFT) * payRate / <span class="number">2</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> basePay + overtimePay;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不可否认，这段代码十分简洁，但是从维护的角度来看，它非常危险。假设将一个元素添加到该枚举中，或许是一个表示假期天数的特殊值，但是忘记给 switch 语句添加相应的 case。程序依然可以编译，但 pay 方法会悄悄的将假期工资计算成与正常工作日的相同。</p>
+<p>为了利用特定于常量的方法实现安全的执行工资计算，你可能必须重复计算每个常量的加班工资，或者将计算移到两个辅助方法中(一个用来计算工作日，一个用来计算双休日)，并从每个常量调用相应的辅助方法。这任何一种方法都会产生相当数量的样板代码，结果降低了可读性，并增加了出错的几率。</p>
+<p>通过用计算工作日加班工资的具体方法代替 PayrollDay 中抽象的 overtimePay 方法，可以减少样板代码。这样，就只有双休日必须覆盖该方法了。但是这样也有着与 switch 语句一样的不足：如果又增加了一天而没有覆盖 overtimePay 方法，就会悄悄的延续工作日的计算。</p>
+<p>你真正想要的就出每当添加一个枚举常量时，就强制选择一种加班报酬策略。幸运的是，有一种很好的办法可以实现这一点。这种想法就是将加班工资计算移到一个私有的嵌套枚举中，将这个策略枚举的实例传到 PayrollDay 枚举的构造器中。之后 PayrollDay 枚举将加班工资计算委托给策略枚举，PayrollDay 中就不需要switch语句或特定与常量的方法实现了。这种模式虽然没有 switch 语句那么简洁，但是更安全，也更加灵活。<br>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">enum</span> PayrollDay &#123;</div><div class="line">    MONDAY(PayType.WEEKDAY), TUESDAY(PayType.WEEKDAY),</div><div class="line">    WEDNESDAY(PayType.WEEKDAY), THURSDAY(PayType.WEEKDAY),</div><div class="line">    FRIDAY(PayType.WEEKDAY), SATURDAY(PayType.WEEKEND),</div><div class="line">    SUNDAY(PayType.WEEKEND);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> PayType payType;</div><div class="line"></div><div class="line">    PayrollDay(PayType payType) &#123;</div><div class="line">        <span class="keyword">this</span>.payType = payType;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">pay</span><span class="params">(<span class="keyword">double</span> hoursWorked, <span class="keyword">double</span> payRate)</span> </span>&#123;</div><div class="line">        <span class="keyword">double</span> basePay = hoursWorked * payRate;</div><div class="line">        <span class="keyword">return</span> basePay + payType.overtimePay(hoursWorked, payRate);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">enum</span> PayType &#123;</div><div class="line">        WEEKDAY &#123;</div><div class="line">            <span class="function"><span class="keyword">double</span> <span class="title">overtimePay</span><span class="params">(<span class="keyword">double</span> hours, <span class="keyword">double</span> payRate)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> hours &lt;= HOURS_PER_SHIFT ? </div><div class="line">                <span class="number">0</span> : (hours - HOURS_PER_SHIFT) * payRate / <span class="number">2</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        WEEKEND &#123;</div><div class="line">            <span class="function"><span class="keyword">double</span> <span class="title">overtimePay</span><span class="params">(<span class="keyword">double</span> hours, <span class="keyword">double</span> payRate)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> hours * payRate / <span class="number">2</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HOURS_PER_SHIFT = <span class="number">8</span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">overtimePay</span><span class="params">(<span class="keyword">double</span> hours, <span class="keyword">double</span> payRate)</span></span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">double</span> <span class="title">pay</span><span class="params">(<span class="keyword">double</span> hoursWorked, <span class="keyword">double</span> payRate)</span> </span>&#123;</div><div class="line">            <span class="keyword">double</span> basePay = hoursWorked * payRate;</div><div class="line">            <span class="keyword">return</span> basePay + overtimePay(hoursWorked, payRate);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总而言之， 如果多个枚举常量同时共享相同的行为，则考虑策略枚举</p>
+<p>————摘自《Effective Java》 </p>
 
     
 
@@ -370,11 +402,27 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2015/02/28/为Context-Menu.Android库增加用户体验(续)/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2015/02/27/PubDialog----一个简单的提示对话框/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -460,7 +508,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
             </ul>
         </li>
         
@@ -586,6 +634,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -664,9 +720,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                     <!-- Import File -->
-<script src="../js/lazyload.min.js"></script>
-<script src="../js/js.min.js"></script>
-<script src="../js/nprogress.js"></script>
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
 
 <script type="text/javascript">
     NProgress.configure({

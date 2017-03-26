@@ -10,7 +10,7 @@
     
     <title>
         
-            关于我 | 
+            关于 WebView 因 url 重定向而导致无法 goBack 的问题 | 
         
         Benjy&#39;s blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Benjy">
     <meta name="description" content="null">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,工作总结">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://benjyair.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="关于我 | Benjy&#39;s blog">
+    <meta property="og:title" content="关于 WebView 因 url 重定向而导致无法 goBack 的问题 | Benjy&#39;s blog">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="工作总结"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -61,8 +61,8 @@
     <![endif]-->
 
     <!-- Import CSS -->
-    <link rel="stylesheet" href="../css/material.min.css">
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
     <!-- Config CSS -->
 
 
@@ -161,14 +161,14 @@
 
 
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/queue.js"></script>
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
 
     <!-- UC Browser Compatible -->
     <script>
         var agent = navigator.userAgent.toLowerCase();
         if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../css/uc.css\">");
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
             alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
         }
     </script>
@@ -205,6 +205,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -230,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                关于我
+                关于 WebView 因 url 重定向而导致无法 goBack 的问题
             </p>
         </div>
 
@@ -249,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Benjy</strong>
-        <span>3月 25, 2017</span>
+        <span>11月 11, 2014</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -273,7 +308,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="../../../../tags/工作总结/">工作总结</a>
     </ul>
     
 
@@ -289,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于我&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于 WebView 因 url 重定向而导致无法 goBack 的问题&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -298,7 +333,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于我&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于 WebView 因 url 重定向而导致无法 goBack 的问题&url=http://benjyair.github.io/&via=Benjy" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -334,19 +369,24 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>Android 开发者，J2EE 开发者，Go 爱好者，果粉。<br>喜欢不同的语言处理不同的工作。</p>
-<h3 id="关于这里"><a href="#关于这里" class="headerlink" title="关于这里"></a>关于这里</h3><p>本 Blog 主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇 Blog，力求达到精益求精。<br>分享成果，让我每天都很开心。<br>我的开源</p>
-<ol>
-<li>PubDialog<br>一款 Android 上常用的列表对话框，使用简单，功能强大，可定制性强，类似 IOS 上的 UIActionSheet。</li>
-<li>PDEXChart<br>IOS 上用 Swift 开发的图表库，在 PDChart 的基础上二次开发，支持多线图，多柱形图，不过已经废弃，改用 ios-charts 吧。</li>
-</ol>
-<h3 id="我的作品"><a href="#我的作品" class="headerlink" title="我的作品"></a>我的作品</h3><ol>
-<li>楼里</li>
-<li>京东金融数据分析 Android</li>
-<li>京东金融数据分析 IOS</li>
-<li>红茶漫游</li>
-</ol>
-<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。</p>
+        <p>最近项目中有一些界面需要嵌入 wap 页，在按返回键的时候让 WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却无法正常 goBack，原因是，退回重定向之前的 url 又被重定向了回来,网上的解决办法是自己控制一个 url 集合,我试了一下非常麻烦,因为我们还需要 goForward 功能,仅仅使用一个 LinkedList 还满足不了需求.最终还是放弃了这样的做法,后来终于在 stackOverflow 上找到了解决的办法,解决的方法真是格外的简单.直接看代码</p>
+<p>为了让 WebView 控制界面里面的 url 跳转,我们一般都会设置 WebViewClient ，并重写 shouldOverrideUrlLoading 方法，让 WebView 加载点击 url，一般的例子代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">webView.setWebViewClient(<span class="keyword">new</span> WebViewClient() &#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span> </span>&#123;</div><div class="line">		 view.loadUrl(url);</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>解决办法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">webView.setWebViewClient(<span class="keyword">new</span> WebViewClient() &#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span> </span>&#123;</div><div class="line">		 </div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>万万没想到解决办法就在 api 里面,shouldOverrideUrlLoading这个方法的 api 如下:</p>
+<p>Give the host application a chance to take over the control when a new url is about to be loaded in the current WebView. If WebViewClient is not provided, by default WebView will ask Activity Manager to choose the proper handler for the url. If WebViewClient is provided, return true means the host application handles the url, while return false means the current WebView handles the url.</p>
+<p>就是说如果 application 处理这个 url 则返回 true,如果 WebView 处理这个 url 则返回 false.我们让 WebView 处理了这个 url 就应该返回 false,否则相当于处理的两(多)次,而这也是这个问题出现的原因所在.</p>
+<p>后来我又看了一下 WebViewClient 的其他方法发现原来好多问题都可以在这里解决,只是之前用的不多不知道有这些方法,例如:</p>
+<blockquote>
+<ul>
+<li>onPageStarted 在页面加载开始时调用.</li>
+<li>onPageFinished 在页面加载结束时调用.</li>
+<li>onLoadResource 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次.</li>
+</ul>
+</blockquote>
+<p>如果你还需要更丰富的处理效果那么推荐你用 WebChromeClient.</p>
+<p>ps: 最近国内 github 好不稳定啊，大家还是翻墙吧.</p>
 
     
 
@@ -370,11 +410,27 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2014/11/11/Android应用内存溢出导致应用退出的解决方案/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2014/11/02/关于使用commons-codec.jar出现方法找不到的问题/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -460,7 +516,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
             </ul>
         </li>
         
@@ -586,6 +642,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -664,9 +728,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                     <!-- Import File -->
-<script src="../js/lazyload.min.js"></script>
-<script src="../js/js.min.js"></script>
-<script src="../js/nprogress.js"></script>
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
 
 <script type="text/javascript">
     NProgress.configure({

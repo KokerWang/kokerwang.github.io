@@ -10,7 +10,7 @@
     
     <title>
         
-            关于我 | 
+            一招搞定 IOS 屏幕适配 | 
         
         Benjy&#39;s blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Benjy">
     <meta name="description" content="null">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,Swift">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://benjyair.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="关于我 | Benjy&#39;s blog">
+    <meta property="og:title" content="一招搞定 IOS 屏幕适配 | Benjy&#39;s blog">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="Swift"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -61,8 +61,8 @@
     <![endif]-->
 
     <!-- Import CSS -->
-    <link rel="stylesheet" href="../css/material.min.css">
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
     <!-- Config CSS -->
 
 
@@ -161,14 +161,14 @@
 
 
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/queue.js"></script>
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
 
     <!-- UC Browser Compatible -->
     <script>
         var agent = navigator.userAgent.toLowerCase();
         if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../css/uc.css\">");
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
             alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
         }
     </script>
@@ -205,6 +205,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一个图"><span class="post-toc-number">1.</span> <span class="post-toc-text">一个图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一段话"><span class="post-toc-number">2.</span> <span class="post-toc-text">一段话</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#结束"><span class="post-toc-number">3.</span> <span class="post-toc-text">结束</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -230,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                关于我
+                一招搞定 IOS 屏幕适配
             </p>
         </div>
 
@@ -249,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Benjy</strong>
-        <span>3月 25, 2017</span>
+        <span>5月 15, 2015</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -273,7 +308,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="../../../../tags/Swift/">Swift</a>
     </ul>
     
 
@@ -289,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于我&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=一招搞定 IOS 屏幕适配&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -298,7 +333,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于我&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=一招搞定 IOS 屏幕适配&url=http://benjyair.github.io/&via=Benjy" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -334,19 +369,10 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>Android 开发者，J2EE 开发者，Go 爱好者，果粉。<br>喜欢不同的语言处理不同的工作。</p>
-<h3 id="关于这里"><a href="#关于这里" class="headerlink" title="关于这里"></a>关于这里</h3><p>本 Blog 主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇 Blog，力求达到精益求精。<br>分享成果，让我每天都很开心。<br>我的开源</p>
-<ol>
-<li>PubDialog<br>一款 Android 上常用的列表对话框，使用简单，功能强大，可定制性强，类似 IOS 上的 UIActionSheet。</li>
-<li>PDEXChart<br>IOS 上用 Swift 开发的图表库，在 PDChart 的基础上二次开发，支持多线图，多柱形图，不过已经废弃，改用 ios-charts 吧。</li>
-</ol>
-<h3 id="我的作品"><a href="#我的作品" class="headerlink" title="我的作品"></a>我的作品</h3><ol>
-<li>楼里</li>
-<li>京东金融数据分析 Android</li>
-<li>京东金融数据分析 IOS</li>
-<li>红茶漫游</li>
-</ol>
-<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。</p>
+        <p>首先从一首歌说起，你还在，你还在，头悬梁，锥刺股，做做做做适配么？你还以为使用宏定义，纯代码编写，就能高枕无忧么？你还把分辨率转像素当成当成卖身资本么？你还在格子间码子冲刺过劳死么？ no no no no no no no no no no no no ~ ~ 。人生苦短，IOS 应用适配所有 iPhone 的梦想，你可以复制。——<a href="http://www.bilibili.com/video/av1572046/" target="_blank" rel="external">挖掘机技术哪家强</a></p>
+<h3 id="一个图"><a href="#一个图" class="headerlink" title="一个图"></a>一个图</h3><p><img src="http://oneylt1vv.bkt.clouddn.com/20150515173315.png" alt="PubDialog"></p>
+<h3 id="一段话"><a href="#一段话" class="headerlink" title="一段话"></a>一段话</h3><p>第一步，第二步，就不多说了，重点是第三部。一般先点 Add Missing Constraints 增加约束，加完之后就可以适配所有的设备了。如果你动了布局点 Update Constraints 更新约束，如果布局和约束不符点 Update Frames 更新布局，如果添加了新的组件之后接着点 Add Missing Constraints 添加新的约束即可。</p>
+<h3 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h3><p>好了，就是这么简单（纯代码编写 UI 的请略过）。</p>
 
     
 
@@ -370,11 +396,27 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2015/06/30/使用Shell来编译Android项目/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2015/05/04/爬坑IOS——第一季/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -460,7 +502,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
             </ul>
         </li>
         
@@ -586,6 +628,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -664,9 +714,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                     <!-- Import File -->
-<script src="../js/lazyload.min.js"></script>
-<script src="../js/js.min.js"></script>
-<script src="../js/nprogress.js"></script>
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
 
 <script type="text/javascript">
     NProgress.configure({

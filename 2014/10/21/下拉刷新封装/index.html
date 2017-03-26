@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!-- 
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            下拉刷新封装 | 
+        
+        Benjy&#39;s blog
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
+    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/img/favicon.ico">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Benjy">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null,工作总结">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Benjy&#39;s blog">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://benjyair.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="下拉刷新封装 | Benjy&#39;s blog">
+    <meta property="og:description" content="null">
+    <meta property="og:article:tag" content="工作总结"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto， "Helvetica Neue"， Helvetica， "PingFang SC"， "Hiragino Sans GB"， "Microsoft YaHei"， "微软雅黑"， Arial， sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-image: url(/img/bg.png);
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#附"><span class="post-toc-number">3.</span> <span class="post-toc-text">附</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                下拉刷新封装
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Benjy</strong>
+        <span>10月 21, 2014</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="../../../../tags/工作总结/">工作总结</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=下拉刷新封装&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=下拉刷新封装&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://benjyair.github.io/" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>忙了两周，楼里 app 终于完成了，25号正式上线，顺便吐槽一下接私活果然好坑，特别是这种工期比较着急的，不过今天款项下来了，拿到 money 之后感觉整个人萌萌哒~~ 废话不多说，今天分享一下自己在工作中对 <a href="https://github.com/chrisbanes/Android-PullToRefresh" target="_blank" rel="external">Android-PullToRefresh</a>的封装</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>目前 Android 上实现下拉刷新的方式主要有两种:</p>
+<blockquote>
+<ul>
+<li>通过修改 HeaderView 的 Padding 实现，常见作法是使用自定义组件继承 ListView，一个类就可以搞定</li>
+<li>在 istview 底部套一层 ScrollView 或者 LinearLayout，通过移动 ListView 来实现</li>
+</ul>
+</blockquote>
+<p>第一种方法简单但是碰到复杂的 ListView，特别是带有图片的的item就会特别卡，因为主线程刷新界面也需要时间，而改变之后的效果只有刷新之后才能看到，所以给人的感觉是一顿一顿的。第二种方法就不会出现这样的效果，这里推荐的是 Android-PullToRefresh，具体使用大家可以看该项目的 demo，该项目对常见的带滑动的组件都有支持，很强大，而且可以定制。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>我的封装主要是对消息处理的封装和页码计算的封装，使你只用写自己逻辑而不用管这些细节<br>直接看代码， 首先是封装类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.louli.activity.louli;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> android.app.Activity;</div><div class="line"><span class="keyword">import</span> android.os.Message;</div><div class="line"><span class="keyword">import</span> android.widget.BaseAdapter;</div><div class="line"><span class="keyword">import</span> android.widget.ListView;</div><div class="line"><span class="keyword">import</span> android.widget.Toast;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.handmark.pulltorefresh.library.PullToRefreshBase;</div><div class="line"><span class="keyword">import</span> com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;</div><div class="line"><span class="keyword">import</span> com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;</div><div class="line"><span class="keyword">import</span> com.handmark.pulltorefresh.library.PullToRefreshListView;</div><div class="line"><span class="keyword">import</span> com.louli.community.R;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 带下拉刷新的activity 需要继承该类</div><div class="line"> * </div><div class="line"> * <span class="doctag">@author</span> KokerWang</div><div class="line"> * </div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ListViewBaseActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 分页的页码，当前第几页</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> pageCount = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 当前刷新状态　　-1　下拉　，　1　　上拉 ， 0 默认值</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> status;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取页码   如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法，自己记录页码</div><div class="line">     * </div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPageCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> pageCount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 设置页码  如果界面里有1个以上的 PullToRefreshListView组件需要重重写 pageCount的get set 方法，自己记录页码</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> pageCount</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPageCount</span><span class="params">(<span class="keyword">int</span> pageCount)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.pageCount = pageCount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 返回数据内容的集合</div><div class="line">     * </div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;?&gt; getList();</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 返回ListView</div><div class="line">     * </div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> PullToRefreshListView <span class="title">getListView</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 返回适配器</div><div class="line">     * </div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> BaseAdapter <span class="title">getAdapter</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 该方法主要完成异步获取数据分别需要处理三种结果 获取成功 msg.what=LOAD_SUCCESS 获取失败</div><div class="line">     * msg.what=LOAD_FAIL 没有数据 msg.what=LOAD_NODATA 获取成功的数据放在msg.obj 里 ，List 类型</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">loadData</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化带刷新的ListView</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> id</div><div class="line">     *            组件id</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> PullToRefreshListView <span class="title">initListView</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        PullToRefreshListView listView = (PullToRefreshListView) findViewById(id);</div><div class="line">        <span class="keyword">if</span> (listView == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> initListView(listView);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化带刷新的ListView</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> listView</div><div class="line">     *            帅新组件</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> PullToRefreshListView <span class="title">initListView</span><span class="params">(PullToRefreshListView listView)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (listView == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        listView.setMode(Mode.BOTH);</div><div class="line">        <span class="comment">//以下为自定义提示语 可以不写使用默认的</span></div><div class="line">        listView.getLoadingLayoutProxy(<span class="keyword">false</span>， <span class="keyword">true</span>).setPullLabel(getResources().getString(R.string.push_label));</div><div class="line">        listView.getLoadingLayoutProxy(<span class="keyword">false</span>， <span class="keyword">true</span>).setRefreshingLabel(getResources().getString(R.string.refreshing_label));</div><div class="line">        listView.getLoadingLayoutProxy(<span class="keyword">false</span>， <span class="keyword">true</span>).setReleaseLabel(getResources().getString(R.string.release_label));</div><div class="line">        listView.getLoadingLayoutProxy(<span class="keyword">true</span>， <span class="keyword">false</span>).setPullLabel(getResources().getString(R.string.pull_label));</div><div class="line">        listView.getLoadingLayoutProxy(<span class="keyword">true</span>， <span class="keyword">false</span>).setRefreshingLabel(getResources().getString(R.string.refreshing_label));</div><div class="line">        listView.getLoadingLayoutProxy(<span class="keyword">true</span>， <span class="keyword">false</span>).setReleaseLabel(getResources().getString(R.string.release_label));</div><div class="line">        </div><div class="line">        listView.setOnRefreshListener(<span class="keyword">new</span> OnRefreshListener2Impl());</div><div class="line">        <span class="keyword">return</span> listView;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取成功的处理， 主要在handler 里面调用</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> msg</div><div class="line">     */</div><div class="line">    <span class="meta">@SuppressWarnings</span>(&#123; <span class="string">"unchecked"</span>， <span class="string">"rawtypes"</span> &#125;)</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">loadSucess</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">        List ls = (List) msg.obj;</div><div class="line">        <span class="keyword">if</span> (getPageCount() == <span class="number">1</span>) &#123;</div><div class="line">            getList().clear();</div><div class="line">            getListView().setMode(Mode.BOTH);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (ls != <span class="keyword">null</span>) &#123;</div><div class="line">            getList().addAll(ls);</div><div class="line">        &#125;</div><div class="line">        getAdapter().notifyDataSetChanged();</div><div class="line">        getListView().onRefreshComplete();</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取成功但是没有数据的处理， 主要在handler 里面调用</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> msg</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">loadZeroDate</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (getPageCount() == <span class="number">1</span>) &#123;</div><div class="line">            Toast.makeText(<span class="keyword">this</span>， R.string.zero_date， Toast.LENGTH_SHORT).show();</div><div class="line"></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            Toast.makeText(<span class="keyword">this</span>， R.string.msg_last， Toast.LENGTH_SHORT).show();</div><div class="line">        &#125;</div><div class="line">        getAdapter().notifyDataSetChanged();</div><div class="line">        getListView().onRefreshComplete();</div><div class="line">        getListView().setMode(Mode.PULL_FROM_START);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取失败的处理， 主要在handler 里面调用</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> msg</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">loadFalt</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">        Toast.makeText(<span class="keyword">this</span>， R.string.load_error， Toast.LENGTH_SHORT).show();</div><div class="line">        getAdapter().notifyDataSetChanged();</div><div class="line">        getListView().onRefreshComplete();</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 上拉刷新及加载更多的回调接口实现类</div><div class="line">     * </div><div class="line">     * <span class="doctag">@author</span> tom</div><div class="line">     * </div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">OnRefreshListener2Impl</span> <span class="keyword">implements</span> <span class="title">OnRefreshListener2</span>&lt;<span class="title">ListView</span>&gt; </span>&#123;</div><div class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(getResources().getString(R.string.refresh_for) + <span class="string">":MM-dd hh:mm"</span>);</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPullDownToRefresh</span><span class="params">(PullToRefreshBase&lt;ListView&gt; refreshView)</span> </span>&#123;</div><div class="line">            <span class="comment">//下拉</span></div><div class="line">            status = <span class="number">1</span>;</div><div class="line">            setPageCount(<span class="number">1</span>);</div><div class="line">            loadData();</div><div class="line">            String label = sdf.format(System.currentTimeMillis());</div><div class="line">            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPullUpToRefresh</span><span class="params">(PullToRefreshBase&lt;ListView&gt; refreshView)</span> </span>&#123;</div><div class="line">            <span class="comment">//上拉</span></div><div class="line">            status = -<span class="number">1</span>;</div><div class="line">            setPageCount(getPageCount() + <span class="number">1</span>);</div><div class="line">            loadData();</div><div class="line">            String label = sdf.format(System.currentTimeMillis());</div><div class="line">            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果你的界面里有一个以上的 PullToRefreshListView 组件，那你需要额外重写 getPageCount 和 setPageCount 来自己控制页码，当然这个时候其他几个重写的方法也需要你加上判断，具体示例我会在文章最后附上</p>
+<p>下面看例子代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.os.Message;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChannelExhibitionListActivity</span> <span class="keyword">extends</span> <span class="title">ListViewBaseActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 界面组件</span></div><div class="line">    PullToRefreshListView _listView;</div><div class="line">    List&lt;ChannelExhibitionListItem&gt; _list;</div><div class="line">    ChannelExhibitionListAdapter _adapter;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.channel_exhibition_list_activity);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// 初始化组件及适配器</span></div><div class="line">        _listView = initListView(R.id.listView);</div><div class="line">        <span class="comment">// 获取内部listview 推荐这样用而不是直接给_listview设置参数</span></div><div class="line">        ListView actualListView = _listView.getRefreshableView();</div><div class="line">        _adapter = <span class="keyword">new</span> ChannelExhibitionListAdapter(<span class="keyword">this</span>);</div><div class="line">        _list = <span class="keyword">new</span> ArrayList&lt;ChannelExhibitionListItem&gt;();</div><div class="line">        _adapter.setList(_list);</div><div class="line">        actualListView.setOnItemClickListener(<span class="keyword">new</span> OnItemClickListener() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent， View view， <span class="keyword">int</span> position， <span class="keyword">long</span> id)</span> </span>&#123;</div><div class="line">                <span class="comment">// 不要忘了这一行代码　　因为自带了headview 所以postiton加了1 这里要减去</span></div><div class="line">                position--;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        actualListView.setAdapter(_adapter);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 异步任务接受处理</span></div><div class="line">    Handler _handler = <span class="keyword">new</span> Handler() &#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(android.os.Message msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">switch</span> (msg.what) &#123;</div><div class="line">            <span class="keyword">case</span> LOAD_SUCCESS:</div><div class="line">                loadSucess(msg);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> LOAD_FAIL:</div><div class="line">                loadFalt(msg);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> LOAD_NODATA:</div><div class="line">                loadZeroDate(msg);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 获取数据的线程</span></div><div class="line">    Thread loadThread;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 更改数据并刷新adapter</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadData</span><span class="params">()</span> </span>&#123;</div><div class="line">        createCountryThread();</div><div class="line">        loadThread.start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化线程</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createCountryThread</span><span class="params">()</span> </span>&#123;</div><div class="line">        loadThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                List&lt;ChannelExhibitionListItem&gt; channels = <span class="keyword">new</span> ArrayList&lt;ChannelExhibitionListItem&gt;();</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="comment">// 把页码拼接到url</span></div><div class="line">                    StringBuffer loadService = <span class="keyword">new</span> StringBuffer(); </div><div class="line">                    loadService.append(<span class="string">"?r=findlist&amp;pagesize=15&amp;pagenow="</span> + getPageCount());</div><div class="line">                    </div><div class="line">                    String res = HttpConstants.getPHPRequest(<span class="string">"url"</span>， loadService.toString());</div><div class="line">                    <span class="keyword">if</span> (res == <span class="keyword">null</span> || res.equals(<span class="string">""</span>)) &#123;</div><div class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"resoult="</span> + res);</div><div class="line">                    &#125;</div><div class="line">                    JSONObject resultJsonObject = <span class="keyword">new</span> JSONObject(res);</div><div class="line">                    <span class="keyword">int</span> code = resultJsonObject.getInt(<span class="string">"returncode"</span>);</div><div class="line">                    <span class="keyword">if</span> (code == <span class="number">0</span>) &#123;</div><div class="line">                        <span class="comment">// 业务处理　　大概就是解析出list</span></div><div class="line">                        JSONArray datas = resultJsonObject.getJSONArray(<span class="string">"result"</span>);</div><div class="line">                        <span class="keyword">if</span> (datas.length() == <span class="number">0</span>) &#123;</div><div class="line">                            Message m = _handler.obtainMessage(LOAD_NODATA);</div><div class="line">                            _handler.sendMessage(m);</div><div class="line">                            <span class="keyword">return</span>;</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">int</span> size = datas.length();</div><div class="line">                        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">                            JSONObject obj = (JSONObject) datas.get(i);</div><div class="line">                            ChannelExhibitionListItem item = <span class="keyword">new</span> ChannelExhibitionListItem();</div><div class="line">                            item.setId(<span class="string">""</span>);</div><div class="line">                     </div><div class="line">                            channels.add(item);</div><div class="line">                        &#125;</div><div class="line">                        Message message = _handler.obtainMessage(LOAD_SUCCESS);</div><div class="line">                        message.obj = channels;</div><div class="line">                        _handler.sendMessage(message);</div><div class="line">                        <span class="keyword">return</span>;</div><div class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(code == <span class="number">1</span>)&#123;</div><div class="line">                        Message m = _handler.obtainMessage(LOAD_NODATA);</div><div class="line">                        _handler.sendMessage(m);</div><div class="line">                        <span class="keyword">return</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">// 获取失败</span></div><div class="line">                    Message m = _handler.obtainMessage(LOAD_FAIL);</div><div class="line">                    _handler.sendMessage(m);</div><div class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                    Message m = _handler.obtainMessage(LOAD_FAIL);</div><div class="line">                    _handler.sendMessage(m);</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    <span class="comment">//关闭进度条</span></div><div class="line">                    <span class="comment">//Util.dismissWaitingDialog(pd);</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> List&lt;?&gt; getList() &#123;</div><div class="line">        <span class="keyword">return</span> _list;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> PullToRefreshListView <span class="title">getListView</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _listView;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> BaseAdapter <span class="title">getAdapter</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> _adapter;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码只是逻辑代码，复制在自己的项目中是不能运行的，参考着就可以写了，因为我们的项目是使用的 httpClient+Handler 回调，所以用这个特别方便， 如果你们项目使用 Volley 那就更简单了，稍微修改一下就能用。</p>
+<p>最后是布局  布局只需要把 ListView 替换实现就可以 其他的一下属性和 ListView 通用。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.handmark.pulltorefresh.library.PullToRefreshListView</span></span></div><div class="line">      <span class="attr">android:id</span>=<span class="string">"@+id/listView"</span></div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">      <span class="attr">android:cacheColorHint</span>=<span class="string">"#00000000"</span></div><div class="line">      <span class="attr">android:divider</span>=<span class="string">"#19000000"</span></div><div class="line">      <span class="attr">android:dividerHeight</span>=<span class="string">"1dp"</span></div><div class="line">      <span class="attr">android:fadingEdge</span>=<span class="string">"none"</span></div><div class="line">      <span class="attr">android:fastScrollEnabled</span>=<span class="string">"false"</span></div><div class="line">      <span class="attr">android:footerDividersEnabled</span>=<span class="string">"true"</span></div><div class="line">      <span class="attr">android:headerDividersEnabled</span>=<span class="string">"true"</span></div><div class="line">      <span class="attr">android:smoothScrollbar</span>=<span class="string">"true"</span> &gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">com.handmark.pulltorefresh.library.PullToRefreshListView</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p>多个 PullToRefreshListView 组件时的示例代码 ， 其他几个重写的方法也要这样修改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> *当前第几个PullToRefreshListView的标示</div><div class="line"> */</div><div class="line"><span class="keyword">int</span> num=<span class="number">1</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 页码</div><div class="line"> */</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> count_p = <span class="number">1</span>;</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> count_r = <span class="number">1</span>;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 获取页码</div><div class="line"> * </div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPageCount</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (num ==<span class="number">1</span>) &#123;</div><div class="line">        <span class="keyword">return</span> count_p;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> count_r;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 设置页码</div><div class="line"> * </div><div class="line"> * <span class="doctag">@param</span> pageCount</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPageCount</span><span class="params">(<span class="keyword">int</span> pageCount)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (num ==<span class="number">1</span>) &#123;</div><div class="line">        <span class="keyword">this</span>.count_p = pageCount;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">this</span>.count_r = pageCount;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>写完啦，我要去腐败喽。</p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2014/11/02/关于使用commons-codec.jar出现方法找不到的问题/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2014/10/11/Android简单实现圆形头像(续)/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="Benjy's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        benjyair@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:benjyair@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">pages</i>
+                
+                标签云
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/read" title="读书">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                读书
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="http://chanyouji.com/users/658973" title="游记">
+                
+                    <i class="material-icons sidebar-material-icons">local_florist</i>
+                
+                游记
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/gallery" title="映像">
+                
+                    <i class="material-icons sidebar-material-icons">camera</i>
+                
+                映像
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="关于">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">18</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/BenjyAir" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;Benjy's blog
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>

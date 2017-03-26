@@ -10,7 +10,7 @@
     
     <title>
         
-            关于我 | 
+            Android 应用内存溢出导致应用退出的解决方案 | 
         
         Benjy&#39;s blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Benjy">
     <meta name="description" content="null">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,工作总结">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://benjyair.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="关于我 | Benjy&#39;s blog">
+    <meta property="og:title" content="Android 应用内存溢出导致应用退出的解决方案 | Benjy&#39;s blog">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="工作总结"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -61,8 +61,8 @@
     <![endif]-->
 
     <!-- Import CSS -->
-    <link rel="stylesheet" href="../css/material.min.css">
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
     <!-- Config CSS -->
 
 
@@ -161,14 +161,14 @@
 
 
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/queue.js"></script>
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
 
     <!-- UC Browser Compatible -->
     <script>
         var agent = navigator.userAgent.toLowerCase();
         if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../css/uc.css\">");
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
             alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
         }
     </script>
@@ -205,6 +205,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ps"><span class="post-toc-number">1.</span> <span class="post-toc-text">ps</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -230,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                关于我
+                Android 应用内存溢出导致应用退出的解决方案
             </p>
         </div>
 
@@ -249,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Benjy</strong>
-        <span>3月 25, 2017</span>
+        <span>11月 11, 2014</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -273,7 +308,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="../../../../tags/工作总结/">工作总结</a>
     </ul>
     
 
@@ -289,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于我&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android 应用内存溢出导致应用退出的解决方案&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -298,7 +333,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于我&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android 应用内存溢出导致应用退出的解决方案&url=http://benjyair.github.io/&via=Benjy" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -334,19 +369,21 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>Android 开发者，J2EE 开发者，Go 爱好者，果粉。<br>喜欢不同的语言处理不同的工作。</p>
-<h3 id="关于这里"><a href="#关于这里" class="headerlink" title="关于这里"></a>关于这里</h3><p>本 Blog 主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇 Blog，力求达到精益求精。<br>分享成果，让我每天都很开心。<br>我的开源</p>
-<ol>
-<li>PubDialog<br>一款 Android 上常用的列表对话框，使用简单，功能强大，可定制性强，类似 IOS 上的 UIActionSheet。</li>
-<li>PDEXChart<br>IOS 上用 Swift 开发的图表库，在 PDChart 的基础上二次开发，支持多线图，多柱形图，不过已经废弃，改用 ios-charts 吧。</li>
-</ol>
-<h3 id="我的作品"><a href="#我的作品" class="headerlink" title="我的作品"></a>我的作品</h3><ol>
-<li>楼里</li>
-<li>京东金融数据分析 Android</li>
-<li>京东金融数据分析 IOS</li>
-<li>红茶漫游</li>
-</ol>
-<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。</p>
+        <p>昨天项目里遇到了一个严重问题，用户在使用一段时间应用之后，便会非常慢，最终导致内存溢出而崩溃，这个问题几乎让我们的一切努力白费。我几乎花了一整天的时间才终于找到了问题所在。问题的原因让我完全意料不到。</p>
+<p>在分析原因的时候我使用的是 Eclipse 的 Memory AnalysisTools + DDMS，这套工具真是在关键时候解决了我的大问题。<br>附上 Memory Analysis 插件的<a href="http://www.eclipse.org/mat/downloads.php" target="_blank" rel="external">下载地址</a><br>只使用DDMS也可以看出在activity切换过程中的内存变化，但是不能并发现问题的具体所在，所以我们需要MAT(Memory AnalysisTools)来分析具体是那个类引发的问题。上图</p>
+<p><img src="http://oneylt1vv.bkt.clouddn.com/20141111211142.png" alt="tool-editor"></p>
+<p>上图大家应该都看的懂吧，不懂的我简单说一下，也不要嫌弃我啰嗦:</p>
+<blockquote>
+<ul>
+<li>1位置是开始监控 一般在启动应用之后就可以点上来查看记录了</li>
+<li>2位置是保存分析到文件，装了Memory Analysis之后便可以直接打开分析界面</li>
+<li>3位置是查看内存数值的区域，内存变化的过程基本上就是在这里分析出来的</li>
+</ul>
+</blockquote>
+<p>具体的使用大家可以参考这篇文章 <a href="http://www.360doc.com/content/12/1023/14/203871_243274421.shtml" target="_blank" rel="external">http://www.360doc.com/content/12/1023/14/203871_243274421.shtml</a>，解决问题的过程真的是非常的快乐的，我希望大家也可以通过这个过程get新技能，而不是一味的 copy。</p>
+<p>分析的过程我也就不多说了 好多次的分析才找到了问题所在，依然直接说结果:</p>
+<p>现在大家在写app的时候通常会使用一个集合来保存整个 Activity。或放在 BaseActivity 里，或放在 Application 里，<br>然后在退出应用的时候遍历集合逐个调用finish方法，以此来达到退出整个应用，这些方法在网上很多写法，也是大多数人推荐的做法，但我如今碰到的问题就是这里导致的。我的测试结果是，虽然在每个activity的finish方法里把自己从容器里移除自己，但依然因为这个导致activity不能释放，如此循环往复导致了内存溢出。找到了问题所在就好解决多了，就怕有问题自己也摸不到头绪。其实如果自己控制好每个界面的启动和销毁，这样的做法完全是多此一举的，如果你实在想这样做，推荐的是使用广播的方法，在每个 Activity 里面注册一个广播，应用退出的时候通过广播来关闭所有 Activity，不要忘了在 onDestroy 里注销广播哟。</p>
+<h3 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h3><p>我曾经也深信不疑的使用网上的各种现成的代码，但如今，我想至少应该测试过会再使用才行，不要人云亦云，知其然知其所以然，才能最大的提升自己的能力。感谢项目经理的耐心教导。<br>另外<strong>MAT</strong>工具推荐大家都学习一下，特别是大型项目一定要严格控制内存，否则会死的很惨。</p>
 
     
 
@@ -370,11 +407,27 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2014/12/04/从Framework层看Android启动/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2014/11/11/关于WebView因url重定向而导致无法goBack的问题/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -460,7 +513,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
             </ul>
         </li>
         
@@ -586,6 +639,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -664,9 +725,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                     <!-- Import File -->
-<script src="../js/lazyload.min.js"></script>
-<script src="../js/js.min.js"></script>
-<script src="../js/nprogress.js"></script>
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
 
 <script type="text/javascript">
     NProgress.configure({

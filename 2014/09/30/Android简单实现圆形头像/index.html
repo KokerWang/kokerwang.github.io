@@ -10,7 +10,7 @@
     
     <title>
         
-            关于我 | 
+            Android 简单实现圆形头像 | 
         
         Benjy&#39;s blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Benjy">
     <meta name="description" content="null">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,工作总结">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://benjyair.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="关于我 | Benjy&#39;s blog">
+    <meta property="og:title" content="Android 简单实现圆形头像 | Benjy&#39;s blog">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="工作总结"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -61,8 +61,8 @@
     <![endif]-->
 
     <!-- Import CSS -->
-    <link rel="stylesheet" href="../css/material.min.css">
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
     <!-- Config CSS -->
 
 
@@ -161,14 +161,14 @@
 
 
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/queue.js"></script>
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
 
     <!-- UC Browser Compatible -->
     <script>
         var agent = navigator.userAgent.toLowerCase();
         if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../css/uc.css\">");
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
             alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
         }
     </script>
@@ -205,6 +205,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -230,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                关于我
+                Android 简单实现圆形头像
             </p>
         </div>
 
@@ -249,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Benjy</strong>
-        <span>3月 25, 2017</span>
+        <span>9月 30, 2014</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -273,7 +308,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="../../../../tags/工作总结/">工作总结</a>
     </ul>
     
 
@@ -289,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于我&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android 简单实现圆形头像&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -298,7 +333,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于我&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android 简单实现圆形头像&url=http://benjyair.github.io/&via=Benjy" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -334,19 +369,38 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>Android 开发者，J2EE 开发者，Go 爱好者，果粉。<br>喜欢不同的语言处理不同的工作。</p>
-<h3 id="关于这里"><a href="#关于这里" class="headerlink" title="关于这里"></a>关于这里</h3><p>本 Blog 主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇 Blog，力求达到精益求精。<br>分享成果，让我每天都很开心。<br>我的开源</p>
-<ol>
-<li>PubDialog<br>一款 Android 上常用的列表对话框，使用简单，功能强大，可定制性强，类似 IOS 上的 UIActionSheet。</li>
-<li>PDEXChart<br>IOS 上用 Swift 开发的图表库，在 PDChart 的基础上二次开发，支持多线图，多柱形图，不过已经废弃，改用 ios-charts 吧。</li>
-</ol>
-<h3 id="我的作品"><a href="#我的作品" class="headerlink" title="我的作品"></a>我的作品</h3><ol>
-<li>楼里</li>
-<li>京东金融数据分析 Android</li>
-<li>京东金融数据分析 IOS</li>
-<li>红茶漫游</li>
-</ol>
-<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。</p>
+        <p>今天项目中即时通信工具部分要把好友头像由方形转换成圆形，大概也是跟上时代的潮流吧，毕竟连 QQ 都开始使用圆形头像了，我在这里记录一下修改过程。</p>
+<p>在网上找了一番之后，大概解决方法有两种</p>
+<blockquote>
+<ul>
+<li>使用自定义组件继承 ImageView</li>
+<li>通过对 BitMap 重绘得到</li>
+</ul>
+</blockquote>
+<p>第一种方式，有许多开源框架可以实现，如 <a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="external"><strong>CircleImageView</strong></a>&nbsp;,由于我们项目中图片缓存及显示使用的是 <a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="external"><strong>Android-Universal-Image-Loader</strong></a>，而他本身支持在获取到网络图片之后增加回调，那我毫无疑问的选择了第二种方式实现，</p>
+<p>首先是圆形图片转换的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 将图片转为圆型  不标准的图形从中心截取</div><div class="line"> * </div><div class="line"> * <span class="doctag">@param</span> bitmap</div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">getRoundedCornerBitmap</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> width = bitmap.getWidth();</div><div class="line">	<span class="keyword">int</span> height = bitmap.getHeight();</div><div class="line">	Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);</div><div class="line">	Canvas canvas = <span class="keyword">new</span> Canvas(output);</div><div class="line">	<span class="comment">// 切圆的直径</span></div><div class="line">	<span class="keyword">int</span> minLength = width &gt; height ? height : width;</div><div class="line">	<span class="keyword">final</span> <span class="keyword">int</span> color = <span class="number">0xff424242</span>;</div><div class="line">	<span class="keyword">final</span> Paint paint = <span class="keyword">new</span> Paint();</div><div class="line">	<span class="keyword">int</span> x = (width - minLength) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">int</span> y = (height - minLength) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">final</span> Rect rect = <span class="keyword">new</span> Rect(x, y, x + minLength, y + minLength);</div><div class="line">	<span class="keyword">final</span> RectF rectF = <span class="keyword">new</span> RectF(rect);</div><div class="line">	<span class="keyword">final</span> <span class="keyword">float</span> roundPx = minLength / <span class="number">2</span>;</div><div class="line"></div><div class="line">	paint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">	canvas.drawARGB(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">	paint.setColor(color);</div><div class="line">	canvas.drawRoundRect(rectF, roundPx, roundPx, paint);</div><div class="line">	paint.setXfermode(<span class="keyword">new</span> PorterDuffXfermode(Mode.SRC_IN));</div><div class="line">	canvas.drawBitmap(bitmap, rect, rect, paint);</div><div class="line">	<span class="keyword">return</span> output;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再然后是显示图片工具类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> SimpleImageLoadingListener listener;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends ImageView&gt; <span class="function"><span class="keyword">void</span> <span class="title">displayImage2Circle</span><span class="params">(T container, String url)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (listener == <span class="keyword">null</span>) &#123;</div><div class="line">		listener = <span class="keyword">new</span> SimpleImageLoadingListener() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoadingComplete</span><span class="params">(String imageUri, View view, Bitmap loadedImage)</span> </span>&#123;</div><div class="line">				<span class="keyword">super</span>.onLoadingComplete(imageUri, view, loadedImage);</div><div class="line">				((ImageView) view).setImageBitmap(getRoundedCornerBitmap(loadedImage));</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">	&#125;</div><div class="line">	ImageLoader.getInstance().displayImage(url, container, listener);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样只要是需要把图片显示为圆形的地方直接调用 displayImage2Circle 这个方法即可</p>
+<hr>
+<p>本以为已经大功告成，没想到使用之后却发现图片四周仿佛被切掉一部分一样，如图:</p>
+<p><img src="http://oneylt1vv.bkt.clouddn.com/20140930151619.png" alt="tool-editor"></p>
+<blockquote>
+<ul>
+<li>起先以为是图片有白边，后来发现不是，<a href="http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg" target="_blank" rel="external">图片地址</a></li>
+<li>然后又以为是半径没算对,验证之后再次被排除</li>
+<li>最终把原因定位到了 Image-Loader 上,解决办法如下:</li>
+</ul>
+</blockquote>
+<p>ImageLoaderConfiguration 的 defaultDisplayImageOptions 方法需要一个 DisplayImageOptions 参数而 DisplayImageOptions 的参数的 imageScaleType 属性默认的是 ImageScaleType.IN_SAMPLE_POWER_OF_2 就是这个属性导致的图片不圆,查了一下文档</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** </span></div><div class="line"> * 图片的缩放方式 </div><div class="line"> */  </div><div class="line">imageScaleType(ImageScaleType imageScaleType)  </div><div class="line">imageScaleType:  </div><div class="line">    EXACTLY :图像将完全按比例缩小的目标大小  </div><div class="line">    EXACTLY_STRETCHED:图片会完全缩放到目标大小  </div><div class="line">    IN_SAMPLE_INT:图像将被二次采样,并且倍数为整数倍  </div><div class="line">    IN_SAMPLE_POWER_OF_2:图片将降低<span class="number">2</span>倍，直到下一减少步骤，使图像更小的目标大小  </div><div class="line">    NONE:图片不会调整</div></pre></td></tr></table></figure>
+<p>IN_SAMPLE_POWER_OF_2 模式下缩放是成倍缩放的所以导致实际显示的要比我设定的宽一些,改成 EXACTLY_STRETCHED 之后问题得到解决</p>
+<p>最后展示一下最终效果</p>
+<p><img src="http://oneylt1vv.bkt.clouddn.com/20140930154619.png" alt="tool-editor"></p>
+<p>以及 Image-Loader 的完整设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initImageLoader</span><span class="params">()</span> </span>&#123;</div><div class="line">	DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()</div><div class="line">    .showImageForEmptyUri(R.drawable.default_image) </div><div class="line">    .showImageOnFail(R.drawable.default_image) </div><div class="line">    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) </div><div class="line">    .bitmapConfig(Config.RGB_565) </div><div class="line">    .cacheInMemory(<span class="keyword">true</span>)</div><div class="line">    .cacheOnDisk(<span class="keyword">true</span>)</div><div class="line">    .resetViewBeforeLoading(<span class="keyword">true</span>)</div><div class="line">    .build();</div><div class="line">	</div><div class="line">	File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); </div><div class="line">	</div><div class="line">	ImageLoaderConfiguration config = <span class="keyword">new</span> ImageLoaderConfiguration.Builder(<span class="keyword">this</span>)</div><div class="line">    .denyCacheImageMultipleSizesInMemory()</div><div class="line">    .memoryCache(<span class="keyword">new</span> LruMemoryCache(<span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>))</div><div class="line">    .threadPoolSize(<span class="number">4</span>)</div><div class="line">    .memoryCacheSize(<span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>)</div><div class="line">    .diskCache(<span class="keyword">new</span> UnlimitedDiscCache(cacheDir)) <span class="comment">// 缓存路径</span></div><div class="line">    .diskCacheSize(<span class="number">50</span> * <span class="number">1024</span> * <span class="number">1024</span>)</div><div class="line">    .diskCacheFileCount(<span class="number">100</span>)</div><div class="line">    .defaultDisplayImageOptions(options) </div><div class="line">    .build();</div><div class="line">	</div><div class="line">	 ImageLoader.getInstance().init(config);  </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>公司项目我就不放源码了，核心代码都在上面了，有问题可以和我联系。</p>
 
     
 
@@ -370,11 +424,27 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2014/10/11/Android简单实现圆形头像(续)/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2014/09/28/BroadcastReceiver接收顺序/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -460,7 +530,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
             </ul>
         </li>
         
@@ -586,6 +656,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -664,9 +742,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                     <!-- Import File -->
-<script src="../js/lazyload.min.js"></script>
-<script src="../js/js.min.js"></script>
-<script src="../js/nprogress.js"></script>
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
 
 <script type="text/javascript">
     NProgress.configure({

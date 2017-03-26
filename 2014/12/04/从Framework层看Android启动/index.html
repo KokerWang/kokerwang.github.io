@@ -10,7 +10,7 @@
     
     <title>
         
-            关于我 | 
+            从 Framework 层看 Android 启动 | 
         
         Benjy&#39;s blog
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Benjy">
     <meta name="description" content="null">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,读书笔记">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://benjyair.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="关于我 | Benjy&#39;s blog">
+    <meta property="og:title" content="从 Framework 层看 Android 启动 | Benjy&#39;s blog">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="读书笔记"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -61,8 +61,8 @@
     <![endif]-->
 
     <!-- Import CSS -->
-    <link rel="stylesheet" href="../css/material.min.css">
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../../../../css/material.min.css">
+    <link rel="stylesheet" href="../../../../css/style.min.css">
     <!-- Config CSS -->
 
 
@@ -161,14 +161,14 @@
 
 
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/queue.js"></script>
+    <script src="../../../../js/jquery.min.js"></script>
+    <script src="../../../../js/queue.js"></script>
 
     <!-- UC Browser Compatible -->
     <script>
         var agent = navigator.userAgent.toLowerCase();
         if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../css/uc.css\">");
+            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
             alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
         }
     </script>
@@ -205,6 +205,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Init-进程启动以及-Zygote-启动"><span class="post-toc-number">1.</span> <span class="post-toc-text">Init 进程启动以及 Zygote 启动</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Zygote-启动应用程序"><span class="post-toc-number">2.</span> <span class="post-toc-text">Zygote 启动应用程序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Android-Framework-的启动过程"><span class="post-toc-number">3.</span> <span class="post-toc-text">Android Framework 的启动过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Binder-IPC-机制"><span class="post-toc-number">4.</span> <span class="post-toc-text">Binder IPC 机制</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -230,7 +265,7 @@
         
     
             <p class="article-headline-p">
-                关于我
+                从 Framework 层看 Android 启动
             </p>
         </div>
 
@@ -249,7 +284,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Benjy</strong>
-        <span>3月 25, 2017</span>
+        <span>12月 04, 2014</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -273,7 +308,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="../../../../tags/读书笔记/">读书笔记</a>
     </ul>
     
 
@@ -289,7 +324,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=关于我&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=从 Framework 层看 Android 启动&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -298,7 +333,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=关于我&url=http://benjyair.github.io/&via=Benjy" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=从 Framework 层看 Android 启动&url=http://benjyair.github.io/&via=Benjy" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -334,19 +369,19 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>Android 开发者，J2EE 开发者，Go 爱好者，果粉。<br>喜欢不同的语言处理不同的工作。</p>
-<h3 id="关于这里"><a href="#关于这里" class="headerlink" title="关于这里"></a>关于这里</h3><p>本 Blog 主要分享我在工作中遇到的技术难点，以及一些读书笔记，我会认真写好每一篇 Blog，力求达到精益求精。<br>分享成果，让我每天都很开心。<br>我的开源</p>
-<ol>
-<li>PubDialog<br>一款 Android 上常用的列表对话框，使用简单，功能强大，可定制性强，类似 IOS 上的 UIActionSheet。</li>
-<li>PDEXChart<br>IOS 上用 Swift 开发的图表库，在 PDChart 的基础上二次开发，支持多线图，多柱形图，不过已经废弃，改用 ios-charts 吧。</li>
-</ol>
-<h3 id="我的作品"><a href="#我的作品" class="headerlink" title="我的作品"></a>我的作品</h3><ol>
-<li>楼里</li>
-<li>京东金融数据分析 Android</li>
-<li>京东金融数据分析 IOS</li>
-<li>红茶漫游</li>
-</ol>
-<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。</p>
+        <p>众所周知，Linux 中所有的进程都是有 init 进程创建并运行的，Android 系统基于 Linux 内核，所以也存在着 init 进程。<br>init进程启动的过程比较复杂，但是在准备工作做好之后，会通过 jni 创建 Dalvik 虚拟机，然后启动 Android 的核心 Zygote 进程，这个进程将成为所有应用进程的孵化器存在。下面我通过几个图来说明这个过程。</p>
+<h3 id="Init-进程启动以及-Zygote-启动"><a href="#Init-进程启动以及-Zygote-启动" class="headerlink" title="Init 进程启动以及 Zygote 启动"></a>Init 进程启动以及 Zygote 启动</h3><p><img src="http://oneylt1vv.bkt.clouddn.com/20141204181105.jpg" alt="tool-editor"></p>
+<p>上图是启动 Android 设备之后的进程，可以明显看到在 init 进程启动之后启动了 Zygote 进程，而 Zygote 作为之后的大部分进程的父进程存在。</p>
+<h3 id="Zygote-启动应用程序"><a href="#Zygote-启动应用程序" class="headerlink" title="Zygote 启动应用程序"></a>Zygote 启动应用程序</h3><p><img src="http://oneylt1vv.bkt.clouddn.com/20141204181056.jpg" alt="tool-editor"></p>
+<p>上图是 Zygote 进程启动应用程序的流程图，Zygote 进程调用 fork（）函数创建出 Zygote 子进程，子进程共享父进程的代码区和链接信息，但是注意，新的 Android 应用程序并非通过 fork（）来重新装载已有的进程代码区，而是动态的加载到复制出的Dalvik虚拟机上，而后，Zygote 进程将执行流程交给应用程序，Android 应用程序开始运行，新生的应用程序拥有 Zygote 的进程库和资源的链接信息，所以运行速度很快。</p>
+<h3 id="Android-Framework-的启动过程"><a href="#Android-Framework-的启动过程" class="headerlink" title="Android Framework 的启动过程"></a>Android Framework 的启动过程</h3><p><img src="http://oneylt1vv.bkt.clouddn.com/20141204181100.jpg" alt="tool-editor"></p>
+<p>上图是 Android Framework 的启动过程，Zygote 启动 Dalvik 虚拟机后，会在生成一个 Dalvik 虚拟机示例，以便运行名称为 SystemServer 的 Java 服务，SystemServer 用于运行 Audio Flinger 与 Surface Flinger 本地服务，运行完本地服务之后开始运行 Android Framework 的 Java 服务，也就是我们在 Android 系统架构图中 Application Framework 中的各种 Manager Server<br>下图我们从代码层看 Android Framework 的启动过程</p>
+<p><img src="http://oneylt1vv.bkt.clouddn.com/20141204181052.jpg" alt="tool-editor"></p>
+<h3 id="Binder-IPC-机制"><a href="#Binder-IPC-机制" class="headerlink" title="Binder IPC 机制"></a>Binder IPC 机制</h3><p><img src="http://oneylt1vv.bkt.clouddn.com/20141204181047.jpg" alt="tool-editor"></p>
+<p>由于 Android 应用程序与系统服务不在同一个系统进程中，这里就引入的 Binder IPC 机制，服务使用者调用 foo（）服务代理函数，而后 foo（）服务代理函数通过 Binder RPC 调用 Foo 服务的 foo（）服务 Stub 函数</p>
+<p>首先服务使用者调用 foo（）代理函数，传递 Binder RPC 数据，该数据包含引用 Foo 服务的请求。Binder RPC 数据经过 Marshalling 处理后，由 Service Framework 生成 Binder IPC 数据，然后通过 Binder Driver 传递给 Service Server 端</p>
+<p>Service Server 端收到 Binder IPC 数据后，由 Service Framework 对数据进行 UnMarshalling 处理，然后传递给 Service Stub的onTransact（）函数，Service Stub 根据 Binder IPC 数据中的 RPC 代码判断它是一个针对 Foo服务的foo（）服务 Stub 函数的 Binder RPC，最后， 以 Binder IPC 数据中包含的 Binder RPC 数据为参数，调用 foo（）服务的 Stub 函数。至此，就是 Binder IPC 的整个流程。</p>
+<p>————摘自《Android框架揭秘》 以上部分是这本书中的大部分知识的总结，其中的这几幅图更是这些重点简单明了的描述。当然 Binder 机制只看图还是不能深入了解的，因为内容比较多，所以还是推荐看书，写的不错。</p>
 
     
 
@@ -370,11 +405,27 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2015/01/25/为Context-Menu.Android库增加用户体验/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2014/11/11/Android应用内存溢出导致应用退出的解决方案/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -460,7 +511,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
             </ul>
         </li>
         
@@ -586,6 +637,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -664,9 +723,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                     <!-- Import File -->
-<script src="../js/lazyload.min.js"></script>
-<script src="../js/js.min.js"></script>
-<script src="../js/nprogress.js"></script>
+<script src="../../../../js/lazyload.min.js"></script>
+<script src="../../../../js/js.min.js"></script>
+<script src="../../../../js/nprogress.js"></script>
 
 <script type="text/javascript">
     NProgress.configure({
