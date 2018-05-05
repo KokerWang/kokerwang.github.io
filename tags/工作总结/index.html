@@ -1,1152 +1,317 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
-
-    <!-- Title -->
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Benjy&#39;s Blog">
+  <meta name="keyword" content="Benjy, benjy, BenjyAir, benjyair">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-    <title>
-        
-            标签: 工作总结 | 
-        
-        Benjy&#39;s blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
-    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
-    <link rel="apple-touch-icon" href="/img/favicon.ico">
-
-    <!-- Meta & Info -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Benjy">
-    <meta name="description" content="null">
-    <meta name="keywords" content="null">
-
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Benjy&#39;s blog">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://benjyair.github.io">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="标签: 工作总结 | Benjy&#39;s blog">
-    <meta property="og:description" content="null">
+      Benjy&#39;s Blog
     
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="../../css/material.min.css">
-    <link rel="stylesheet" href="../../css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto， "Helvetica Neue"， Helvetica， "PingFang SC"， "Hiragino Sans GB"， "Microsoft YaHei"， "微软雅黑"， Arial， sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/img/bg.png);
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../../css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
+      });
     </script>
 
-    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
 
-    
 
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
-
-
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
-
-    <!-- Pin on top -->
-    
-
-    <!-- Normal Post -->
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2015/07/25/你试过这样分析Android界面么/">你试过这样分析 Android 界面么</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            常常有时候界面不是我们自己写的需要我们去改，常常有时候我们需要参考别人的 APP 的布局来写自己的应用，常常有时候我们自己写的界面需要调试一些隐藏界...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2015/07/25/你试过这样分析Android界面么/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>7月 25, 2015</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
 </div>
 
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2015/03/04/自己修改的GustureLock/">自己修改的 GustureLock</a></p>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Benjy's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/read/" class="item-link">Read</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
     </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+    <div class="menu-mask">
+      <ul class="menu-list">
         
-            今天分享一个我修改过样式的 GustureLock 的源码，该库的出处我已经找不到了，当时是我朋友给我的一个 zip 包，我拿到源码之后，做了一些样...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2015/03/04/自己修改的GustureLock/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>3月 04, 2015</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+          <li class="menu-item">
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2015/02/28/为Context-Menu.Android库增加用户体验(续)/">为 Context-Menu.Android 库增加用户体验(续)</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            在我的另一篇博客 为Context-Menu.Android库增加用户体验 里面留下了一个遗留问题就是给 Dial...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2015/02/28/为Context-Menu.Android库增加用户体验(续)/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>2月 28, 2015</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+              <a href="/" class="menu-link">Home</a>
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
+          </li>
         
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2015/01/25/为Context-Menu.Android库增加用户体验/">为 Context-Menu.Android 库增加用户体验</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            Github 上面有很多的开源库，除了工具库之外，还有大量的UI库供我们使用，在使用这些UI库的时候开源者本人可能会给我们一些可以自定义的功能，可是...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2015/01/25/为Context-Menu.Android库增加用户体验/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>1月 25, 2015</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+          <li class="menu-item">
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2014/11/11/Android应用内存溢出导致应用退出的解决方案/">Android 应用内存溢出导致应用退出的解决方案</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            昨天项目里遇到了一个严重问题，用户在使用一段时间应用之后，便会非常慢，最终导致内存溢出而崩溃，这个问题几乎让我们的一切努力白费。我几乎花了一整天的时...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2014/11/11/Android应用内存溢出导致应用退出的解决方案/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>11月 11, 2014</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+              <a href="/tags/" class="menu-link">Tags</a>
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
+          </li>
         
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2014/11/11/关于WebView因url重定向而导致无法goBack的问题/">关于 WebView 因 url 重定向而导致无法 goBack 的问题</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            最近项目中有一些界面需要嵌入 wap 页，在按返回键的时候让 WebView goBack, 大部分界面都是可以正常回退的,可是某些会重定向的地址却...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2014/11/11/关于WebView因url重定向而导致无法goBack的问题/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>11月 11, 2014</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+          <li class="menu-item">
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2014/11/02/关于使用commons-codec.jar出现方法找不到的问题/">关于使用 commons-codec.jar 出现方法找不到的问题</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            最近项目里要做非即时一对一消息功能，图省事我就直接用了友盟提供的sdk，接收直接用友盟提供的 android 的 sdk，发送方使用友盟服务端 Ja...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2014/11/02/关于使用commons-codec.jar出现方法找不到的问题/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>11月 02, 2014</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+              <a href="/archives/" class="menu-link">Archives</a>
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
+          </li>
         
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2014/10/21/下拉刷新封装/">下拉刷新封装</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            忙了两周，楼里 app 终于完成了，25号正式上线，顺便吐槽一下接私活果然好坑，特别是这种工期比较着急的，不过今天款项下来了，拿到 money 之后...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2014/10/21/下拉刷新封装/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>10月 21, 2014</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+          <li class="menu-item">
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2014/10/11/Android简单实现圆形头像(续)/">Android 简单实现圆形头像(续)</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            上一篇文章里面详细讲解了用自己的方式实现圆形头像，如今发现之前的代码效率并不高，因为每次都要 createBitmap 和转换图片，createBi...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2014/10/11/Android简单实现圆形头像(续)/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>10月 11, 2014</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+              <a href="/read/" class="menu-link">Read</a>
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
+          </li>
         
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2/dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="../../2014/09/30/Android简单实现圆形头像/">Android 简单实现圆形头像</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            今天项目中即时通信工具部分要把好友头像由方形转换成圆形，大概也是跟上时代的潮流吧，毕竟连 QQ 都开始使用圆形头像了，我在这里记录一下修改过程。
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="../../2014/09/30/Android简单实现圆形头像/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.jpg" width="44px" height="44px" alt="Benjy's avatar">
-            </div>
-            <div>
-                <strong>Benjy</strong>
-                <span>9月 30, 2014</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="../../categories/Android/">Android</a>
-            </span>
-
+          <li class="menu-item">
             
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
     </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Archives</h2>
+  <p class="post-date">文章归档</p>
 </div>
-
-        
-        
-        
+<main class="app-body" id="archives">
+  
+  
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2015
+  </h1>
+  <div class="section-list">
     
-
     
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
-        </nav>
+      <div class="section-list-item">
+        <a href="/2015/07/25/你试过这样分析Android界面么/" class="archive-title">你试过这样分析 Android 界面么</a>
+        <p class="archive-date">07-25</p>
+      </div>
     
-
+      <div class="section-list-item">
+        <a href="/2015/06/30/使用Shell来编译Android项目/" class="archive-title">使用 Shell 来编译 Android 项目</a>
+        <p class="archive-date">06-30</p>
+      </div>
     
-        <script>
-    var randomNum;
+      <div class="section-list-item">
+        <a href="/2015/05/15/一招搞定IOS屏幕适配/" class="archive-title">一招搞定 IOS 屏幕适配</a>
+        <p class="archive-date">05-15</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/05/04/爬坑IOS——第一季/" class="archive-title">爬坑IOS——第一季</a>
+        <p class="archive-date">05-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/03/13/Swift通过代码启动Storyboard内的ViewController/" class="archive-title">Swift 通过代码启动 Storyboard 内的 ViewController</a>
+        <p class="archive-date">03-13</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/03/04/自己修改的GustureLock/" class="archive-title">自己修改的 GustureLock</a>
+        <p class="archive-date">03-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/02/28/为Context-Menu.Android库增加用户体验(续)/" class="archive-title">为 Context-Menu.Android 库增加用户体验(续)</a>
+        <p class="archive-date">02-28</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/02/27/策略枚举/" class="archive-title">策略枚举</a>
+        <p class="archive-date">02-27</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/02/27/PubDialog----一个简单的提示对话框/" class="archive-title">PubDialog ---- 一个简单的提示对话框</a>
+        <p class="archive-date">02-27</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2015/01/25/为Context-Menu.Android库增加用户体验/" class="archive-title">为 Context-Menu.Android 库增加用户体验</a>
+        <p class="archive-date">01-25</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2014
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2014/12/04/从Framework层看Android启动/" class="archive-title">从 Framework 层看 Android 启动</a>
+        <p class="archive-date">12-04</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/11/11/Android应用内存溢出导致应用退出的解决方案/" class="archive-title">Android 应用内存溢出导致应用退出的解决方案</a>
+        <p class="archive-date">11-11</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/11/11/关于WebView因url重定向而导致无法goBack的问题/" class="archive-title">关于 WebView 因 url 重定向而导致无法 goBack 的问题</a>
+        <p class="archive-date">11-11</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/11/02/关于使用commons-codec.jar出现方法找不到的问题/" class="archive-title">关于使用 commons-codec.jar 出现方法找不到的问题</a>
+        <p class="archive-date">11-02</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/10/21/下拉刷新封装/" class="archive-title">下拉刷新封装</a>
+        <p class="archive-date">10-21</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/10/11/Android简单实现圆形头像(续)/" class="archive-title">Android 简单实现圆形头像(续)</a>
+        <p class="archive-date">10-11</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/09/30/Android简单实现圆形头像/" class="archive-title">Android 简单实现圆形头像</a>
+        <p class="archive-date">09-30</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2014/09/28/BroadcastReceiver接收顺序/" class="archive-title">BroadcastReceiver 接收顺序</a>
+        <p class="archive-date">09-28</p>
+      </div>
+    
+  </div>
+</section>
+  
+</main>
 
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')')
-
-        locatePost = locatePost.next();
-    }
+<script>
+  (function () {
+    var url = 'http://benjyair.github.io/tags/工作总结/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header');
+  })();
 </script>
-
-    
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
 </div>
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.jpg" alt="Benjy's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        benjyair@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:benjyair@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/tags" title="标签云">
-                
-                    <i class="material-icons sidebar-material-icons">pages</i>
-                
-                标签云
-            </a>
-        </li>
-        
-    
-        <li>
-            <a href="/read" title="读书">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                读书
-            </a>
-        </li>
-        
-    
-        <li>
-            <a href="http://chanyouji.com/users/658973" title="游记">
-                
-                    <i class="material-icons sidebar-material-icons">local_florist</i>
-                
-                游记
-            </a>
-        </li>
-        
-    
-        <li>
-            <a href="/gallery" title="映像">
-                
-                    <i class="material-icons sidebar-material-icons">camera</i>
-                
-                映像
-            </a>
-        </li>
-        
-    
-        <li>
-            <a href="/about" title="关于">
-                
-                    <i class="material-icons sidebar-material-icons">person</i>
-                
-                关于
-            </a>
-        </li>
-        
-    
-
-    <!-- Article Number  -->
-    
-        <li>
-            <a href="/archives">
-                文章总数
-                <span class="sidebar-badge">18</span>
-            </a>
-        </li>
-        
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
-                    
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/BenjyAir" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Benjy's blog
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
 </footer>
 
-
-                    <!-- Import File -->
-<script src="../../js/lazyload.min.js"></script>
-<script src="../../js/js.min.js"></script>
-<script src="../../js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
 <script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
 </script>
 
-<!-- MathJax Load-->
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
 
-
-                </main>
-            </div>
-        </body>
-    
+<script src="/js/script.js"></script>
+  </body>
 </html>

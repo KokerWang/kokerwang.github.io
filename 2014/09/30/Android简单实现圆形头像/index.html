@@ -1,375 +1,153 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
-
-    <!-- Title -->
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Benjy&#39;s Blog">
+  <meta name="keyword" content="Benjy, benjy, BenjyAir, benjyair">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-    <title>
-        
-            Android 简单实现圆形头像 | 
-        
-        Benjy&#39;s blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
-    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
-    <link rel="apple-touch-icon" href="/img/favicon.ico">
-
-    <!-- Meta & Info -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Benjy">
-    <meta name="description" content="null">
-    <meta name="keywords" content="null,工作总结">
-
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Benjy&#39;s blog">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://benjyair.github.io">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Android 简单实现圆形头像 | Benjy&#39;s blog">
-    <meta property="og:description" content="null">
-    <meta property="og:article:tag" content="工作总结"> 
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="../../../../css/material.min.css">
-    <link rel="stylesheet" href="../../../../css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto， "Helvetica Neue"， Helvetica， "PingFang SC"， "Hiragino Sans GB"， "Microsoft YaHei"， "微软雅黑"， Arial， sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/img/bg.png);
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="../../../../js/jquery.min.js"></script>
-    <script src="../../../../js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+      Android 简单实现圆形头像 | Benjy&#39;s Blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
+      });
     </script>
 
-    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
 
-    
 
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
-
-
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                Android 简单实现圆形头像
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Benjy</strong>
-        <span>9月 30, 2014</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="../../../../tags/工作总结/">工作总结</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android 简单实现圆形头像&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android 简单实现圆形头像&url=http://benjyair.github.io/&via=Benjy" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://benjyair.github.io/" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
 </div>
 
-                
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Benjy's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/read/" class="item-link">Read</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/read/" class="menu-link">Read</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <p>今天项目中即时通信工具部分要把好友头像由方形转换成圆形，大概也是跟上时代的潮流吧，毕竟连 QQ 都开始使用圆形头像了，我在这里记录一下修改过程。</p>
+    <div id="article-banner">
+  <h2>Android 简单实现圆形头像</h2>
+  <p class="post-date">2014-09-30</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>今天项目中即时通信工具部分要把好友头像由方形转换成圆形，大概也是跟上时代的潮流吧，毕竟连 QQ 都开始使用圆形头像了，我在这里记录一下修改过程。</p>
 <p>在网上找了一番之后，大概解决方法有两种</p>
 <blockquote>
 <ul>
@@ -377,427 +155,224 @@
 <li>通过对 BitMap 重绘得到</li>
 </ul>
 </blockquote>
-<p>第一种方式，有许多开源框架可以实现，如 <a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="external"><strong>CircleImageView</strong></a>&nbsp;,由于我们项目中图片缓存及显示使用的是 <a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="external"><strong>Android-Universal-Image-Loader</strong></a>，而他本身支持在获取到网络图片之后增加回调，那我毫无疑问的选择了第二种方式实现，</p>
+<p>第一种方式，有许多开源框架可以实现，如 <a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="noopener"><strong>CircleImageView</strong></a>&nbsp;,由于我们项目中图片缓存及显示使用的是 <a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="noopener"><strong>Android-Universal-Image-Loader</strong></a>，而他本身支持在获取到网络图片之后增加回调，那我毫无疑问的选择了第二种方式实现，</p>
 <p>首先是圆形图片转换的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 将图片转为圆型  不标准的图形从中心截取</div><div class="line"> * </div><div class="line"> * <span class="doctag">@param</span> bitmap</div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">getRoundedCornerBitmap</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> width = bitmap.getWidth();</div><div class="line">	<span class="keyword">int</span> height = bitmap.getHeight();</div><div class="line">	Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);</div><div class="line">	Canvas canvas = <span class="keyword">new</span> Canvas(output);</div><div class="line">	<span class="comment">// 切圆的直径</span></div><div class="line">	<span class="keyword">int</span> minLength = width &gt; height ? height : width;</div><div class="line">	<span class="keyword">final</span> <span class="keyword">int</span> color = <span class="number">0xff424242</span>;</div><div class="line">	<span class="keyword">final</span> Paint paint = <span class="keyword">new</span> Paint();</div><div class="line">	<span class="keyword">int</span> x = (width - minLength) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">int</span> y = (height - minLength) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">final</span> Rect rect = <span class="keyword">new</span> Rect(x, y, x + minLength, y + minLength);</div><div class="line">	<span class="keyword">final</span> RectF rectF = <span class="keyword">new</span> RectF(rect);</div><div class="line">	<span class="keyword">final</span> <span class="keyword">float</span> roundPx = minLength / <span class="number">2</span>;</div><div class="line"></div><div class="line">	paint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">	canvas.drawARGB(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">	paint.setColor(color);</div><div class="line">	canvas.drawRoundRect(rectF, roundPx, roundPx, paint);</div><div class="line">	paint.setXfermode(<span class="keyword">new</span> PorterDuffXfermode(Mode.SRC_IN));</div><div class="line">	canvas.drawBitmap(bitmap, rect, rect, paint);</div><div class="line">	<span class="keyword">return</span> output;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将图片转为圆型  不标准的图形从中心截取</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> bitmap</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">getRoundedCornerBitmap</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> width = bitmap.getWidth();</span><br><span class="line">	<span class="keyword">int</span> height = bitmap.getHeight();</span><br><span class="line">	Bitmap output = Bitmap.createBitmap(width, height, Config.ARGB_8888);</span><br><span class="line">	Canvas canvas = <span class="keyword">new</span> Canvas(output);</span><br><span class="line">	<span class="comment">// 切圆的直径</span></span><br><span class="line">	<span class="keyword">int</span> minLength = width &gt; height ? height : width;</span><br><span class="line">	<span class="keyword">final</span> <span class="keyword">int</span> color = <span class="number">0xff424242</span>;</span><br><span class="line">	<span class="keyword">final</span> Paint paint = <span class="keyword">new</span> Paint();</span><br><span class="line">	<span class="keyword">int</span> x = (width - minLength) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> y = (height - minLength) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">final</span> Rect rect = <span class="keyword">new</span> Rect(x, y, x + minLength, y + minLength);</span><br><span class="line">	<span class="keyword">final</span> RectF rectF = <span class="keyword">new</span> RectF(rect);</span><br><span class="line">	<span class="keyword">final</span> <span class="keyword">float</span> roundPx = minLength / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	paint.setAntiAlias(<span class="keyword">true</span>);</span><br><span class="line">	canvas.drawARGB(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">	paint.setColor(color);</span><br><span class="line">	canvas.drawRoundRect(rectF, roundPx, roundPx, paint);</span><br><span class="line">	paint.setXfermode(<span class="keyword">new</span> PorterDuffXfermode(Mode.SRC_IN));</span><br><span class="line">	canvas.drawBitmap(bitmap, rect, rect, paint);</span><br><span class="line">	<span class="keyword">return</span> output;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>再然后是显示图片工具类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> SimpleImageLoadingListener listener;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends ImageView&gt; <span class="function"><span class="keyword">void</span> <span class="title">displayImage2Circle</span><span class="params">(T container, String url)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (listener == <span class="keyword">null</span>) &#123;</div><div class="line">		listener = <span class="keyword">new</span> SimpleImageLoadingListener() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoadingComplete</span><span class="params">(String imageUri, View view, Bitmap loadedImage)</span> </span>&#123;</div><div class="line">				<span class="keyword">super</span>.onLoadingComplete(imageUri, view, loadedImage);</div><div class="line">				((ImageView) view).setImageBitmap(getRoundedCornerBitmap(loadedImage));</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">	&#125;</div><div class="line">	ImageLoader.getInstance().displayImage(url, container, listener);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> SimpleImageLoadingListener listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends ImageView&gt; <span class="function"><span class="keyword">void</span> <span class="title">displayImage2Circle</span><span class="params">(T container, String url)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (listener == <span class="keyword">null</span>) &#123;</span><br><span class="line">		listener = <span class="keyword">new</span> SimpleImageLoadingListener() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoadingComplete</span><span class="params">(String imageUri, View view, Bitmap loadedImage)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">super</span>.onLoadingComplete(imageUri, view, loadedImage);</span><br><span class="line">				((ImageView) view).setImageBitmap(getRoundedCornerBitmap(loadedImage));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	ImageLoader.getInstance().displayImage(url, container, listener);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样只要是需要把图片显示为圆形的地方直接调用 displayImage2Circle 这个方法即可</p>
 <hr>
 <p>本以为已经大功告成，没想到使用之后却发现图片四周仿佛被切掉一部分一样，如图:</p>
 <p><img src="http://oneylt1vv.bkt.clouddn.com/20140930151619.png" alt="tool-editor"></p>
 <blockquote>
 <ul>
-<li>起先以为是图片有白边，后来发现不是，<a href="http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg" target="_blank" rel="external">图片地址</a></li>
+<li>起先以为是图片有白边，后来发现不是，<a href="http://img0.bdstatic.com/img/image/shouye/mxzyq-11795342220.jpg" target="_blank" rel="noopener">图片地址</a></li>
 <li>然后又以为是半径没算对,验证之后再次被排除</li>
 <li>最终把原因定位到了 Image-Loader 上,解决办法如下:</li>
 </ul>
 </blockquote>
 <p>ImageLoaderConfiguration 的 defaultDisplayImageOptions 方法需要一个 DisplayImageOptions 参数而 DisplayImageOptions 的参数的 imageScaleType 属性默认的是 ImageScaleType.IN_SAMPLE_POWER_OF_2 就是这个属性导致的图片不圆,查了一下文档</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** </span></div><div class="line"> * 图片的缩放方式 </div><div class="line"> */  </div><div class="line">imageScaleType(ImageScaleType imageScaleType)  </div><div class="line">imageScaleType:  </div><div class="line">    EXACTLY :图像将完全按比例缩小的目标大小  </div><div class="line">    EXACTLY_STRETCHED:图片会完全缩放到目标大小  </div><div class="line">    IN_SAMPLE_INT:图像将被二次采样,并且倍数为整数倍  </div><div class="line">    IN_SAMPLE_POWER_OF_2:图片将降低<span class="number">2</span>倍，直到下一减少步骤，使图像更小的目标大小  </div><div class="line">    NONE:图片不会调整</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * 图片的缩放方式 </span></span><br><span class="line"><span class="comment"> */</span>  </span><br><span class="line">imageScaleType(ImageScaleType imageScaleType)  </span><br><span class="line">imageScaleType:  </span><br><span class="line">    EXACTLY :图像将完全按比例缩小的目标大小  </span><br><span class="line">    EXACTLY_STRETCHED:图片会完全缩放到目标大小  </span><br><span class="line">    IN_SAMPLE_INT:图像将被二次采样,并且倍数为整数倍  </span><br><span class="line">    IN_SAMPLE_POWER_OF_2:图片将降低<span class="number">2</span>倍，直到下一减少步骤，使图像更小的目标大小  </span><br><span class="line">    NONE:图片不会调整</span><br></pre></td></tr></table></figure>
 <p>IN_SAMPLE_POWER_OF_2 模式下缩放是成倍缩放的所以导致实际显示的要比我设定的宽一些,改成 EXACTLY_STRETCHED 之后问题得到解决</p>
 <p>最后展示一下最终效果</p>
 <p><img src="http://oneylt1vv.bkt.clouddn.com/20140930154619.png" alt="tool-editor"></p>
 <p>以及 Image-Loader 的完整设置</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initImageLoader</span><span class="params">()</span> </span>&#123;</div><div class="line">	DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()</div><div class="line">    .showImageForEmptyUri(R.drawable.default_image) </div><div class="line">    .showImageOnFail(R.drawable.default_image) </div><div class="line">    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) </div><div class="line">    .bitmapConfig(Config.RGB_565) </div><div class="line">    .cacheInMemory(<span class="keyword">true</span>)</div><div class="line">    .cacheOnDisk(<span class="keyword">true</span>)</div><div class="line">    .resetViewBeforeLoading(<span class="keyword">true</span>)</div><div class="line">    .build();</div><div class="line">	</div><div class="line">	File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); </div><div class="line">	</div><div class="line">	ImageLoaderConfiguration config = <span class="keyword">new</span> ImageLoaderConfiguration.Builder(<span class="keyword">this</span>)</div><div class="line">    .denyCacheImageMultipleSizesInMemory()</div><div class="line">    .memoryCache(<span class="keyword">new</span> LruMemoryCache(<span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>))</div><div class="line">    .threadPoolSize(<span class="number">4</span>)</div><div class="line">    .memoryCacheSize(<span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>)</div><div class="line">    .diskCache(<span class="keyword">new</span> UnlimitedDiscCache(cacheDir)) <span class="comment">// 缓存路径</span></div><div class="line">    .diskCacheSize(<span class="number">50</span> * <span class="number">1024</span> * <span class="number">1024</span>)</div><div class="line">    .diskCacheFileCount(<span class="number">100</span>)</div><div class="line">    .defaultDisplayImageOptions(options) </div><div class="line">    .build();</div><div class="line">	</div><div class="line">	 ImageLoader.getInstance().init(config);  </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initImageLoader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">    .showImageForEmptyUri(R.drawable.default_image) </span><br><span class="line">    .showImageOnFail(R.drawable.default_image) </span><br><span class="line">    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED) </span><br><span class="line">    .bitmapConfig(Config.RGB_565) </span><br><span class="line">    .cacheInMemory(<span class="keyword">true</span>)</span><br><span class="line">    .cacheOnDisk(<span class="keyword">true</span>)</span><br><span class="line">    .resetViewBeforeLoading(<span class="keyword">true</span>)</span><br><span class="line">    .build();</span><br><span class="line">	</span><br><span class="line">	File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), Util.getCachePath()); </span><br><span class="line">	</span><br><span class="line">	ImageLoaderConfiguration config = <span class="keyword">new</span> ImageLoaderConfiguration.Builder(<span class="keyword">this</span>)</span><br><span class="line">    .denyCacheImageMultipleSizesInMemory()</span><br><span class="line">    .memoryCache(<span class="keyword">new</span> LruMemoryCache(<span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>))</span><br><span class="line">    .threadPoolSize(<span class="number">4</span>)</span><br><span class="line">    .memoryCacheSize(<span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line">    .diskCache(<span class="keyword">new</span> UnlimitedDiscCache(cacheDir)) <span class="comment">// 缓存路径</span></span><br><span class="line">    .diskCacheSize(<span class="number">50</span> * <span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line">    .diskCacheFileCount(<span class="number">100</span>)</span><br><span class="line">    .defaultDisplayImageOptions(options) </span><br><span class="line">    .build();</span><br><span class="line">	</span><br><span class="line">	 ImageLoader.getInstance().init(config);  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>公司项目我就不放源码了，核心代码都在上面了，有问题可以和我联系。</p>
-
+</section>
+    <!-- Tags START -->
     
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2014/10/11/Android简单实现圆形头像(续)/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2014/09/28/BroadcastReceiver接收顺序/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.jpg" alt="Benjy's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        benjyair@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:benjyair@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
+      <div class="tags">
+        <span>Tags:</span>
         
-    
+  <a href="/tags#工作总结" >
+    <span class="tag-code">工作总结</span>
+  </a>
 
-    <!-- Archives  -->
+      </div>
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2014/09/28/BroadcastReceiver接收顺序/">
+        <span class="nav-arrow">← </span>
         
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/tags" title="标签云">
-                
-                    <i class="material-icons sidebar-material-icons">pages</i>
-                
-                标签云
-            </a>
-        </li>
+          BroadcastReceiver 接收顺序
         
+      </a>
     
-        <li>
-            <a href="/read" title="读书">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                读书
-            </a>
-        </li>
+    
+      <a class="nav-right" href="/2014/10/11/Android简单实现圆形头像(续)/">
         
-    
-        <li>
-            <a href="http://chanyouji.com/users/658973" title="游记">
-                
-                    <i class="material-icons sidebar-material-icons">local_florist</i>
-                
-                游记
-            </a>
-        </li>
+          Android 简单实现圆形头像(续)
         
+        <span class="nav-arrow"> →</span>
+      </a>
     
-        <li>
-            <a href="/gallery" title="映像">
-                
-                    <i class="material-icons sidebar-material-icons">camera</i>
-                
-                映像
-            </a>
-        </li>
-        
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
     
-        <li>
-            <a href="/about" title="关于">
-                
-                    <i class="material-icons sidebar-material-icons">person</i>
-                
-                关于
-            </a>
-        </li>
-        
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
     
-
-    <!-- Article Number  -->
+    <!-- 二维码 END -->
     
-        <li>
-            <a href="/archives">
-                文章总数
-                <span class="sidebar-badge">18</span>
-            </a>
-        </li>
-        
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
     
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
     
-
+      <ol class="nav">none</ol>
+    
+  </div>
 </aside>
+  
+  <!-- Catalog END -->
+</main>
 
-                    
+<script>
+  (function () {
+    var url = 'http://benjyair.github.io/2014/09/30/Android简单实现圆形头像/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
 
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "benjy";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Android 简单实现圆形头像",
+        owner: "benjy",
+        repo: "benjyair.github.io",
+        oauth: {
+          client_id: "dcedaa7e13d42cbba2fa",
+          client_secret: "46e76c6466fd800188887c8a51735d2bf59f9753"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
 </div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/BenjyAir" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Benjy's blog
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
 </footer>
 
-
-                    <!-- Import File -->
-<script src="../../../../js/lazyload.min.js"></script>
-<script src="../../../../js/js.min.js"></script>
-<script src="../../../../js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
 <script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
 </script>
 
-<!-- MathJax Load-->
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
 
-
-                </main>
-            </div>
-        </body>
-    
+<script src="/js/script.js"></script>
+  </body>
 </html>

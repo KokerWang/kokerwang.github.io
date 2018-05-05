@@ -1,797 +1,376 @@
 <!DOCTYPE html>
-<html lang="zh">
-    <head>
-    <!-- 
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.3.0 -->
-
-    <!-- Title -->
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Benjy&#39;s Blog">
+  <meta name="keyword" content="Benjy, benjy, BenjyAir, benjyair">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-    <title>
-        
-            爬坑IOS——第一季 | 
-        
-        Benjy&#39;s blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
-    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
-    <link rel="apple-touch-icon" href="/img/favicon.ico">
-
-    <!-- Meta & Info -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="Benjy">
-    <meta name="description" content="null">
-    <meta name="keywords" content="null,Swift">
-
-    <!--iOS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Benjy&#39;s blog">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://benjyair.github.io">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="爬坑IOS——第一季 | Benjy&#39;s blog">
-    <meta property="og:description" content="null">
-    <meta property="og:article:tag" content="Swift"> 
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import CSS -->
-    <link rel="stylesheet" href="../../../../css/material.min.css">
-    <link rel="stylesheet" href="../../../../css/style.min.css">
-    <!-- Config CSS -->
-
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto， "Helvetica Neue"， Helvetica， "PingFang SC"， "Hiragino Sans GB"， "Microsoft YaHei"， "微软雅黑"， Arial， sans-serif;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-image: url(/img/bg.png);
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-
-    <script src="../../../../js/jquery.min.js"></script>
-    <script src="../../../../js/queue.js"></script>
-
-    <!-- UC Browser Compatible -->
-    <script>
-        var agent = navigator.userAgent.toLowerCase();
-        if(agent.indexOf('ucbrowser')>0) {
-            document.write("<link rel=\"stylesheet\" href=\"../../../../css/uc.css\">");
-            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+      爬坑IOS——第一季 | Benjy&#39;s Blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
+      });
     </script>
 
-    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
 
-    
 
-    <!-- Bing Background -->
-    
-
-    <!-- Custom Head -->
-    
 </head>
-
-
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-    <!-- Left aligned menu below button -->
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#爬坑-——-String-类"><span class="post-toc-number">1.</span> <span class="post-toc-text">爬坑 —— String 类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#爬坑-——-3DES，BASE64，SHA1-算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">爬坑 —— 3DES，BASE64，SHA1 算法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#爬坑——UI"><span class="post-toc-number">3.</span> <span class="post-toc-text">爬坑——UI</span></a></li></ol>
-
-        <!--
-        <li class="mdl-menu__item">
-            Some Action
-        </li>
-        -->
-    </ul>
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script>
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                爬坑IOS——第一季
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Benjy</strong>
-        <span>5月 04, 2015</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-link" href="../../../../tags/Swift/">Swift</a>
-    </ul>
-    
-
-    <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=爬坑IOS——第一季&url=http://benjyair.github.io/&pic=&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=爬坑IOS——第一季&url=http://benjyair.github.io/&via=Benjy" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://benjyair.github.io/" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
 </div>
 
-                
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Benjy's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/read/" class="item-link">Read</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/read/" class="menu-link">Read</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <p>辛苦了将近一个多月，公司应用的 IOS 第一个版本终于发布啦。从无到有，一步一个坑的走到了现在。自信心受到了前所未有的打击，不过还好坚持了下来。分享下爬坑的经验。</p>
+    <div id="article-banner">
+  <h2>爬坑IOS——第一季</h2>
+  <p class="post-date">2015-05-04</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>辛苦了将近一个多月，公司应用的 IOS 第一个版本终于发布啦。从无到有，一步一个坑的走到了现在。自信心受到了前所未有的打击，不过还好坚持了下来。分享下爬坑的经验。</p>
 <h3 id="爬坑-——-String-类"><a href="#爬坑-——-String-类" class="headerlink" title="爬坑 —— String 类"></a>爬坑 —— String 类</h3><p>Swift 语法对 String 支持的并不如 Java 全面，有好多方法调用都好麻烦，对于熟悉 Java 开发的我来说哪怕做个简单的字符串截取甚至都要查API，不过 Swift 有个特别的地方就是可以对类进行扩展（不是继承），下面是我对 Java String 类的常用方法的封装，用 Swift 来实现了几个 Java String 类的几个常用 API。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">*  @author KokerWang, 15-04-22 14:04:35</div><div class="line">*</div><div class="line">*  拓展String</div><div class="line">*/</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">String</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">/// 返回长度</span></div><div class="line">    <span class="keyword">var</span> length: <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="built_in">count</span>(<span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">trim</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.stringByTrimmingCharactersInSet(<span class="type">NSCharacterSet</span>.whitespaceCharacterSet())</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">split</span><span class="params">(regularExpression : String)</span></span> -&gt; [<span class="type">String</span>] &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.componentsSeparatedByString(regularExpression)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">substring</span><span class="params">(start : Int, end : Int)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">        <span class="keyword">var</span> si = getRange(start)!</div><div class="line">        <span class="keyword">var</span> ei = getRange(end)!</div><div class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.substringWithRange(<span class="type">Range</span>&lt;<span class="type">String</span>.<span class="type">Index</span>&gt;(start: si, end: ei))</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">replace</span><span class="params">(oldChary : String, newChart : String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.stringByReplacingOccurrencesOfString(oldChary, withString: newChart, options: <span class="literal">nil</span>, range: <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">getRange</span><span class="params">(index : Int)</span></span> -&gt; <span class="type">String</span>.<span class="type">Index</span>?&#123;</div><div class="line">        <span class="keyword">if</span>(index &gt; length)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">advance</span>(<span class="keyword">self</span>.startIndex, index)</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*  @author KokerWang, 15-04-22 14:04:35</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*  拓展String</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">String</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 返回长度</span></span><br><span class="line">    <span class="keyword">var</span> length: <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">count</span>(<span class="keyword">self</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">trim</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.stringByTrimmingCharactersInSet(<span class="type">NSCharacterSet</span>.whitespaceCharacterSet())</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">split</span><span class="params">(regularExpression : String)</span></span> -&gt; [<span class="type">String</span>] &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.componentsSeparatedByString(regularExpression)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">substring</span><span class="params">(start : Int, end : Int)</span></span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> si = getRange(start)!</span><br><span class="line">        <span class="keyword">var</span> ei = getRange(end)!</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.substringWithRange(<span class="type">Range</span>&lt;<span class="type">String</span>.<span class="type">Index</span>&gt;(start: si, end: ei))</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">replace</span><span class="params">(oldChary : String, newChart : String)</span></span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.stringByReplacingOccurrencesOfString(oldChary, withString: newChart, options: <span class="literal">nil</span>, range: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">getRange</span><span class="params">(index : Int)</span></span> -&gt; <span class="type">String</span>.<span class="type">Index</span>?&#123;</span><br><span class="line">        <span class="keyword">if</span>(index &gt; length)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">advance</span>(<span class="keyword">self</span>.startIndex, index)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h3 id="爬坑-——-3DES，BASE64，SHA1-算法"><a href="#爬坑-——-3DES，BASE64，SHA1-算法" class="headerlink" title="爬坑 —— 3DES，BASE64，SHA1 算法"></a>爬坑 —— 3DES，BASE64，SHA1 算法</h3><p>出于安全性的考虑，用到的加密算法较多，组合模式也比较特殊，因为直接调用的和 Android 一样的接口，所以也就是说 IOS 端的加密方式要和 Android 端一致，但是我并没有找到 Swift 合适的类库来使用，后来只能使用了 OC 的算法来用。遇到的问题还是挺多的，这里我只说几个典型的问题。</p>
 <blockquote>
 <p>1 、BASE64 加密每 76 个字符增加一个换行符</p>
+</blockquote>
+<blockquote>
 <p>2 、BASE64 加密如果被加密字符串正好是 76 的整数倍最后一个不加换行符</p>
+</blockquote>
+<blockquote>
 <p>3 、3DES 加密使用一种加密方式而不是使用三种加密</p>
 </blockquote>
 <p>第一，二个问题因为我并没有找到如何切换 BASE64 加密选项的参数（ Java 内是有这个 Option 的）。所以最后我的解决方法是手动用 Swift 来实现了这个功能。</p>
 <p>第三个问题我查 OC 的源码发现可以修改了 CCCrypt() 方法第三个参数的值来修改加密方式，源码里只有 2 个枚举，我先是直接传 nil 发现不行后来改传 0x0003 得以解决。代码如下</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">enum</span> </span>&#123;</div><div class="line">    <span class="comment">/* options for block ciphers */</span></div><div class="line">    kCCOptionPKCS7Padding   = <span class="number">0x0001</span>,</div><div class="line">    kCCOptionECBMode        = <span class="number">0x0002</span></div><div class="line">    <span class="comment">/* stream ciphers currently have no options */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">var</span> ccStatus = <span class="type">CCCrypt</span>(encryptOrDecrypt,</div><div class="line">                       kCCAlgorithm3DES,</div><div class="line">                       <span class="number">0x0003</span>,</div><div class="line">                       vkey,</div><div class="line">                       kCCKeySize3DES,</div><div class="line">                       <span class="literal">nil</span>,</div><div class="line">                       vplainText,</div><div class="line">                       plainTextBufferSize,</div><div class="line">                       (void *)bufferPtr,</div><div class="line">                       bufferPtrSize,</div><div class="line">                       &amp;movedBytes);</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* options for block ciphers */</span></span><br><span class="line">    kCCOptionPKCS7Padding   = <span class="number">0x0001</span>,</span><br><span class="line">    kCCOptionECBMode        = <span class="number">0x0002</span></span><br><span class="line">    <span class="comment">/* stream ciphers currently have no options */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> ccStatus = <span class="type">CCCrypt</span>(encryptOrDecrypt,</span><br><span class="line">                       kCCAlgorithm3DES,</span><br><span class="line">                       <span class="number">0x0003</span>,</span><br><span class="line">                       vkey,</span><br><span class="line">                       kCCKeySize3DES,</span><br><span class="line">                       <span class="literal">nil</span>,</span><br><span class="line">                       vplainText,</span><br><span class="line">                       plainTextBufferSize,</span><br><span class="line">                       (void *)bufferPtr,</span><br><span class="line">                       bufferPtrSize,</span><br><span class="line">                       &amp;movedBytes);</span><br></pre></td></tr></table></figure>
 <p>以上代码并非完整代码，只是我拿出来的具体修改部分，有需要的可以在网上找对应的算法下载下来对比即可。</p>
 <p>其他几个算法修改的幅度不大，出于安全考虑我也不多说了</p>
 <h3 id="爬坑——UI"><a href="#爬坑——UI" class="headerlink" title="爬坑——UI"></a>爬坑——UI</h3><p>1、上篇文章里我介绍了如何从 Storyboard 中加载出来一个 ViewController，但是如果要在 Storyboard 中给这些 VeiwController 添加上苹果推荐的 Navigation Controller 并顺利拿出来展示可就难办了，开始的时候我使用代码的方式来加上导航栏，这个没有难度。可是既然已经使用了 Storyboard 还是用代码编写实在说不过去，后来我想了个点子，那就是在 ViewController 的 Navigation Controller 上加一个 id 在通过上篇文章介绍的方式拿出来，如果需要设置 delegate 的话在从该 Controller 内拿出 childViewControllers[0] 来设置。 这样就既有导航栏，又没有写代码，可谓一举两得，具体代码看第三条。</p>
 <p>2、网络请求处理<br>因为多数界面都有网络请求，对于多种请求结果的回调，还是需要合理的构思一下代码逻辑，我的做法和 Android 的处理类似，在所有的 ViewController 加一个基类，通过这个类来处理所有通用回调的处理在发送 HTTP 请求的时候把 self 作为 delegate 传过去。我在项目里并没用第三方网络请求类库，因为我感觉原生的已经足够满足我的需求了。看代码：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  BaseViewController.swift</span></div><div class="line"><span class="comment">//  Polyhedron</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by KokerWang on 15/4/22.</span></div><div class="line"><span class="comment">//  Copyright (c) 2015年 jdjr. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">NetCell</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noNet</span><span class="params">()</span></span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCoonection</span><span class="params">()</span></span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCell</span><span class="params">(str : String)</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseViewController</span>: <span class="title">UIViewController</span>, <span class="title">NetCell</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noNet</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">self</span>.presentViewController(buildAlert(<span class="string">"网络不通，请检查后再试！"</span>), animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCoonection</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">self</span>.presentViewController(buildAlert(<span class="string">"网络异常，请稍后再试！"</span>), animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCell</span><span class="params">(str : String)</span></span>&#123;</div><div class="line">        <span class="keyword">self</span>.presentViewController(buildAlert(str), animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">NetCell</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noNet</span><span class="params">()</span></span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCoonection</span><span class="params">()</span></span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCell</span><span class="params">(str : String)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseViewController</span>: <span class="title">UIViewController</span>, <span class="title">NetCell</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noNet</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">self</span>.presentViewController(buildAlert(<span class="string">"网络不通，请检查后再试！"</span>), animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCoonection</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">self</span>.presentViewController(buildAlert(<span class="string">"网络异常，请稍后再试！"</span>), animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">noCell</span><span class="params">(str : String)</span></span>&#123;</span><br><span class="line">        <span class="keyword">self</span>.presentViewController(buildAlert(str), animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>代码中 buildAlert 方法是我写的一个工具类，效果是弹出一个提示框。具体我回在后面拿出来。<br>下面是 HTTP 请求的工具类</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  NetUtil.swift</span></div><div class="line"><span class="comment">//  Polyhedron</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by KokerWang on 15/4/13.</span></div><div class="line"><span class="comment">//  Copyright (c) 2015年 jdjr. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NetUtil</span>: <span class="title">NSObject</span></span>&#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sendPost</span> <span class="params">(url : String , data : String, delegate : NetCell, cell : <span class="params">(result: NSDictionary)</span></span></span> -&gt; <span class="type">Void</span>) &#123;</div><div class="line">    <span class="keyword">if</span> checkNetWork() &#123;</div><div class="line">        delegate.noNet()</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">var</span> url = <span class="type">NSURL</span>(string: url)</div><div class="line">    <span class="keyword">var</span> request = <span class="type">NSMutableURLRequest</span>(<span class="type">URL</span>: url!, cachePolicy: <span class="type">NSURLRequestCachePolicy</span>.<span class="type">ReloadIgnoringLocalAndRemoteCacheData</span>, timeoutInterval: <span class="number">10</span>)</div><div class="line">    request.<span class="type">HTTPMethod</span> = <span class="string">"POST"</span></div><div class="line">    request.addValue(<span class="string">"application/json; charset=utf-8"</span>, forHTTPHeaderField: <span class="string">"Content-Type"</span>)</div><div class="line">    request.<span class="type">HTTPBody</span> = data.dataUsingEncoding(<span class="type">NSUTF8StringEncoding</span>)</div><div class="line">    <span class="type">NSURLConnection</span>.sendAsynchronousRequest(request, queue: <span class="type">NSOperationQueue</span>.mainQueue(), completionHandler: &#123;</div><div class="line">        (response:<span class="type">NSURLResponse</span>!, data : <span class="type">NSData</span>!,error : <span class="type">NSError</span>!) -&gt; <span class="type">Void</span> <span class="keyword">in</span></div><div class="line">        <span class="keyword">if</span> data != <span class="literal">nil</span> &amp;&amp; data.length &gt; <span class="number">0</span> &#123;</div><div class="line">            <span class="keyword">var</span> jsonResult:<span class="type">NSDictionary</span> = <span class="type">NSJSONSerialization</span>.<span class="type">JSONObjectWithData</span>(data, options: <span class="type">NSJSONReadingOptions</span>.<span class="type">MutableContainers</span>, error: <span class="literal">nil</span>) <span class="keyword">as</span>! <span class="type">NSDictionary</span></div><div class="line">            <span class="keyword">var</span> code = jsonResult[<span class="string">"code"</span>] <span class="keyword">as</span>! <span class="type">String</span></div><div class="line">            <span class="keyword">if</span> code.hasPrefix(<span class="string">"1"</span>) &#123;</div><div class="line">                cell(result: jsonResult)</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">              delegate.noCell(jsonResult[<span class="string">"msg"</span>] <span class="keyword">as</span>! <span class="type">String</span>)</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            delegate.noCoonection()</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NetUtil</span>: <span class="title">NSObject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sendPost</span> <span class="params">(url : String , data : String, delegate : NetCell, cell : <span class="params">(result: NSDictionary)</span></span></span> -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> checkNetWork() &#123;</span><br><span class="line">        delegate.noNet()</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> url = <span class="type">NSURL</span>(string: url)</span><br><span class="line">    <span class="keyword">var</span> request = <span class="type">NSMutableURLRequest</span>(<span class="type">URL</span>: url!, cachePolicy: <span class="type">NSURLRequestCachePolicy</span>.<span class="type">ReloadIgnoringLocalAndRemoteCacheData</span>, timeoutInterval: <span class="number">10</span>)</span><br><span class="line">    request.<span class="type">HTTPMethod</span> = <span class="string">"POST"</span></span><br><span class="line">    request.addValue(<span class="string">"application/json; charset=utf-8"</span>, forHTTPHeaderField: <span class="string">"Content-Type"</span>)</span><br><span class="line">    request.<span class="type">HTTPBody</span> = data.dataUsingEncoding(<span class="type">NSUTF8StringEncoding</span>)</span><br><span class="line">    <span class="type">NSURLConnection</span>.sendAsynchronousRequest(request, queue: <span class="type">NSOperationQueue</span>.mainQueue(), completionHandler: &#123;</span><br><span class="line">        (response:<span class="type">NSURLResponse</span>!, data : <span class="type">NSData</span>!,error : <span class="type">NSError</span>!) -&gt; <span class="type">Void</span> <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">if</span> data != <span class="literal">nil</span> &amp;&amp; data.length &gt; <span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> jsonResult:<span class="type">NSDictionary</span> = <span class="type">NSJSONSerialization</span>.<span class="type">JSONObjectWithData</span>(data, options: <span class="type">NSJSONReadingOptions</span>.<span class="type">MutableContainers</span>, error: <span class="literal">nil</span>) <span class="keyword">as</span>! <span class="type">NSDictionary</span></span><br><span class="line">            <span class="keyword">var</span> code = jsonResult[<span class="string">"code"</span>] <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line">            <span class="keyword">if</span> code.hasPrefix(<span class="string">"1"</span>) &#123;</span><br><span class="line">                cell(result: jsonResult)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">              delegate.noCell(jsonResult[<span class="string">"msg"</span>] <span class="keyword">as</span>! <span class="type">String</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            delegate.noCoonection()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>有一小部分的逻辑代码可以忽略，这里只是为了说明调用的过程。</p>
 <p>3、未登录自动跳转实现<br>这样的逻辑在常见 APP 中应用的很广泛，我的做法是重写了 UIViewController 的 viewWillAppear 方法</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillAppear</span><span class="params">(animated: Bool)</span></span> &#123;</div><div class="line">    login()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">检查登陆</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">login</span><span class="params">()</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> <span class="comment">/* 你的逻辑 */</span> &#123;</div><div class="line">        <span class="keyword">var</span> controller = getController(<span class="string">"reg_nav"</span>) <span class="keyword">as</span>! <span class="type">UINavigationController</span></div><div class="line">        <span class="keyword">var</span> reg = controller.childViewControllers[<span class="number">0</span>] <span class="keyword">as</span>! <span class="type">RegisterController</span></div><div class="line">        reg.delegate = <span class="keyword">self</span></div><div class="line">        <span class="keyword">self</span>.presentViewController(controller, animated: <span class="literal">true</span>,completion: <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line">    login()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">检查登陆</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">login</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="comment">/* 你的逻辑 */</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> controller = getController(<span class="string">"reg_nav"</span>) <span class="keyword">as</span>! <span class="type">UINavigationController</span></span><br><span class="line">        <span class="keyword">var</span> reg = controller.childViewControllers[<span class="number">0</span>] <span class="keyword">as</span>! <span class="type">RegisterController</span></span><br><span class="line">        reg.delegate = <span class="keyword">self</span></span><br><span class="line">        <span class="keyword">self</span>.presentViewController(controller, animated: <span class="literal">true</span>,completion: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>4、工具类<br>在开发过程中还是抽象出来了好多的工具类，如下</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Utils.swift</span></div><div class="line"><span class="comment">//  Polyhedron</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by KokerWang on 15/3/11.</span></div><div class="line"><span class="comment">//  Copyright (c) 2015 jdjr. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">获取缓存数据</div><div class="line"></div><div class="line">:param: key key</div><div class="line"></div><div class="line">:returns: value</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">getData</span> <span class="params">(key : String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">var</span> ud = <span class="type">NSUserDefaults</span>.standardUserDefaults()</div><div class="line">    <span class="keyword">if</span> <span class="keyword">let</span> value: <span class="type">AnyObject</span> = ud.objectForKey(key) &#123;</div><div class="line">        <span class="keyword">return</span> value <span class="keyword">as</span>! <span class="type">String</span></div><div class="line">    &#125;<span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">""</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">保存缓存数据</div><div class="line"></div><div class="line">:param: key   key</div><div class="line">:param: value value</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">setDate</span><span class="params">(key : String, value : String)</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> ud = <span class="type">NSUserDefaults</span>.standardUserDefaults()</div><div class="line">    ud.setObject(value, forKey: key)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">获取Storyboard内的UI组件</div><div class="line"></div><div class="line">:param: name 组件Storyboard ID</div><div class="line"></div><div class="line">:returns: UIViewController</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">getController</span><span class="params">(name : String)</span></span> -&gt; <span class="type">UIViewController</span>&#123;</div><div class="line">    <span class="keyword">var</span> story =  <span class="type">UIStoryboard</span>(name: <span class="string">"Main"</span>, bundle: <span class="literal">nil</span>)</div><div class="line">    <span class="keyword">return</span> story.instantiateViewControllerWithIdentifier(name) <span class="keyword">as</span>! <span class="type">UIViewController</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">Log 日志</div><div class="line"></div><div class="line">:param: obj 日志输出对象</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">myLog</span> <span class="params">(obj : AnyObject)</span></span> &#123;</div><div class="line">    <span class="built_in">println</span>(<span class="string">"****************************************************************************"</span>)</div><div class="line">    <span class="built_in">println</span>(<span class="string">"****"</span>)</div><div class="line">    <span class="built_in">println</span>(<span class="string">"****log:  \(obj)"</span>)</div><div class="line">    <span class="built_in">println</span>(<span class="string">"****"</span>)</div><div class="line">    <span class="built_in">println</span>(<span class="string">"****************************************************************************"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">返回UIAlertController 对象 通过 self.presentViewController(buildAlert(msg as String), animated: true, completion: nil) 展示</div><div class="line"></div><div class="line">:param: msg 提示信息</div><div class="line"></div><div class="line">:returns:</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildAlert</span> <span class="params">(msg : String)</span></span> -&gt; <span class="type">UIAlertController</span> &#123;</div><div class="line">    <span class="keyword">let</span> alert = <span class="type">UIAlertController</span>(title: <span class="string">"提示"</span>, message: msg, preferredStyle: <span class="type">UIAlertControllerStyle</span>.<span class="type">Alert</span>)</div><div class="line">    alert.addAction(<span class="type">UIAlertAction</span>(title: <span class="string">"确定"</span>, style: <span class="type">UIAlertActionStyle</span>.<span class="type">Default</span>, handler: <span class="literal">nil</span>))</div><div class="line">    <span class="keyword">return</span> alert</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">获取随机数</div><div class="line"></div><div class="line">:param: length 随机数的长度</div><div class="line"></div><div class="line">:returns: 指定长度的随机数</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">getVerificationCode</span><span class="params">(length : Int)</span></span> -&gt; <span class="type">String</span>&#123;</div><div class="line">    <span class="keyword">if</span>(length &lt; <span class="number">1</span> )&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">""</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">var</span> str = <span class="string">""</span></div><div class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">1</span>...length&#123;</div><div class="line">        str += (<span class="string">"\(arc4random_uniform(10))"</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> str</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">var</span> hindenExtCellView : <span class="type">UIView</span>?</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">隐藏多余的table line</div><div class="line"></div><div class="line">:param: tableview UITableView</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">hindenExtCellLine</span> <span class="params">(tableview : UITableView)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span> hindenExtCellView == <span class="literal">nil</span> &#123;</div><div class="line">        hindenExtCellView = <span class="type">UIView</span>()</div><div class="line">        hindenExtCellView!.backgroundColor = <span class="type">UIColor</span>.clearColor()</div><div class="line">    &#125;</div><div class="line">    tableview.tableFooterView = hindenExtCellView</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">获取缓存数据</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:param: key key</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:returns: value</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getData</span> <span class="params">(key : String)</span></span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> ud = <span class="type">NSUserDefaults</span>.standardUserDefaults()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> value: <span class="type">AnyObject</span> = ud.objectForKey(key) &#123;</span><br><span class="line">        <span class="keyword">return</span> value <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">保存缓存数据</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:param: key   key</span></span><br><span class="line"><span class="comment">:param: value value</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setDate</span><span class="params">(key : String, value : String)</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ud = <span class="type">NSUserDefaults</span>.standardUserDefaults()</span><br><span class="line">    ud.setObject(value, forKey: key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">获取Storyboard内的UI组件</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:param: name 组件Storyboard ID</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:returns: UIViewController</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getController</span><span class="params">(name : String)</span></span> -&gt; <span class="type">UIViewController</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> story =  <span class="type">UIStoryboard</span>(name: <span class="string">"Main"</span>, bundle: <span class="literal">nil</span>)</span><br><span class="line">    <span class="keyword">return</span> story.instantiateViewControllerWithIdentifier(name) <span class="keyword">as</span>! <span class="type">UIViewController</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">Log 日志</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:param: obj 日志输出对象</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">myLog</span> <span class="params">(obj : AnyObject)</span></span> &#123;</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">"****************************************************************************"</span>)</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">"****"</span>)</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">"****log:  \(obj)"</span>)</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">"****"</span>)</span><br><span class="line">    <span class="built_in">println</span>(<span class="string">"****************************************************************************"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">返回UIAlertController 对象 通过 self.presentViewController(buildAlert(msg as String), animated: true, completion: nil) 展示</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:param: msg 提示信息</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:returns:</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildAlert</span> <span class="params">(msg : String)</span></span> -&gt; <span class="type">UIAlertController</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> alert = <span class="type">UIAlertController</span>(title: <span class="string">"提示"</span>, message: msg, preferredStyle: <span class="type">UIAlertControllerStyle</span>.<span class="type">Alert</span>)</span><br><span class="line">    alert.addAction(<span class="type">UIAlertAction</span>(title: <span class="string">"确定"</span>, style: <span class="type">UIAlertActionStyle</span>.<span class="type">Default</span>, handler: <span class="literal">nil</span>))</span><br><span class="line">    <span class="keyword">return</span> alert</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">获取随机数</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:param: length 随机数的长度</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:returns: 指定长度的随机数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getVerificationCode</span><span class="params">(length : Int)</span></span> -&gt; <span class="type">String</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(length &lt; <span class="number">1</span> )&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">1</span>...length&#123;</span><br><span class="line">        str += (<span class="string">"\(arc4random_uniform(10))"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> hindenExtCellView : <span class="type">UIView</span>?</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">隐藏多余的table line</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">:param: tableview UITableView</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hindenExtCellLine</span> <span class="params">(tableview : UITableView)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> hindenExtCellView == <span class="literal">nil</span> &#123;</span><br><span class="line">        hindenExtCellView = <span class="type">UIView</span>()</span><br><span class="line">        hindenExtCellView!.backgroundColor = <span class="type">UIColor</span>.clearColor()</span><br><span class="line">    &#125;</span><br><span class="line">    tableview.tableFooterView = hindenExtCellView</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>好啦，将近 2 个月的积累就说到这里啦，爬坑系类第一季到此结束。</p>
-
+</section>
+    <!-- Tags START -->
     
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-
-
-
-
-                
-            </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2015/05/15/一招搞定IOS屏幕适配/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2015/03/13/Swift通过代码启动Storyboard内的ViewController/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.jpg" alt="Benjy's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        benjyair@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:benjyair@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/" target="_self">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
+      <div class="tags">
+        <span>Tags:</span>
         
-    
+  <a href="/tags#Swift" >
+    <span class="tag-code">Swift</span>
+  </a>
 
-    <!-- Archives  -->
+      </div>
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="../../../../archives/2015/07/">七月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/06/">六月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/05/">五月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/03/">三月 2015<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/02/">二月 2015<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2015/01/">一月 2015<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/12/">十二月 2014<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/11/">十一月 2014<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/10/">十月 2014<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="../../../../archives/2014/09/">九月 2014<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2015/03/13/Swift通过代码启动Storyboard内的ViewController/">
+        <span class="nav-arrow">← </span>
         
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/tags" title="标签云">
-                
-                    <i class="material-icons sidebar-material-icons">pages</i>
-                
-                标签云
-            </a>
-        </li>
+          Swift 通过代码启动 Storyboard 内的 ViewController
         
+      </a>
     
-        <li>
-            <a href="/read" title="读书">
-                
-                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
-                
-                读书
-            </a>
-        </li>
+    
+      <a class="nav-right" href="/2015/05/15/一招搞定IOS屏幕适配/">
         
-    
-        <li>
-            <a href="http://chanyouji.com/users/658973" title="游记">
-                
-                    <i class="material-icons sidebar-material-icons">local_florist</i>
-                
-                游记
-            </a>
-        </li>
+          一招搞定 IOS 屏幕适配
         
+        <span class="nav-arrow"> →</span>
+      </a>
     
-        <li>
-            <a href="/gallery" title="映像">
-                
-                    <i class="material-icons sidebar-material-icons">camera</i>
-                
-                映像
-            </a>
-        </li>
-        
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
     
-        <li>
-            <a href="/about" title="关于">
-                
-                    <i class="material-icons sidebar-material-icons">person</i>
-                
-                关于
-            </a>
-        </li>
-        
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
     
-
-    <!-- Article Number  -->
+    <!-- 二维码 END -->
     
-        <li>
-            <a href="/archives">
-                文章总数
-                <span class="sidebar-badge">18</span>
-            </a>
-        </li>
-        
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
     
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
     
-
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#爬坑-——-String-类"><span class="toc-nav-text">爬坑 —— String 类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#爬坑-——-3DES，BASE64，SHA1-算法"><span class="toc-nav-text">爬坑 —— 3DES，BASE64，SHA1 算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#爬坑——UI"><span class="toc-nav-text">爬坑——UI</span></a></li></ol>
+    
+  </div>
 </aside>
+  
+  <!-- Catalog END -->
+</main>
 
-                    
+<script>
+  (function () {
+    var url = 'http://benjyair.github.io/2015/05/04/爬坑IOS——第一季/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
 
-                    
-                        <!-- Footer Top Button -->
-                        <div class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "benjy";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "爬坑IOS——第一季",
+        owner: "benjy",
+        repo: "benjyair.github.io",
+        oauth: {
+          client_id: "dcedaa7e13d42cbba2fa",
+          client_secret: "46e76c6466fd800188887c8a51735d2bf59f9753"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
 </div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/BenjyAir" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;
-            <script type="text/javascript">
-                var fd = new Date();
-                document.write(fd.getFullYear());
-            </script>
-            &nbsp;Benjy's blog
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
-            </div>
-        </div>
-    
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
 </footer>
 
-
-                    <!-- Import File -->
-<script src="../../../../js/lazyload.min.js"></script>
-<script src="../../../../js/js.min.js"></script>
-<script src="../../../../js/nprogress.js"></script>
-
-<script type="text/javascript">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Swiftye -->
-
-
-<!-- Local Search-->
-
-
-<!-- Window Load-->
 <script>
-    $(window).load(function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
 </script>
 
-<!-- MathJax Load-->
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
 
-
-                </main>
-            </div>
-        </body>
-    
+<script src="/js/script.js"></script>
+  </body>
 </html>
