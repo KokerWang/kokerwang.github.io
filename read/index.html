@@ -151,12 +151,12 @@
 
     <div id="article-banner">
   <h2>Read</h2>
-  <p class="post-date">2018-05-27</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
 </div>
-<main class="app-body flex-box">
+
+<main class="app-body">
   <!-- Article START -->
   <article class="post-article">
     <section class="markdown-content"><h3 id="2018-02"><a href="#2018-02" class="headerlink" title="2018-02"></a>2018-02</h3><p>2017-02-19 霍乱时期的爱情</p>
@@ -177,38 +177,8 @@
 <h3 id="2014-11"><a href="#2014-11" class="headerlink" title="2014-11"></a>2014-11</h3><p>2014-11-24 深入理解Java虚拟机<br>2014-11-17 Go语言程序设计<br>2014-11-05 50 Android Hacks</p>
 <p><br></p>
 </section>
-    <!-- Tags START -->
-    
-    <!-- Tags END -->
-    <!-- NAV START -->
-    
-
-    <!-- NAV END -->
-    <!-- 打赏 START -->
-    
-    <!-- 打赏 END -->
-    <!-- 二维码 START -->
-    
-    <!-- 二维码 END -->
-    
-      <!-- Gitment START -->
-      <div id="comments"></div>
-      <!-- Gitment END -->
-    
   </article>
   <!-- Article END -->
-  <!-- Catalog START -->
-  
-    <aside class="catalog-container">
-  <div class="toc-main">
-    <strong class="toc-title">Catalog</strong>
-    
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2018-02"><span class="toc-nav-text">2018-02</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2017-12"><span class="toc-nav-text">2017-12</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2017-11"><span class="toc-nav-text">2017-11</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2017-10"><span class="toc-nav-text">2017-10</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2016-12"><span class="toc-nav-text">2016-12</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2016-06"><span class="toc-nav-text">2016-06</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-09"><span class="toc-nav-text">2015-09</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-08"><span class="toc-nav-text">2015-08</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-07"><span class="toc-nav-text">2015-07</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-06"><span class="toc-nav-text">2015-06</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-04"><span class="toc-nav-text">2015-04</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-03"><span class="toc-nav-text">2015-03</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-02"><span class="toc-nav-text">2015-02</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2015-01"><span class="toc-nav-text">2015-01</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2014-12"><span class="toc-nav-text">2014-12</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2014-11"><span class="toc-nav-text">2014-11</span></a></li></ol>
-    
-  </div>
-</aside>
-  
-  <!-- Catalog END -->
 </main>
 
 <script>
@@ -238,7 +208,7 @@
       if (src !== 'http://file.muyutech.com/error-img.png') {
         var imageW = $(this).width()
         var imageH = $(this).height()
-        
+
         var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
         zoom = zoom < 1 ? 1 : zoom
         zoom = zoom > 2 ? 2 : zoom
@@ -258,39 +228,6 @@
         })
       }
     })
-
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
-
-    // gitment
-    var gitmentConfig = "benjyair";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "Read",
-        owner: "benjyair",
-        repo: "benjyair.github.io",
-        oauth: {
-          client_id: "dcedaa7e13d42cbba2fa",
-          client_secret: "46e76c6466fd800188887c8a51735d2bf59f9753"
-        },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
   })();
 </script>
 

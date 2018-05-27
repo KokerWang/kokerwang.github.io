@@ -10,7 +10,7 @@
   
   <title>
     
-      About Benjy | Benjy&#39;s Blog
+      Benjy | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -150,13 +150,13 @@
 </header>
 
     <div id="article-banner">
-  <h2>About Benjy</h2>
-  <p class="post-date">2018-05-27</p>
+  <h2>Benjy</h2>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
 </div>
-<main class="app-body flex-box">
+
+<main class="app-body">
   <!-- Article START -->
   <article class="post-article">
     <section class="markdown-content"><h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><ul>
@@ -182,38 +182,8 @@
 </ul>
 <h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>最近看到有人晒自己 Github 的连续签到记录，甚是励志，自己何不也记录点什么呢？今天灵光一闪，那就记录读的书吧，顺便挑战一下自己一年可以看多少书，详情 <a href="/read">点击这里</a>。<br><br></p>
 </section>
-    <!-- Tags START -->
-    
-    <!-- Tags END -->
-    <!-- NAV START -->
-    
-
-    <!-- NAV END -->
-    <!-- 打赏 START -->
-    
-    <!-- 打赏 END -->
-    <!-- 二维码 START -->
-    
-    <!-- 二维码 END -->
-    
-      <!-- Gitment START -->
-      <div id="comments"></div>
-      <!-- Gitment END -->
-    
   </article>
   <!-- Article END -->
-  <!-- Catalog START -->
-  
-    <aside class="catalog-container">
-  <div class="toc-main">
-    <strong class="toc-title">Catalog</strong>
-    
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关于我"><span class="toc-nav-text">关于我</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关于这里"><span class="toc-nav-text">关于这里</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#其他方面的我"><span class="toc-nav-text">其他方面的我</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#读书"><span class="toc-nav-text">读书</span></a></li></ol>
-    
-  </div>
-</aside>
-  
-  <!-- Catalog END -->
 </main>
 
 <script>
@@ -243,7 +213,7 @@
       if (src !== 'http://file.muyutech.com/error-img.png') {
         var imageW = $(this).width()
         var imageH = $(this).height()
-        
+
         var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
         zoom = zoom < 1 ? 1 : zoom
         zoom = zoom > 2 ? 2 : zoom
@@ -263,39 +233,6 @@
         })
       }
     })
-
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
-
-    // gitment
-    var gitmentConfig = "benjyair";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "About Benjy",
-        owner: "benjyair",
-        repo: "benjyair.github.io",
-        oauth: {
-          client_id: "dcedaa7e13d42cbba2fa",
-          client_secret: "46e76c6466fd800188887c8a51735d2bf59f9753"
-        },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
   })();
 </script>
 

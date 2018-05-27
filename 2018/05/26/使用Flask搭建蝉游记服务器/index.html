@@ -166,7 +166,7 @@
 </ul>
 <p>数据是一切信息型网站的基础，这些数据已经足够我们完成一个基本的网站了。我们可以选择自己开发一套前端 UI 来完成数据的展示，也可以把蝉游记现有的结构套进去。毫无疑问，我选择后者，来尽可能展现蝉游记原貌。<br><br><br>项目选型上直接选择 Flask + Jinja2，简单高效。<br><br><br>第一阶段我们主要完成用户界面和游记页面的开发，跳转方式和蝉游记保持一致。</p>
 <h3 id="目录介绍"><a href="#目录介绍" class="headerlink" title="目录介绍"></a>目录介绍</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|____templates                  <span class="comment"># 模板文件目录</span></span><br><span class="line">| |____trip.html</span><br><span class="line">| |____user.html</span><br><span class="line">|____static                     <span class="comment"># 资源文件目录</span></span><br><span class="line">| |____xxxxxx.js                <span class="comment"># 依赖文件等</span></span><br><span class="line">| |____data                     <span class="comment"># 用户数据目录</span></span><br><span class="line">| | |____user_1</span><br><span class="line">| | | |____trip_47891</span><br><span class="line">|____application.py             <span class="comment"># 项目主程序</span></span><br></pre></td></tr></table></figure>
-<h3 id="前端改造"><a href="#前端改造" class="headerlink" title="前端改造"></a>前端改造</h3><p>首先在在浏览器上分别保存两个网页源码到本地，然后对 HTML 中需要动态的部分使用 Jinja 语法修改为动态的内容，过程比较枯燥就不在这里赘述。简单讲几个遇到的问题：<br><br><br>1、动态替换进 HTML 内容后页面无法滚动。</p>
+<h3 id="前端改造"><a href="#前端改造" class="headerlink" title="前端改造"></a>前端改造</h3><p>首先在在浏览器上分别保存两个网页源码到本地，然后对 HTML 中需要动态的部分使用 Jinja 语法修改为动态的内容，依赖文件下载到本地的 static 目录中，过程比较枯燥就不在这里赘述。简单讲几个遇到的问题：<br><br><br>1、动态替换进 HTML 内容后页面无法滚动。</p>
 <p>A：原因是页面中有一些元素是需要使用 JS 动态加载的，而这部分又依赖一些数据，这部分数据是 API 中没有的，可以选择修改 application.js 中的逻辑，或者把这部分数据也爬下来，在展示的动态添加进模板中，我使用的是后者，爬取的内容存在 trip 的 script.js 中。<br><br><br>2、加密游记的获取与展示。</p>
 <p>A：在爬取过程中，我们是可以抓到加密的游记的，理论上是可以展示的，但是唯一获取不到的就是上一个问题中的那部分 script，这部分必须要登录才可以获取到，为了美观，我暂时把加密游记过滤掉了，如果之后能解决第一个问题，那么这个问题也可以迎刃而解，或者也可以自己做一套 UI 来展示即可。<br><br><br>3、图片展示 URL 的处理。</p>
 <p>A：使用 Jinja 编写一个 filter 将 JSON 中的 URL 修改到 static 目录中对应的地址。</p>
@@ -222,15 +222,6 @@
   </article>
   <!-- Article END -->
   <!-- Catalog START -->
-  
-    <aside class="catalog-container">
-  <div class="toc-main">
-    <strong class="toc-title">Catalog</strong>
-    
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#承接上文"><span class="toc-nav-text">承接上文</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#目录介绍"><span class="toc-nav-text">目录介绍</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#前端改造"><span class="toc-nav-text">前端改造</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#其他分析"><span class="toc-nav-text">其他分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#TBD"><span class="toc-nav-text">TBD</span></a></li></ol>
-    
-  </div>
-</aside>
   
   <!-- Catalog END -->
 </main>

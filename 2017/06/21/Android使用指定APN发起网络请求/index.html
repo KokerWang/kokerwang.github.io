@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Benjy&#39;s Blog">
+  <meta name="keyword" content="Benjy, benjy, BenjyAir, benjyair">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Android使用指定APN发起网络请求 | Benjy&#39;s Blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Benjy's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Project</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/read/" class="item-link">Read</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Project</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/read/" class="menu-link">Read</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Android使用指定APN发起网络请求</h2>
+  <p class="post-date">2017-06-21</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="如果想在不切换现有-APN-的情况下让一个网络请求走另一个-APN-应该怎么做？"><a href="#如果想在不切换现有-APN-的情况下让一个网络请求走另一个-APN-应该怎么做？" class="headerlink" title="如果想在不切换现有 APN 的情况下让一个网络请求走另一个 APN 应该怎么做？"></a>如果想在不切换现有 APN 的情况下让一个网络请求走另一个 APN 应该怎么做？</h3><p>这样的需求在 Android 上是可行的，你只需要获取到一个 Network 对象就可以。<br>Network 提供 openConnection() 方法，你可以像使用 HttpURLConnection 一样来发起网络请求。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * /frameworks/base/core/java/android/net/Network.java</span></span><br><span class="line"><span class="comment"> * Opens the specified &#123;<span class="doctag">@link</span> URL&#125; on this &#123;<span class="doctag">@code</span> Network&#125;, such that all traffic will be sent</span></span><br><span class="line"><span class="comment"> * on this Network. The URL protocol must be &#123;<span class="doctag">@code</span> HTTP&#125; or &#123;<span class="doctag">@code</span> HTTPS&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> proxy the proxy through which the connection will be established.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> a &#123;<span class="doctag">@code</span> URLConnection&#125; to the resource referred to by this URL.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> MalformedURLException if the URL protocol is not HTTP or HTTPS.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException if the argument proxy is null.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IOException if an error occurs while opening the connection.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> java.net.URL#openConnection()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> URLConnection <span class="title">openConnection</span><span class="params">(URL url, java.net.Proxy proxy)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (proxy == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"proxy is null"</span>);</span><br><span class="line">   maybeInitHttpClient();</span><br><span class="line">   String protocol = url.getProtocol();</span><br><span class="line">   OkUrlFactory okUrlFactory;</span><br><span class="line">   <span class="comment">// <span class="doctag">TODO:</span> HttpHandler creates OkUrlFactory instances that share the default ResponseCache.</span></span><br><span class="line">   <span class="comment">// Could this cause unexpected behavior?</span></span><br><span class="line">   <span class="keyword">if</span> (protocol.equals(<span class="string">"http"</span>)) &#123;</span><br><span class="line">       okUrlFactory = HttpHandler.createHttpOkUrlFactory(proxy);</span><br><span class="line">   &#125; <span class="keyword">else</span> <span class="keyword">if</span> (protocol.equals(<span class="string">"https"</span>)) &#123;</span><br><span class="line">       okUrlFactory = HttpsHandler.createHttpsOkUrlFactory(proxy);</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="comment">// OkHttp only supports HTTP and HTTPS and returns a null URLStreamHandler if</span></span><br><span class="line">       <span class="comment">// passed another protocol.</span></span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> MalformedURLException(<span class="string">"Invalid URL or unrecognized protocol "</span> + protocol);</span><br><span class="line">   &#125;</span><br><span class="line">   OkHttpClient client = okUrlFactory.client();</span><br><span class="line">   client.setSocketFactory(getSocketFactory()).setConnectionPool(mConnectionPool);</span><br><span class="line">   <span class="comment">// Let network traffic go via mDns</span></span><br><span class="line">   client.setDns(mDns);</span><br><span class="line">   <span class="keyword">return</span> okUrlFactory.open(url);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上方法中的 Proxy 对象便是由 APN 中设置的 Proxy 和 ProxyPort 等参数生成的，使用方法参考如下例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * /packages/services/Mms/src/com/android/mms/service/MmsHttpClient.java</span></span><br><span class="line"><span class="comment"> * Execute an MMS HTTP request, either a POST (sending) or a GET (downloading)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> urlString  The request URL, for sending it is usually the MMSC, and for downloading</span></span><br><span class="line"><span class="comment"> *                   it is the message URL</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> pdu        For POST (sending) only, the PDU to send</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> method     HTTP method, POST for sending and GET for downloading</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> isProxySet Is there a proxy for the MMSC</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> proxyHost  The proxy host</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> proxyPort  The proxy port</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> mmsConfig  The MMS config to use</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> subId      The subscription ID used to get line number, etc.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> requestId  The request ID for logging</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> The HTTP response body</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> MmsHttpException For any failures</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">byte</span>[] execute(String urlString, <span class="keyword">byte</span>[] pdu, String method, <span class="keyword">boolean</span> isProxySet,</span><br><span class="line">                      String proxyHost, <span class="keyword">int</span> proxyPort, Bundle mmsConfig, <span class="keyword">int</span> subId, String requestId)</span><br><span class="line">        <span class="keyword">throws</span> MmsHttpException &#123;</span><br><span class="line">    LogUtil.d(requestId, <span class="string">"HTTP: "</span> + method + <span class="string">" "</span> + redactUrlForNonVerbose(urlString)</span><br><span class="line">            + (isProxySet ? (<span class="string">", proxy="</span> + proxyHost + <span class="string">":"</span> + proxyPort) : <span class="string">""</span>)</span><br><span class="line">            + <span class="string">", PDU size="</span> + (pdu != <span class="keyword">null</span> ? pdu.length : <span class="number">0</span>));</span><br><span class="line">    checkMethod(method);</span><br><span class="line">    HttpURLConnection connection = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Proxy proxy = Proxy.NO_PROXY;</span><br><span class="line">        <span class="keyword">if</span> (isProxySet) &#123;</span><br><span class="line">            proxy = <span class="keyword">new</span> Proxy(Proxy.Type.HTTP,</span><br><span class="line">                    <span class="keyword">new</span> InetSocketAddress(mNetwork.getByName(proxyHost), proxyPort));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> URL url = <span class="keyword">new</span> URL(urlString);</span><br><span class="line">        maybeWaitForIpv4(requestId, url);</span><br><span class="line">        <span class="comment">// Now get the connection</span></span><br><span class="line">        connection = (HttpURLConnection) mNetwork.openConnection(url, proxy);</span><br><span class="line">        connection.setDoInput(<span class="keyword">true</span>);</span><br><span class="line">        connection.setConnectTimeout(</span><br><span class="line">                mmsConfig.getInt(SmsManager.MMS_CONFIG_HTTP_SOCKET_TIMEOUT));</span><br><span class="line">        <span class="comment">// ------- COMMON HEADERS ---------</span></span><br><span class="line">        <span class="comment">// Header: Accept</span></span><br><span class="line">        connection.setRequestProperty(HEADER_ACCEPT, HEADER_VALUE_ACCEPT);</span><br><span class="line">        <span class="comment">// Header: Accept-Language</span></span><br><span class="line">        connection.setRequestProperty(</span><br><span class="line">                HEADER_ACCEPT_LANGUAGE, getCurrentAcceptLanguage(Locale.getDefault()));</span><br><span class="line">        <span class="comment">// Header: User-Agent</span></span><br><span class="line">        <span class="keyword">final</span> String userAgent = mmsConfig.getString(SmsManager.MMS_CONFIG_USER_AGENT);</span><br><span class="line">        LogUtil.i(requestId, <span class="string">"HTTP: User-Agent="</span> + userAgent);</span><br><span class="line">        connection.setRequestProperty(HEADER_USER_AGENT, userAgent);</span><br><span class="line">        <span class="comment">// Header: x-wap-profile</span></span><br><span class="line">        <span class="keyword">final</span> String uaProfUrlTagName =</span><br><span class="line">                mmsConfig.getString(SmsManager.MMS_CONFIG_UA_PROF_TAG_NAME);</span><br><span class="line">        <span class="keyword">final</span> String uaProfUrl = mmsConfig.getString(SmsManager.MMS_CONFIG_UA_PROF_URL);</span><br><span class="line">        <span class="keyword">if</span> (uaProfUrl != <span class="keyword">null</span>) &#123;</span><br><span class="line">            LogUtil.i(requestId, <span class="string">"HTTP: UaProfUrl="</span> + uaProfUrl);</span><br><span class="line">            connection.setRequestProperty(uaProfUrlTagName, uaProfUrl);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Header: Connection: close (if needed)</span></span><br><span class="line">        <span class="comment">// Some carriers require that the HTTP connection's socket is closed</span></span><br><span class="line">        <span class="comment">// after an MMS request/response is complete. In these cases keep alive</span></span><br><span class="line">        <span class="comment">// is disabled. See https://tools.ietf.org/html/rfc7230#section-6.6</span></span><br><span class="line">        <span class="keyword">if</span> (mmsConfig.getBoolean(SmsManager.MMS_CONFIG_CLOSE_CONNECTION, <span class="keyword">false</span>)) &#123;</span><br><span class="line">            LogUtil.i(requestId, <span class="string">"HTTP: Connection close after request"</span>);</span><br><span class="line">            connection.setRequestProperty(HEADER_CONNECTION, HEADER_CONNECTION_CLOSE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Add extra headers specified by mms_config.xml's httpparams</span></span><br><span class="line">        addExtraHeaders(connection, mmsConfig, subId);</span><br><span class="line">        <span class="comment">// Different stuff for GET and POST</span></span><br><span class="line">        <span class="keyword">if</span> (METHOD_POST.equals(method)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pdu == <span class="keyword">null</span> || pdu.length &lt; <span class="number">1</span>) &#123;</span><br><span class="line">                LogUtil.e(requestId, <span class="string">"HTTP: empty pdu"</span>);</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> MmsHttpException(<span class="number">0</span><span class="comment">/*statusCode*/</span>, <span class="string">"Sending empty PDU"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            connection.setDoOutput(<span class="keyword">true</span>);</span><br><span class="line">            connection.setRequestMethod(METHOD_POST);</span><br><span class="line">            <span class="keyword">if</span> (mmsConfig.getBoolean(SmsManager.MMS_CONFIG_SUPPORT_HTTP_CHARSET_HEADER)) &#123;</span><br><span class="line">                connection.setRequestProperty(HEADER_CONTENT_TYPE,</span><br><span class="line">                        HEADER_VALUE_CONTENT_TYPE_WITH_CHARSET);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                connection.setRequestProperty(HEADER_CONTENT_TYPE,</span><br><span class="line">                        HEADER_VALUE_CONTENT_TYPE_WITHOUT_CHARSET);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (LogUtil.isLoggable(Log.VERBOSE)) &#123;</span><br><span class="line">                logHttpHeaders(connection.getRequestProperties(), requestId);</span><br><span class="line">            &#125;</span><br><span class="line">            connection.setFixedLengthStreamingMode(pdu.length);</span><br><span class="line">            <span class="comment">// Sending request body</span></span><br><span class="line">            <span class="keyword">final</span> OutputStream out =</span><br><span class="line">                    <span class="keyword">new</span> BufferedOutputStream(connection.getOutputStream());</span><br><span class="line">            out.write(pdu);</span><br><span class="line">            out.flush();</span><br><span class="line">            out.close();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (METHOD_GET.equals(method)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (LogUtil.isLoggable(Log.VERBOSE)) &#123;</span><br><span class="line">                logHttpHeaders(connection.getRequestProperties(), requestId);</span><br><span class="line">            &#125;</span><br><span class="line">            connection.setRequestMethod(METHOD_GET);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Get response</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> responseCode = connection.getResponseCode();</span><br><span class="line">        <span class="keyword">final</span> String responseMessage = connection.getResponseMessage();</span><br><span class="line">        LogUtil.d(requestId, <span class="string">"HTTP: "</span> + responseCode + <span class="string">" "</span> + responseMessage);</span><br><span class="line">        <span class="keyword">if</span> (LogUtil.isLoggable(Log.VERBOSE)) &#123;</span><br><span class="line">            logHttpHeaders(connection.getHeaderFields(), requestId);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (responseCode / <span class="number">100</span> != <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> MmsHttpException(responseCode, responseMessage);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> InputStream in = <span class="keyword">new</span> BufferedInputStream(connection.getInputStream());</span><br><span class="line">        <span class="keyword">final</span> ByteArrayOutputStream byteOut = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4096</span>];</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> ((count = in.read(buf)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            byteOut.write(buf, <span class="number">0</span>, count);</span><br><span class="line">        &#125;</span><br><span class="line">        in.close();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">byte</span>[] responseBody = byteOut.toByteArray();</span><br><span class="line">        LogUtil.d(requestId, <span class="string">"HTTP: response size="</span></span><br><span class="line">                + (responseBody != <span class="keyword">null</span> ? responseBody.length : <span class="number">0</span>));</span><br><span class="line">        <span class="keyword">return</span> responseBody;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">        <span class="keyword">final</span> String redactedUrl = redactUrlForNonVerbose(urlString);</span><br><span class="line">        LogUtil.e(requestId, <span class="string">"HTTP: invalid URL "</span> + redactedUrl, e);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MmsHttpException(<span class="number">0</span><span class="comment">/*statusCode*/</span>, <span class="string">"Invalid URL "</span> + redactedUrl, e);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ProtocolException e) &#123;</span><br><span class="line">        <span class="keyword">final</span> String redactedUrl = redactUrlForNonVerbose(urlString);</span><br><span class="line">        LogUtil.e(requestId, <span class="string">"HTTP: invalid URL protocol "</span> + redactedUrl, e);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MmsHttpException(<span class="number">0</span><span class="comment">/*statusCode*/</span>, <span class="string">"Invalid URL protocol "</span> + redactedUrl, e);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        LogUtil.e(requestId, <span class="string">"HTTP: IO failure"</span>, e);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MmsHttpException(<span class="number">0</span><span class="comment">/*statusCode*/</span>, e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (connection != <span class="keyword">null</span>) &#123;</span><br><span class="line">            connection.disconnect();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://androidxref.com/8.0.0_r4/xref/frameworks/base/core/java/android/net/Network.java" target="_blank" rel="noopener">/frameworks/base/core/java/android/net/Network.java</a><br><a href="http://androidxref.com/8.0.0_r4/xref/packages/services/Mms/src/com/android/mms/service/MmsHttpClient.java" target="_blank" rel="noopener">/packages/services/Mms/src/com/android/mms/service/MmsHttpClient.java</a><br><a href="http://androidxref.com/8.0.0_r4/xref/packages/services/Mms/src/com/android/mms/service/MmsRequest.java" target="_blank" rel="noopener">/packages/services/Mms/src/com/android/mms/service/MmsNetworkManager.java</a><br><br></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/02/07/驻网APDU信息解读/">
+        <span class="nav-arrow">← </span>
+        
+          驻网APDU信息解读
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2015/07/25/你试过这样分析Android界面么/">
+        
+          你试过这样分析 Android 界面么
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://benjyair.github.io/2017/06/21/Android使用指定APN发起网络请求/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "benjyair";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Android使用指定APN发起网络请求",
+        owner: "benjyair",
+        repo: "benjyair.github.io",
+        oauth: {
+          client_id: "dcedaa7e13d42cbba2fa",
+          client_secret: "46e76c6466fd800188887c8a51735d2bf59f9753"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
