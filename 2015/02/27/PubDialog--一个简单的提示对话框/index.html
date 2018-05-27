@@ -10,7 +10,7 @@
   
   <title>
     
-      Android 简单实现圆形头像(续) | Benjy&#39;s Blog
+      PubDialog--一个简单的提示对话框 | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -150,8 +150,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Android 简单实现圆形头像(续)</h2>
-  <p class="post-date">2014-10-11</p>
+  <h2>PubDialog--一个简单的提示对话框</h2>
+  <p class="post-date">2015-02-27</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -159,31 +159,30 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>上一篇文章里面详细讲解了用自己的方式实现圆形头像，如今发现之前的代码效率并不高，因为每次都要 createBitmap 和转换图片，createBitmap 是一件很费内存的事，而频繁转换是一件很费 cpu 的事，这样费手机资源肯定必然是不行的，并且随着自己对 Imageloader 的深入使用，发现使用 Imageloader 还有另外一种更简单的方法来实现这样的效果，或许能解决这样的问题。</p>
-<hr>
-<p>下面我详细介绍下，先看代码:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">   .showImageForEmptyUri(R.drawable.default_image)</span><br><span class="line">   .showImageOnFail(R.drawable.default_image)</span><br><span class="line">   .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)</span><br><span class="line">   .bitmapConfig(Config.RGB_565)</span><br><span class="line">.cacheInMemory(<span class="keyword">true</span>)</span><br><span class="line">.cacheOnDisk(<span class="keyword">true</span>)</span><br><span class="line">.resetViewBeforeLoading(<span class="keyword">true</span>)</span><br><span class="line">.displayer(<span class="keyword">new</span> RoundedBitmapDisplayer(<span class="number">112</span>)).build();</span><br></pre></td></tr></table></figure>
-<p>这里面的 displayer 方法可以接收实现 BitmapDisplayer 接口的对象，关键点就在这里，Imageloader 有默认的可以实现圆角的 Displayer 那就是 FadeInBitmapDisplayer（int durationMillis），durationMillis 就是圆角的半径。用他就不用之前自己那么麻烦的方法了。</p>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p>Imageloader 的初始化方法没变，同上一篇 blog，这里只展示一下显示的工具类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//显示圆角的option</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> DisplayImageOptions options ;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends ImageView&gt; <span class="function"><span class="keyword">void</span> <span class="title">displayImage2Circle</span><span class="params">(T container， String url)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(options == <span class="keyword">null</span>)&#123;</span><br><span class="line">        options = <span class="keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">            .showImageForEmptyUri(R.drawable.default_image)</span><br><span class="line">            .showImageOnFail(R.drawable.default_image)</span><br><span class="line">            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)</span><br><span class="line">            .bitmapConfig(Config.RGB_565)</span><br><span class="line">            .cacheInMemory(<span class="keyword">true</span>)</span><br><span class="line">            .cacheOnDisk(<span class="keyword">true</span>)</span><br><span class="line">            .resetViewBeforeLoading(<span class="keyword">true</span>)</span><br><span class="line">            <span class="comment">// 我们的图片大小是70dp 所以我这里半径=70*1.6 ，其他情况可以自己算，或者动态设置</span></span><br><span class="line">            .displayer(<span class="keyword">new</span> RoundedBitmapDisplayer(<span class="number">112</span>)) </span><br><span class="line">            .build();</span><br><span class="line">    &#125;</span><br><span class="line">	ImageLoader.getInstance().displayImage(url, container, options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="附"><a href="#附" class="headerlink" title="附 :"></a>附 :</h3><p>其他 displayer</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">displayer：  </span><br><span class="line">        RoundedBitmapDisplayer（<span class="keyword">int</span> roundPixels）设置圆角图片  </span><br><span class="line">        FakeBitmapDisplayer（）这个类什么都没做  </span><br><span class="line">        FadeInBitmapDisplayer（<span class="keyword">int</span> durationMillis）设置图片渐显的时间  </span><br><span class="line">        SimpleBitmapDisplayer()正常显示一张图片</span><br></pre></td></tr></table></figure>
-<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>Imageloader 缓存的图片是转换之前的 bitmap 呢还是之后的呢？</p>
-<blockquote>
-<ul>
-<li>如果是之前的，那执行效率并不会较之前我实现的方法提高多少，只是转换的工作交给了 Imageloader，每次还是要转换.</li>
-<li>如果缓存的是转换之后的圆角 bitmap 那效率就会大大提高，而我也希望是这样的，但这样拓展性可能会降低。</li>
+    <section class="markdown-content"><p>项目里需要做一个有多个选项的单选对话框，类似 QQ 的 Dialog 风格，实现起来倒是不难，只是这样的功能我在之前的项目里就写过一次，这次又要为一些小的改动再写一遍。干脆，我把这样的 Dialog 封装一下开源出来，也方便自己以后再用到的时候就不再需要做重复的工作。加上自己一直想写个开源项目，所以这次借着这股东风，PubDialog 诞生了。PubDialog 是一个类似 IOS 风格的对话框，我封装了一些简单的功能，方便在大部分场合快速实现选择对话框的功能。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//初始化一个字符数组</span></span><br><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line">list.add(<span class="string">"Send message"</span>);</span><br><span class="line">list.add(<span class="string">"Like profile"</span>);</span><br><span class="line">list.add(<span class="string">"Add to favorites"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化PubDialogFragment</span></span><br><span class="line">PubDialogFragment pubDialog = PubDialogFragment.newInstance(list, <span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置回调(也可以不设置)</span></span><br><span class="line">pubDialog.setItemClickListener(<span class="keyword">new</span> PubDialogFragment.ItemClickListener() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(View clickedView, DialogObject dialogObject,</span></span></span><br><span class="line"><span class="function"><span class="params">    	<span class="keyword">int</span> groupIndex, <span class="keyword">int</span> itemIndex)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//在回调中处理事件</span></span><br><span class="line">        Intent intent;</span><br><span class="line">        <span class="keyword">if</span> (itemIndex == <span class="number">1</span>) &#123;</span><br><span class="line">            Uri uri = Uri.parse(<span class="string">"https://github.com/KokerWang/PubDialog"</span>);</span><br><span class="line">            intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW, uri);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Uri uri = Uri.parse(<span class="string">"http://www.kokerwang.com"</span>);</span><br><span class="line">            intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW, uri);</span><br><span class="line">        &#125;</span><br><span class="line">        startActivity(intent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//在使用的地方</span></span><br><span class="line">pubDialog.show(getSupportFragmentManager(), <span class="string">"setting"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="功能定制"><a href="#功能定制" class="headerlink" title="功能定制"></a>功能定制</h3><ul>
+<li>字体颜色</li>
+<li>背景</li>
+<li>icon</li>
+<li>多分组</li>
 </ul>
-</blockquote>
-<p>等有时间了我会深入研究一下 Imageloader 的源码，把结果写出来。</p>
+<p>更多定制功能请留意API</p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="http://oneylt1vv.bkt.clouddn.com/pubdialog_show_demo.gif" alt="PubDialog"></p>
+<ul>
+<li><p><a href="https://github.com/BenjyAir/PubDialog" target="_blank" rel="noopener">项目地址</a> (包含示例项目和lib库)</p>
+</li>
+<li><p><a href="https://github.com/BenjyAir/PubDialog/blob/master/apk/PubDialogExample-debug.apk?raw=true" target="_blank" rel="noopener">下载Demo</a></p>
+</li>
+</ul>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#技术积累" >
-    <span class="tag-code">技术积累</span>
+  <a href="/tags#OpenSource" >
+    <span class="tag-code">OpenSource</span>
   </a>
 
       </div>
@@ -194,17 +193,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2014/10/21/下拉刷新封装/">
+      <a class="nav-left" href="/2015/02/27/策略枚举/">
         <span class="nav-arrow">← </span>
         
-          下拉刷新封装
+          策略枚举
         
       </a>
     
     
-      <a class="nav-right" href="/2014/09/30/Android简单实现圆形头像/">
+      <a class="nav-right" href="/2015/01/25/为Context-Menu.Android库增加用户体验/">
         
-          Android 简单实现圆形头像
+          为 Context-Menu.Android 库增加用户体验
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -232,7 +231,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#完整代码"><span class="toc-nav-text">完整代码</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#附"><span class="toc-nav-text">附 :</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#疑问"><span class="toc-nav-text">疑问</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用"><span class="toc-nav-text">使用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#功能定制"><span class="toc-nav-text">功能定制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#效果"><span class="toc-nav-text">效果</span></a></li></ol>
     
   </div>
 </aside>
@@ -242,7 +241,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2014/10/11/Android简单实现圆形头像(续)/';
+    var url = 'http://benjyair.github.io/2015/02/27/PubDialog--一个简单的提示对话框/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -298,7 +297,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Android 简单实现圆形头像(续)",
+        id: "PubDialog--一个简单的提示对话框",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {

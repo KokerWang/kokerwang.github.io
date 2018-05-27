@@ -10,7 +10,7 @@
   
   <title>
     
-      PubDialog ---- 一个简单的提示对话框 | Benjy&#39;s Blog
+      使用Flask搭建蝉游记服务器 | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -83,6 +83,12 @@
       
         <li class="list-item">
           
+            <a href="/project/" class="item-link">Project</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
             <a href="/read/" class="item-link">Read</a>
           
         </li>
@@ -122,6 +128,12 @@
         
           <li class="menu-item">
             
+              <a href="/project/" class="menu-link">Project</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
               <a href="/read/" class="menu-link">Read</a>
             
           </li>
@@ -138,8 +150,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>PubDialog ---- 一个简单的提示对话框</h2>
-  <p class="post-date">2015-02-27</p>
+  <h2>使用Flask搭建蝉游记服务器</h2>
+  <p class="post-date">2018-05-26</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -147,30 +159,33 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>项目里需要做一个有多个选项的单选对话框，类似 QQ 的 Dialog 风格，实现起来倒是不难，只是这样的功能我在之前的项目里就写过一次，这次又要为一些小的改动再写一遍。干脆，我把这样的 Dialog 封装一下开源出来，也方便自己以后再用到的时候就不再需要做重复的工作。加上自己一直想写个开源项目，所以这次借着这股东风，PubDialog 诞生了。PubDialog 是一个类似 IOS 风格的对话框，我封装了一些简单的功能，方便在大部分场合快速实现选择对话框的功能。</p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//初始化一个字符数组</span></span><br><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line">list.add(<span class="string">"Send message"</span>);</span><br><span class="line">list.add(<span class="string">"Like profile"</span>);</span><br><span class="line">list.add(<span class="string">"Add to favorites"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化PubDialogFragment</span></span><br><span class="line">PubDialogFragment pubDialog = PubDialogFragment.newInstance(list, <span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置回调(也可以不设置)</span></span><br><span class="line">pubDialog.setItemClickListener(<span class="keyword">new</span> PubDialogFragment.ItemClickListener() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(View clickedView, DialogObject dialogObject, </span></span></span><br><span class="line"><span class="function"><span class="params">    	<span class="keyword">int</span> groupIndex, <span class="keyword">int</span> itemIndex)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//在回调中处理事件</span></span><br><span class="line">        Intent intent;</span><br><span class="line">        <span class="keyword">if</span> (itemIndex == <span class="number">1</span>) &#123;</span><br><span class="line">            Uri uri = Uri.parse(<span class="string">"https://github.com/KokerWang/PubDialog"</span>);</span><br><span class="line">            intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW, uri);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Uri uri = Uri.parse(<span class="string">"http://www.kokerwang.com"</span>);</span><br><span class="line">            intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW, uri);</span><br><span class="line">        &#125;</span><br><span class="line">        startActivity(intent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//在使用的地方</span></span><br><span class="line">pubDialog.show(getSupportFragmentManager(), <span class="string">"setting"</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="功能定制"><a href="#功能定制" class="headerlink" title="功能定制"></a>功能定制</h3><ul>
-<li>字体颜色</li>
-<li>背景</li>
-<li>icon</li>
-<li>多分组</li>
-</ul>
-<p>更多定制功能请留意API</p>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="http://oneylt1vv.bkt.clouddn.com/pubdialog_show_demo.gif" alt="PubDialog"></p>
+    <section class="markdown-content"><h3 id="承接上文"><a href="#承接上文" class="headerlink" title="承接上文"></a>承接上文</h3><p>我们现在获取到的数据有：</p>
 <ul>
-<li><p><a href="https://github.com/BenjyAir/PubDialog" target="_blank" rel="noopener">项目地址</a> (包含示例项目和lib库)</p>
-</li>
-<li><p><a href="https://github.com/BenjyAir/PubDialog/blob/master/apk/PubDialogExample-debug.apk?raw=true" target="_blank" rel="noopener">下载Demo</a></p>
-</li>
+<li>游记 JSON 数据和游记图片</li>
+<li>用户信息 JSON 数据和用户去过的地方 JSON 数据</li>
 </ul>
+<p>数据是一切信息型网站的基础，这些数据已经足够我们完成一个基本的网站了。我们可以选择自己开发一套前端 UI 来完成数据的展示，也可以把蝉游记现有的结构套进去。毫无疑问，我选择后者，来尽可能展现蝉游记原貌。<br><br><br>项目选型上直接选择 Flask + Jinja2，简单高效。<br><br><br>第一阶段我们主要完成用户界面和游记页面的开发，跳转方式和蝉游记保持一致。</p>
+<h3 id="目录介绍"><a href="#目录介绍" class="headerlink" title="目录介绍"></a>目录介绍</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|____templates                  <span class="comment"># 模板文件目录</span></span><br><span class="line">| |____trip.html</span><br><span class="line">| |____user.html</span><br><span class="line">|____static                     <span class="comment"># 资源文件目录</span></span><br><span class="line">| |____xxxxxx.js                <span class="comment"># 依赖文件等</span></span><br><span class="line">| |____data                     <span class="comment"># 用户数据目录</span></span><br><span class="line">| | |____user_1</span><br><span class="line">| | | |____trip_47891</span><br><span class="line">|____application.py             <span class="comment"># 项目主程序</span></span><br></pre></td></tr></table></figure>
+<h3 id="前端改造"><a href="#前端改造" class="headerlink" title="前端改造"></a>前端改造</h3><p>首先在在浏览器上分别保存两个网页源码到本地，然后对 HTML 中需要动态的部分使用 Jinja 语法修改为动态的内容，过程比较枯燥就不在这里赘述。简单讲几个遇到的问题：<br><br><br>1、动态替换进 HTML 内容后页面无法滚动。</p>
+<p>A：原因是页面中有一些元素是需要使用 JS 动态加载的，而这部分又依赖一些数据，这部分数据是 API 中没有的，可以选择修改 application.js 中的逻辑，或者把这部分数据也爬下来，在展示的动态添加进模板中，我使用的是后者，爬取的内容存在 trip 的 script.js 中。<br><br><br>2、加密游记的获取与展示。</p>
+<p>A：在爬取过程中，我们是可以抓到加密的游记的，理论上是可以展示的，但是唯一获取不到的就是上一个问题中的那部分 script，这部分必须要登录才可以获取到，为了美观，我暂时把加密游记过滤掉了，如果之后能解决第一个问题，那么这个问题也可以迎刃而解，或者也可以自己做一套 UI 来展示即可。<br><br><br>3、图片展示 URL 的处理。</p>
+<p>A：使用 Jinja 编写一个 filter 将 JSON 中的 URL 修改到 static 目录中对应的地址。</p>
+<h3 id="其他分析"><a href="#其他分析" class="headerlink" title="其他分析"></a>其他分析</h3><p>在分析数据的过程中，我发现蝉游记的私密游记实际上并没有做到完全的私密。也就是说数据是可以获取到的，是否展示由客户端来决定，如果是私密游记 API 会同时返回一个加密后的 password。经过对蝉游记 App 的反编译，我发现就是由用户 user_id + ‘_’ + password 然后取 hash 生成的，只要用户输入的密码经过计算与数据一致便可以显示，所以我们完全可以绕过这一步检测 =、=。</p>
+<h3 id="TBD"><a href="#TBD" class="headerlink" title="TBD"></a>TBD</h3><p>接下来的任务</p>
+<ul>
+<li>用户去过的地方</li>
+<li>私密游记的展示</li>
+<li>生成静态网页</li>
+</ul>
+<p><a href="https://github.com/benjyair/Taki" target="_blank" rel="noopener">项目地址</a><br><br></p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#OpenSource" >
-    <span class="tag-code">OpenSource</span>
+  <a href="/tags#Python" >
+    <span class="tag-code">Python</span>
   </a>
 
       </div>
@@ -181,22 +196,16 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2015/01/25/为Context-Menu.Android库增加用户体验/">
-        <span class="nav-arrow">← </span>
-        
-          为 Context-Menu.Android 库增加用户体验
-        
-      </a>
     
-    
-      <a class="nav-right" href="/2015/02/27/策略枚举/">
+      <a class="nav-right" href="/2018/05/21/使用Python爬取蝉游记/">
         
-          策略枚举
+          使用Python抓取蝉游记
         
         <span class="nav-arrow"> →</span>
       </a>
     
   </div>
+
 
     <!-- NAV END -->
     <!-- 打赏 START -->
@@ -218,7 +227,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用"><span class="toc-nav-text">使用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#功能定制"><span class="toc-nav-text">功能定制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#效果"><span class="toc-nav-text">效果</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#承接上文"><span class="toc-nav-text">承接上文</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#目录介绍"><span class="toc-nav-text">目录介绍</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#前端改造"><span class="toc-nav-text">前端改造</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#其他分析"><span class="toc-nav-text">其他分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#TBD"><span class="toc-nav-text">TBD</span></a></li></ol>
     
   </div>
 </aside>
@@ -228,7 +237,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2015/02/27/PubDialog----一个简单的提示对话框/';
+    var url = 'http://benjyair.github.io/2018/05/26/使用Flask搭建蝉游记服务器/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -284,7 +293,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "PubDialog ---- 一个简单的提示对话框",
+        id: "使用Flask搭建蝉游记服务器",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {

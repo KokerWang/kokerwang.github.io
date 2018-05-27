@@ -10,7 +10,7 @@
   
   <title>
     
-      Android 简单实现圆形头像(续) | Benjy&#39;s Blog
+      博客迁移--从Jekyll到Hexo | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -150,8 +150,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Android 简单实现圆形头像(续)</h2>
-  <p class="post-date">2014-10-11</p>
+  <h2>博客迁移--从Jekyll到Hexo</h2>
+  <p class="post-date">2018-03-18</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -159,31 +159,15 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>上一篇文章里面详细讲解了用自己的方式实现圆形头像，如今发现之前的代码效率并不高，因为每次都要 createBitmap 和转换图片，createBitmap 是一件很费内存的事，而频繁转换是一件很费 cpu 的事，这样费手机资源肯定必然是不行的，并且随着自己对 Imageloader 的深入使用，发现使用 Imageloader 还有另外一种更简单的方法来实现这样的效果，或许能解决这样的问题。</p>
-<hr>
-<p>下面我详细介绍下，先看代码:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">   .showImageForEmptyUri(R.drawable.default_image)</span><br><span class="line">   .showImageOnFail(R.drawable.default_image)</span><br><span class="line">   .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)</span><br><span class="line">   .bitmapConfig(Config.RGB_565)</span><br><span class="line">.cacheInMemory(<span class="keyword">true</span>)</span><br><span class="line">.cacheOnDisk(<span class="keyword">true</span>)</span><br><span class="line">.resetViewBeforeLoading(<span class="keyword">true</span>)</span><br><span class="line">.displayer(<span class="keyword">new</span> RoundedBitmapDisplayer(<span class="number">112</span>)).build();</span><br></pre></td></tr></table></figure>
-<p>这里面的 displayer 方法可以接收实现 BitmapDisplayer 接口的对象，关键点就在这里，Imageloader 有默认的可以实现圆角的 Displayer 那就是 FadeInBitmapDisplayer（int durationMillis），durationMillis 就是圆角的半径。用他就不用之前自己那么麻烦的方法了。</p>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p>Imageloader 的初始化方法没变，同上一篇 blog，这里只展示一下显示的工具类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//显示圆角的option</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> DisplayImageOptions options ;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends ImageView&gt; <span class="function"><span class="keyword">void</span> <span class="title">displayImage2Circle</span><span class="params">(T container， String url)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(options == <span class="keyword">null</span>)&#123;</span><br><span class="line">        options = <span class="keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">            .showImageForEmptyUri(R.drawable.default_image)</span><br><span class="line">            .showImageOnFail(R.drawable.default_image)</span><br><span class="line">            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)</span><br><span class="line">            .bitmapConfig(Config.RGB_565)</span><br><span class="line">            .cacheInMemory(<span class="keyword">true</span>)</span><br><span class="line">            .cacheOnDisk(<span class="keyword">true</span>)</span><br><span class="line">            .resetViewBeforeLoading(<span class="keyword">true</span>)</span><br><span class="line">            <span class="comment">// 我们的图片大小是70dp 所以我这里半径=70*1.6 ，其他情况可以自己算，或者动态设置</span></span><br><span class="line">            .displayer(<span class="keyword">new</span> RoundedBitmapDisplayer(<span class="number">112</span>)) </span><br><span class="line">            .build();</span><br><span class="line">    &#125;</span><br><span class="line">	ImageLoader.getInstance().displayImage(url, container, options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="附"><a href="#附" class="headerlink" title="附 :"></a>附 :</h3><p>其他 displayer</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">displayer：  </span><br><span class="line">        RoundedBitmapDisplayer（<span class="keyword">int</span> roundPixels）设置圆角图片  </span><br><span class="line">        FakeBitmapDisplayer（）这个类什么都没做  </span><br><span class="line">        FadeInBitmapDisplayer（<span class="keyword">int</span> durationMillis）设置图片渐显的时间  </span><br><span class="line">        SimpleBitmapDisplayer()正常显示一张图片</span><br></pre></td></tr></table></figure>
-<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>Imageloader 缓存的图片是转换之前的 bitmap 呢还是之后的呢？</p>
-<blockquote>
-<ul>
-<li>如果是之前的，那执行效率并不会较之前我实现的方法提高多少，只是转换的工作交给了 Imageloader，每次还是要转换.</li>
-<li>如果缓存的是转换之后的圆角 bitmap 那效率就会大大提高，而我也希望是这样的，但这样拓展性可能会降低。</li>
-</ul>
-</blockquote>
-<p>等有时间了我会深入研究一下 Imageloader 的源码，把结果写出来。</p>
+    <section class="markdown-content"><p>有一段时间没写博客了，其一是忙，其二是人生开始了新的篇章。<br><br><br>一番机缘巧合下加入了现在的公司，第一次接触创业公司，和之前所有的感觉完全不一样，周围的同事都非常优秀，以至于让我世界观大开。<br><br><br>1、开始独自旅行。<br>还记得之前面试一家做旅行产品的公司时印象深刻的一段对话：<br>“为什么想加入一家做旅行产品的公司？”<br>“想要经常出去旅行。”<br>“出去旅行和自己所在的公司应该没什么关联吧。”<br>我一时语塞。<br>突然发现有些事情不是因为做不了，而是所处的圈子不一样，完全没有想过去做。<br><br><br>2、出国，与世界接轨。<br>2016年3月，工作原因离开了北京，搬家到深圳。<br>后来去了香港和澳门。<br>终于想明白朋友说过的一句话：<br>“喜欢深圳的原因是因为深圳离香港近，而香港离世界近。”<br><br><br>2017年的9月，被公司外派到美国圣地亚哥，与高通进行技术对接。<br>梦寐以求的 American Dream，就这样突然的实现了。<br>在加州的小别墅中生活了一周。<br>见识了世界一流的公司。<br>参观了世界一流的学校。<br>中途还去了一趟墨西哥。<br>原来国外的世界并不是那么的遥不可及。<br><br></p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#技术积累" >
-    <span class="tag-code">技术积累</span>
+  <a href="/tags#生活感悟" >
+    <span class="tag-code">生活感悟</span>
   </a>
 
       </div>
@@ -194,17 +178,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2014/10/21/下拉刷新封装/">
+      <a class="nav-left" href="/2018/05/21/使用Python爬取蝉游记/">
         <span class="nav-arrow">← </span>
         
-          下拉刷新封装
+          使用Python抓取蝉游记
         
       </a>
     
     
-      <a class="nav-right" href="/2014/09/30/Android简单实现圆形头像/">
+      <a class="nav-right" href="/2015/07/25/你试过这样分析Android界面么/">
         
-          Android 简单实现圆形头像
+          你试过这样分析 Android 界面么
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -232,7 +216,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#完整代码"><span class="toc-nav-text">完整代码</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#附"><span class="toc-nav-text">附 :</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#疑问"><span class="toc-nav-text">疑问</span></a></li></ol>
+      <ol class="nav">none</ol>
     
   </div>
 </aside>
@@ -242,7 +226,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2014/10/11/Android简单实现圆形头像(续)/';
+    var url = 'http://benjyair.github.io/2018/03/18/博客迁移--从Jekyll到Hexo/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -298,7 +282,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Android 简单实现圆形头像(续)",
+        id: "博客迁移--从Jekyll到Hexo",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {

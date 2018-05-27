@@ -10,7 +10,7 @@
   
   <title>
     
-      使用 Python 抓取蝉游记 | Benjy&#39;s Blog
+      使用Python抓取蝉游记 | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -83,6 +83,12 @@
       
         <li class="list-item">
           
+            <a href="/project/" class="item-link">Project</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
             <a href="/read/" class="item-link">Read</a>
           
         </li>
@@ -122,6 +128,12 @@
         
           <li class="menu-item">
             
+              <a href="/project/" class="menu-link">Project</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
               <a href="/read/" class="menu-link">Read</a>
             
           </li>
@@ -138,7 +150,7 @@
 </header>
 
     <div id="article-banner">
-  <h2>使用 Python 抓取蝉游记</h2>
+  <h2>使用Python抓取蝉游记</h2>
   <p class="post-date">2018-05-21</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
@@ -153,7 +165,7 @@
 <li>服务器部分，使用本地数据尽可能的还原蝉游记原貌。</li>
 <li>(TBD) 生成静态网页。</li>
 </ul>
-<h3 id="使用-Charles-抓取-API、Header-以及-Cookie"><a href="#使用-Charles-抓取-API、Header-以及-Cookie" class="headerlink" title="使用 Charles 抓取 API、Header 以及 Cookie"></a>使用 Charles 抓取 API、Header 以及 Cookie</h3><p>API：<br>蝉游记虽然作为一款几年前的产品，不得不说系统还是设计的非常不错的，良好的 RESTful API 对我们来说非常友好。</p>
+<h3 id="使用-Charles-抓取-API、Header-以及-Cookie"><a href="#使用-Charles-抓取-API、Header-以及-Cookie" class="headerlink" title="使用 Charles 抓取 API、Header 以及 Cookie"></a>使用 Charles 抓取 API、Header 以及 Cookie</h3><p>API：<br>蝉游记虽然作为一款几年前的产品，不得不说系统还是设计的非常不错的(因为 ruby on rails ？)，良好的 RESTful API 对我们来说非常友好。</p>
 <ul>
 <li><a href="http://chanyouji.com/api/users/1.json?page=1" target="_blank" rel="noopener">http://chanyouji.com/api/users/1.json?page=1</a> 用户信息及游记列表</li>
 <li><a href="http://chanyouji.com/api/trips/310965.json" target="_blank" rel="noopener">http://chanyouji.com/api/trips/310965.json</a>   游记详情</li>
@@ -162,10 +174,10 @@
 <p>Header：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;<span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span>,</span><br><span class="line">               <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate'</span>,</span><br><span class="line">               <span class="string">'Accept-Language'</span>: <span class="string">'zh-CN,zh;q=0.9'</span>,</span><br><span class="line">               <span class="string">'Cache-Control'</span>: <span class="string">'no-cache'</span>,</span><br><span class="line">               <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>,</span><br><span class="line">               <span class="string">'Host'</span>: <span class="string">'chanyouji.com'</span>,</span><br><span class="line">               <span class="string">'Pragma'</span>: <span class="string">'no-cache'</span>,</span><br><span class="line">               <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</span><br><span class="line">               <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'</span></span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
 <p>Cookie：<br>抓到的 cookie 是无法持续使用的，我们这里采用动态的方式，先请求蝉游记首页，然后记录下来留给后面的请求使用。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line">response = session.get(<span class="string">'http://chanyouji.com'</span>)</span><br><span class="line">cookies = response.cookies.get_dict()</span><br></pre></td></tr></table></figure></p>
 <h3 id="数据抓取"><a href="#数据抓取" class="headerlink" title="数据抓取"></a>数据抓取</h3><p>由于有 API 的缘故，我们数据抓取的工作量至少减少了 80% ，这里就不过多赘述。我们采用 requests 库来做网络请求，简单起见，没有使用多线程也没有使用代理，所以为了防止多次请求被拉黑，每次请求完随机 Sleep 几秒。</p>
-<h3 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h3><p>数据抓到了，接下来便是数据的存储。除了 JSON 数据，还需要把图片也一起存下来，毕竟图片是游记的基础。项目中我按下面的目录结构进保存：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|____data                       <span class="comment"># 缓存目录</span></span><br><span class="line">| |____user_1                   <span class="comment"># 用户数据目录</span></span><br><span class="line">| | |____1.json                 <span class="comment"># 用户 JSON 数据</span></span><br><span class="line">| | |____cover_photo_xxx.jpg    <span class="comment"># 游记封面照片</span></span><br><span class="line">| | |____image_xxx.jpg          <span class="comment"># 用户头像照片</span></span><br><span class="line">| | |____map.json               <span class="comment"># 用户旅行 JSON 数据</span></span><br><span class="line">| | |____trip_47891             <span class="comment"># 游记目录</span></span><br><span class="line">| | | |____xxxxxxx.jpg          <span class="comment"># 游记照片</span></span><br><span class="line">| | | |____310965.json          <span class="comment"># 游记 JSON 数据</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h3><p>数据抓到了，接下来便是数据的存储。除了 JSON 数据，还需要把图片也一起存下来，毕竟图片是游记的基础。由于已经拿到了 JSON，这里我就不使用数据库了，使用文件按下面的目录结构进保存：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|____data                       <span class="comment"># 缓存目录</span></span><br><span class="line">| |____user_1                   <span class="comment"># 用户数据目录</span></span><br><span class="line">| | |____1.json                 <span class="comment"># 用户 JSON 数据</span></span><br><span class="line">| | |____cover_photo_xxx.jpg    <span class="comment"># 游记封面照片</span></span><br><span class="line">| | |____image_xxx.jpg          <span class="comment"># 用户头像照片</span></span><br><span class="line">| | |____map.json               <span class="comment"># 用户旅行 JSON 数据</span></span><br><span class="line">| | |____trip_47891             <span class="comment"># 游记目录</span></span><br><span class="line">| | | |____xxxxxxx.jpg          <span class="comment"># 游记照片</span></span><br><span class="line">| | | |____310965.json          <span class="comment"># 游记 JSON 数据</span></span><br></pre></td></tr></table></figure></p>
 <p>游记照片 URL 抽取，trips 的数据结构大致结构如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"trip_days"</span>:[&#123;</span><br><span class="line">    <span class="attr">"nodes"</span>:[&#123;</span><br><span class="line">        <span class="attr">"notes"</span>:[&#123;</span><br><span class="line">            <span class="attr">"photo"</span>:[&#123;</span><br><span class="line">                <span class="attr">"url"</span>:<span class="string">""</span></span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;]&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这里我使用 Python 的列表生成式只用一行代码完成 URL 的筛选，入参 days 即 trip_days。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_image_url</span><span class="params">(days)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [note[<span class="string">'photo'</span>][<span class="string">'url'</span>] <span class="keyword">for</span> day <span class="keyword">in</span> days <span class="keyword">for</span> node <span class="keyword">in</span> day[<span class="string">'nodes'</span>] <span class="keyword">for</span> note <span class="keyword">in</span> node[<span class="string">'notes'</span>] <span class="keyword">if</span> note.get(<span class="string">'photo'</span>)]</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/benjyair/Taki" target="_blank" rel="noopener">项目地址</a> </p>
+<p>如此多层次的嵌套，一层一层解析下去代码少说十几行。这里我使用 Python 的列表生成式只用一行代码完成 URL 的筛选，入参 days 即 trip_days。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_image_url</span><span class="params">(days)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [note[<span class="string">'photo'</span>][<span class="string">'url'</span>] <span class="keyword">for</span> day <span class="keyword">in</span> days <span class="keyword">for</span> node <span class="keyword">in</span> day[<span class="string">'nodes'</span>] <span class="keyword">for</span> note <span class="keyword">in</span> node[<span class="string">'notes'</span>] <span class="keyword">if</span> note.get(<span class="string">'photo'</span>)]</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/benjyair/Taki" target="_blank" rel="noopener">项目地址</a><br><br></p>
 </section>
     <!-- Tags START -->
     
@@ -184,15 +196,23 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2015/07/25/你试过这样分析Android界面么/">
+      <a class="nav-left" href="/2018/05/26/使用Flask搭建蝉游记服务器/">
         <span class="nav-arrow">← </span>
         
-          你试过这样分析 Android 界面么
+          使用Flask搭建蝉游记服务器
         
       </a>
     
     
+      <a class="nav-right" href="/2018/03/18/博客迁移--从Jekyll到Hexo/">
+        
+          博客迁移--从Jekyll到Hexo
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
   </div>
+
 
     <!-- NAV END -->
     <!-- 打赏 START -->
@@ -224,7 +244,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2018/05/21/使用 Python 爬取蝉游记/';
+    var url = 'http://benjyair.github.io/2018/05/21/使用Python爬取蝉游记/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -280,7 +300,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "使用 Python 抓取蝉游记",
+        id: "使用Python抓取蝉游记",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {
