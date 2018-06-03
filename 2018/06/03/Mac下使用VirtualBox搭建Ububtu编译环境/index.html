@@ -10,7 +10,7 @@
   
   <title>
     
-      使用Flask搭建蝉游记服务器 | Benjy&#39;s Blog
+      Mac下使用VirtualBox搭建Ububtu编译环境 | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -150,8 +150,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>使用Flask搭建蝉游记服务器</h2>
-  <p class="post-date">2018-05-26</p>
+  <h2>Mac下使用VirtualBox搭建Ububtu编译环境</h2>
+  <p class="post-date">2018-06-03</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -159,34 +159,44 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><h3 id="承接上文"><a href="#承接上文" class="headerlink" title="承接上文"></a>承接上文</h3><p>我们现在获取到的数据有：</p>
-<ul>
-<li>游记 JSON 数据和游记图片</li>
-<li>用户信息 JSON 数据和用户去过的地方 JSON 数据</li>
+    <section class="markdown-content"><p>由于 Mac 系统默认是大小写不敏感的，所以在编译 C 的时候，如果项目中出现文件名一样，大小写不一样的两个文件时，在 Mac 下编译就会出现问题。比如： <strong>ABC.c</strong> 和 <strong>abc.c</strong> ，这种情况只能换到 Linux 下编译。而我又想在 Mac 下完成代码开发，那使用 VirtualBox 搭建 Ububtu 的编译环境 + 共享文件夹共享源代码就是最好的选择。不要和我说使用 Mac + Linux 服务器的方式，我试过了，体验很差。</p>
+<h3 id="安装和配置虚拟机"><a href="#安装和配置虚拟机" class="headerlink" title="安装和配置虚拟机"></a>安装和配置虚拟机</h3><ul>
+<li>下载 VirtualBox 和 Ububtu iso，按提示一步一步来就能很轻松完成 Ubuntu 的安装。</li>
+<li><p>设置 root 密码，为后续简化使用共享文件夹，我们将直接使用 root 账户登录 Ububtu。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 openssh 服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 ssh 配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/ssh/sshd_config</span><br><span class="line"># 找到 Port 22 取消注释开启 22 端口</span><br><span class="line">Port 22</span><br><span class="line"># 找到 PermitRootLogin without-password 修改为 yes 允许 root 账户使用 ssh 登录</span><br><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启 ssh 服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置虚拟机端口转发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 在 VirtualBox 中找到配置表 VirtualBox -&gt; Settings -&gt; Network -&gt; Adapter 1 -&gt; Advanced -&gt; Port Forwarding</span><br><span class="line"># 添加一个 Item</span><br><span class="line">| Name   | Protocol | Host IP | Host Port | Guest IP | Guest Port |</span><br><span class="line">| Rule 1 | TCP      |         | 1111      |          | 22         |</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 VirtualBox Guest Additions</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VirtualBox VM -&gt; Devices -&gt; Insert Guest Additions CD image...</span><br><span class="line">cd /media/</span><br><span class="line">./VBoxLinuxAdditions.run</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置共享文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 VirtualBox -&gt; Settings -&gt; Share Folders 添加共享文件夹，勾选 Auto-mount 和 Make Permanent</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 ssh 远程登录虚拟机</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 1111 root@127.0.0.1</span><br><span class="line">ls /media/</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<p>数据是一切信息型网站的基础，这些数据已经足够我们完成一个基本的网站了。我们可以选择自己开发一套前端 UI 来完成数据的展示，也可以把蝉游记现有的结构套进去。毫无疑问，我选择后者，来尽可能展现蝉游记原貌。<br><br><br>项目选型上直接选择 Flask + Jinja2，简单高效。<br><br><br>第一阶段我们主要完成用户界面和游记页面的开发，跳转方式和蝉游记保持一致。</p>
-<h3 id="目录介绍"><a href="#目录介绍" class="headerlink" title="目录介绍"></a>目录介绍</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|____templates                  # 模板文件目录</span><br><span class="line">| |____trip.html</span><br><span class="line">| |____user.html</span><br><span class="line">|____static                     # 资源文件目录</span><br><span class="line">| |____xxxxxx.js                # 依赖文件等</span><br><span class="line">| |____data                     # 用户数据目录</span><br><span class="line">| | |____user_1</span><br><span class="line">| | | |____trip_47891</span><br><span class="line">|____application.py             # 项目主程序</span><br></pre></td></tr></table></figure>
-<h3 id="前端改造"><a href="#前端改造" class="headerlink" title="前端改造"></a>前端改造</h3><p>首先在在浏览器上分别保存两个网页源码到本地，然后对 HTML 中需要动态的部分使用 Jinja 语法修改为动态的内容，依赖文件下载到本地的 static 目录中，过程比较枯燥就不在这里赘述。简单讲几个遇到的问题：<br><br><br>1、动态替换进 HTML 内容后页面无法滚动。</p>
-<p>A：原因是页面中有一些元素是需要使用 JS 动态加载的，而这部分又依赖一些数据，这部分数据是 API 中没有的，可以选择修改 application.js 中的逻辑，或者把这部分数据也爬下来，在展示的动态添加进模板中，我使用的是后者，爬取的内容存在 trip 的 script.js 中。<br><br><br>2、加密游记的获取与展示。</p>
-<p>A：在爬取过程中，我们是可以抓到加密的游记的，理论上是可以展示的，但是唯一获取不到的就是上一个问题中的那部分 script，这部分必须要登录才可以获取到，为了美观，我暂时把加密游记过滤掉了，如果之后能解决第一个问题，那么这个问题也可以迎刃而解，或者也可以自己做一套 UI 来展示即可。<br><br><br>3、图片展示 URL 的处理。</p>
-<p>A：使用 Jinja 编写一个 filter 将 JSON 中的 URL 修改到 static 目录中对应的地址。<br><br><br>4、数据文件的读取。</p>
-<p>A：使用 Python 读取文件时，如果使用相对路径，那这个相对路径不是执行文件所在路径，而是执行脚本的路径。所以为了增强健壮性，最好使用绝对路径。可以使用如下方式来获取到绝对路径。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">root_path = os.path.split(os.path.realpath(__file__))[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
-<h3 id="其他分析"><a href="#其他分析" class="headerlink" title="其他分析"></a>其他分析</h3><p>在分析数据的过程中，我发现蝉游记的私密游记实际上并没有做到完全的私密。也就是说数据是可以获取到的，是否展示由客户端来决定，如果是私密游记 API 会同时返回一个加密后的 password。经过对蝉游记 App 的反编译，我发现就是由用户 user_id + ‘_’ + password 然后取 hash 生成的，只要用户输入的密码经过计算与数据一致便可以显示，所以我们完全可以绕过这一步检测 =、=。</p>
-<h3 id="TBD"><a href="#TBD" class="headerlink" title="TBD"></a>TBD</h3><p>接下来的任务</p>
-<ul>
-<li>用户去过的地方</li>
-<li>私密游记的展示</li>
-<li>生成静态网页</li>
-</ul>
-<p><a href="https://github.com/benjyair/Taki" target="_blank" rel="noopener">项目地址</a><br><br></p>
+<p>到这里整个环境就设置好了，接下来便可以在 Mac 下开发 C 项目，在 Terminal 中编译项目了。</p>
+<p><br></p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#Python" >
-    <span class="tag-code">Python</span>
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
   </a>
 
       </div>
@@ -197,17 +207,10 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/05/28/跟着Chuck学习C语言（一）/">
-        <span class="nav-arrow">← </span>
+    
+      <a class="nav-right" href="/2018/05/28/跟着Chuck学习C语言（一）/">
         
           跟着Chuck学习C语言（一）
-        
-      </a>
-    
-    
-      <a class="nav-right" href="/2018/05/21/使用Python爬取蝉游记/">
-        
-          使用Python抓取蝉游记
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -236,7 +239,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2018/05/26/使用Flask搭建蝉游记服务器/';
+    var url = 'http://benjyair.github.io/2018/06/03/Mac下使用VirtualBox搭建Ububtu编译环境/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -292,7 +295,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "使用Flask搭建蝉游记服务器",
+        id: "Mac下使用VirtualBox搭建Ububtu编译环境",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {
