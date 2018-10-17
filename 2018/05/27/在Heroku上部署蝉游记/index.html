@@ -10,7 +10,7 @@
   
   <title>
     
-      使用Flask搭建蝉游记服务器 | Benjy&#39;s Blog
+      在Heroku上部署蝉游记 | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -138,8 +138,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>使用Flask搭建蝉游记服务器</h2>
-  <p class="post-date">2018-05-26</p>
+  <h2>在Heroku上部署蝉游记</h2>
+  <p class="post-date">2018-05-27</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -147,20 +147,21 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><h3 id="承接上文"><a href="#承接上文" class="headerlink" title="承接上文"></a>承接上文</h3><p>我们现在获取到的数据有：</p>
+    <section class="markdown-content"><h3 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h3><p><a href="https://www.heroku.com/home" target="_blank" rel="noopener">Heroku</a> 是一个云服务器部署平台，支持多种语言和框架，支持从 Github 自动部署，提供免费的空间和二级域名，虽然系统半小时不使用会自动休眠，但是对我们来说足够用了。</p>
+<h3 id="教学"><a href="#教学" class="headerlink" title="教学"></a>教学</h3><p>1）创建 Heroku 账号。<br>2）创建一个新的 Heroku App。<br>3）链接 Github，开启自动部署。<br>Deploy -&gt; Deployment method -&gt; Github -&gt; Choose Repository &amp; Branch -&gt; Enable Automatic Deploys。<br>4）在 Github 项目根目录添加 Heroku 配置文件。</p>
 <ul>
-<li>游记 JSON 数据和游记图片</li>
-<li>用户信息 JSON 数据和用户去过的地方 JSON 数据</li>
+<li><p>requirements.txt<br>这个文件里放的是当前项目所有的依赖库和对应版本，我们使用 <code>pip freeze &gt; requirements.txt</code> 命令生成。<br>Ps：<br>在 Heroku 里，官方使用 <a href="https://devcenter.heroku.com/articles/python-gunicorn" target="_blank" rel="noopener">Gunicorn</a> 来启动 Web Server，所以我们需要在 requirements.txt 里增加一行配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunicorn==19.9.0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Procfile<br>这个文件是要告诉 Heroku 如何启动这个 Web App。由于我们的 application 文件在二级目录下，所以需要增加 pythonpath 参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web: gunicorn --pythonpath ./web/ application:app</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>runtime.txt（可选）<br>可以在这个文件中指定你的 python 版本，如果你不想指定，这个文件可以忽略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python-2.7.10</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<p>数据是一切信息型网站的基础，这些数据已经足够我们完成一个基本的网站了。我们可以选择自己开发一套前端 UI 来完成数据的展示，也可以把蝉游记现有的结构套进去。毫无疑问，我选择后者，来尽可能展现蝉游记原貌。<br><br><br>项目选型上直接选择 Flask + Jinja2，简单高效。<br><br><br>第一阶段我们主要完成用户界面和游记页面的开发，跳转方式和蝉游记保持一致。</p>
-<h3 id="目录介绍"><a href="#目录介绍" class="headerlink" title="目录介绍"></a>目录介绍</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|____templates                  # 模板文件目录</span><br><span class="line">| |____trip.html</span><br><span class="line">| |____user.html</span><br><span class="line">|____static                     # 资源文件目录</span><br><span class="line">| |____xxxxxx.js                # 依赖文件等</span><br><span class="line">| |____data                     # 用户数据目录</span><br><span class="line">| | |____user_1</span><br><span class="line">| | | |____trip_47891</span><br><span class="line">|____application.py             # 项目主程序</span><br></pre></td></tr></table></figure>
-<h3 id="前端改造"><a href="#前端改造" class="headerlink" title="前端改造"></a>前端改造</h3><p>首先在在浏览器上分别保存两个网页源码到本地，然后对 HTML 中需要动态的部分使用 Jinja 语法修改为动态的内容，依赖文件下载到本地的 static 目录中，过程比较枯燥就不在这里赘述。简单讲几个遇到的问题：<br><br><br>1、动态替换进 HTML 内容后页面无法滚动。</p>
-<p>A：原因是页面中有一些元素是需要使用 JS 动态加载的，而这部分又依赖一些数据，这部分数据是 API 中没有的，可以选择修改 application.js 中的逻辑，或者把这部分数据也爬下来，在展示的动态添加进模板中，我使用的是后者，爬取的内容存在 trip 的 script.js 中。<br><br><br>2、加密游记的获取与展示。</p>
-<p>A：在爬取过程中，我们是可以抓到加密的游记的，理论上是可以展示的，但是唯一获取不到的就是上一个问题中的那部分 script，这部分必须要登录才可以获取到，为了美观，我暂时把加密游记过滤掉了，如果之后能解决第一个问题，那么这个问题也可以迎刃而解，或者也可以自己做一套 UI 来展示即可。<br><br><br>3、图片展示 URL 的处理。</p>
-<p>A：使用 Jinja 编写一个 filter 将 JSON 中的 URL 修改到 static 目录中对应的地址。<br><br><br>4、数据文件的读取。</p>
-<p>A：使用 Python 读取文件时，如果使用相对路径，那这个相对路径不是执行文件所在路径，而是执行脚本的路径。所以为了增强健壮性，最好使用绝对路径。可以使用如下方式来获取到绝对路径。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">root_path = os.path.split(os.path.realpath(__file__))[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
-<h3 id="其他分析"><a href="#其他分析" class="headerlink" title="其他分析"></a>其他分析</h3><p>在分析数据的过程中，我发现蝉游记的私密游记实际上并没有做到完全的私密。也就是说数据是可以获取到的，是否展示由客户端来决定，如果是私密游记 API 会同时返回一个加密后的 password。经过对蝉游记 App 的反编译，我发现就是由用户 user_id + ‘_’ + password 然后取 hash 生成的，只要用户输入的密码经过计算与数据一致便可以显示，所以我们完全可以绕过这一步检测 =、=。</p>
-<p><a href="https://github.com/benjyair/Taki" target="_blank" rel="noopener">项目地址</a><br><br></p>
+<p>5）提交代码到 Github 之后，返回 Heroku Dashboard。在右侧可以看到项目已经开始自动编译了，等待部署完成，点击右上角 Open App，新世界的大门就此打开。<br><br><br>Heroku 项目文件总大小限制要小于 500M（也是合理的，图片应该放在资源服务器上），我自己的游记数据已经接近 3G 自然是放不下了，只好借蝉小队的数据来用用，美其名曰：<a href="https://chanyouji.herokuapp.com/" target="_blank" rel="noopener">你们的回忆我来帮你们保管</a>。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>至此，蝉游记系列到此就结束了，项目简单，也算为自己的情怀做了一些事情 :p<br><br></p>
 </section>
     <!-- Tags START -->
     
@@ -179,17 +180,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/05/27/在Heroku上部署蝉游记/">
+      <a class="nav-left" href="/2018/05/28/跟着Chuck学习C语言/">
         <span class="nav-arrow">← </span>
         
-          在Heroku上部署蝉游记
+          跟着Chuck学习C语言
         
       </a>
     
     
-      <a class="nav-right" href="/2018/05/21/使用Python爬取蝉游记/">
+      <a class="nav-right" href="/2018/05/26/使用Flask搭建蝉游记服务器/">
         
-          使用Python抓取蝉游记
+          使用Flask搭建蝉游记服务器
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -218,7 +219,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2018/05/26/使用Flask搭建蝉游记服务器/';
+    var url = 'http://benjyair.github.io/2018/05/27/在Heroku上部署蝉游记/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -274,7 +275,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "使用Flask搭建蝉游记服务器",
+        id: "在Heroku上部署蝉游记",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {
