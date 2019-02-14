@@ -10,7 +10,7 @@
   
   <title>
     
-      Mac 下使用 VirtualBox 搭建 Ububtu 编译环境 | Benjy&#39;s Blog
+      Android 系统对 eSIM 的支持 | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -138,8 +138,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Mac 下使用 VirtualBox 搭建 Ububtu 编译环境</h2>
-  <p class="post-date">2018-06-03</p>
+  <h2>Android 系统对 eSIM 的支持</h2>
+  <p class="post-date">2018-10-21</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -147,44 +147,26 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>由于 Mac 系统默认是大小写不敏感的，所以在编译 C 的时候，如果项目中出现文件名一样，大小写不一样的两个文件时，在 Mac 下编译就会出现问题。比如： <strong>ABC.c</strong> 和 <strong>abc.c</strong> ，这种情况只能换到 Linux 下编译。而我又想在 Mac 下完成代码开发，那使用 VirtualBox 搭建 Ububtu 的编译环境 + 共享文件夹共享源代码就是最好的选择。不要和我说使用 Mac + Linux 服务器的方式，我试过了，体验很差。</p>
-<h3 id="安装和配置虚拟机"><a href="#安装和配置虚拟机" class="headerlink" title="安装和配置虚拟机"></a>安装和配置虚拟机</h3><ul>
-<li>下载 VirtualBox 和 Ububtu iso，按提示一步一步来就能很轻松完成 Ubuntu 的安装。</li>
-<li><p>设置 root 密码，为后续简化使用共享文件夹，我们将直接使用 root 账户登录 Ububtu。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装 openssh 服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改 ssh 配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/ssh/sshd_config</span><br><span class="line"># 找到 Port 22 取消注释开启 22 端口</span><br><span class="line">Port 22</span><br><span class="line"># 找到 PermitRootLogin without-password 修改为 yes 允许 root 账户使用 ssh 登录</span><br><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重启 ssh 服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置虚拟机端口转发</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 在 VirtualBox 中找到配置表 VirtualBox -&gt; Settings -&gt; Network -&gt; Adapter 1 -&gt; Advanced -&gt; Port Forwarding</span><br><span class="line"># 添加一个 Item</span><br><span class="line">| Name   | Protocol | Host IP | Host Port | Guest IP | Guest Port |</span><br><span class="line">| Rule 1 | TCP      |         | 1111      |          | 22         |</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装 VirtualBox Guest Additions</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VirtualBox VM -&gt; Devices -&gt; Insert Guest Additions CD image...</span><br><span class="line">cd /media/</span><br><span class="line">./VBoxLinuxAdditions.run</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置共享文件夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 VirtualBox -&gt; Settings -&gt; Share Folders 添加共享文件夹，勾选 Auto-mount 和 Make Permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 ssh 远程登录虚拟机</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 1111 root@127.0.0.1</span><br><span class="line">ls /media/</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>到这里整个环境就设置好了，接下来便可以在 Mac 下开发 C 项目，在 Terminal 中编译项目了。</p>
+    <section class="markdown-content"><p>从 Android 8.1 开始，Google 开始提供全新的 eUICC API，主要实现了 GSMA SGP.ES10x 接口。并封停之前 Carrier Privileges 对 ISD-R 的操作 ( <em>Only allows LPA to open logical channel to ISD-R —— 引用自 Android 8.1 源码</em> )。自此以后，基本封死了第三方开发 LPA（<em>Local Profile Assistant</em>）的可能性，至于 LPA 如何集成，控制权交给了 OEM 厂商。</p>
 <p><br></p>
+<p><img src="https://source.android.com/devices/tech/connect/images/carrier-oem-lpa.png" alt="LPA"><br>上图中：</p>
+<ul>
+<li><strong>EuiccManager</strong><br>应用程序与 LPA 交互的入口。包括可下载、删除及切换到运营商所拥有的资源。此外，这还包括 LUI（<em>Local User Interface</em>）系统应用。</li>
+<li><strong>EuiccController</strong><br>EuiccManager 与 EuiccService 之间的桥梁，负责消息的分发和回调。</li>
+<li><strong>EuiccService/EuiccServiceImpl</strong><br>LPA 后端服务的提供者，也是可以称之为 LPD（<em>Local Profile Download</em>）。EuiccService 是一个接口，定义了 ES10x 的接口规范，LPA 通过实现 EuiccService 来响应 EuiccController 的调用。</li>
+<li><strong>EuiccCardController</strong><br>EuiccCardManager 是用于与 eSIM 芯片进行通信的接口。负责处理低级 APDU 的请求/响应以及 ASN.1 的解析。</li>
+</ul>
+<p>具体使用方法可以参照官网介绍：<a href="https://source.android.com/devices/tech/connect/esim-overview#making_a_carrier_app" target="_blank" rel="noopener">点击这里</a></p>
+<p><br><br>最后说一下个人的看法:<br>1、eSIM 在终端上的趋势约来约明显了，Android 和 IOS 相继都推出了各自的 eSIM Demo。<br>2、更加全面统一了，GSMA 统一了规范，平台统一了框架，OEM 统一了入口，开发者之后调用相应的 API 也会更加方便。<br>3、安全性方面更加严格了，第三方很难插足。<br>4、Google 你只向下实现了 ES10x 的接口，那 LPA 中向上对 SMDP+ 的 ES9+ 接口怎么吧？？？</p>
+<p><br><br>以上。<br><br></p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#Linux" >
-    <span class="tag-code">Linux</span>
+  <a href="/tags#eSIM" >
+    <span class="tag-code">eSIM</span>
   </a>
 
       </div>
@@ -195,17 +177,10 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/06/07/Log筛选小工具/">
-        <span class="nav-arrow">← </span>
-        
-          Log 筛选小工具
-        
-      </a>
     
-    
-      <a class="nav-right" href="/2018/05/31/CLion开发环境的配置与搭建/">
+      <a class="nav-right" href="/2018/07/28/在树莓派上搭建OwnCloud私人网盘/">
         
-          CLion 开发环境的配置与搭建
+          在树莓派上搭建 ownCloud 私人网盘
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -234,7 +209,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2018/06/03/Mac下使用VirtualBox搭建Ububtu编译环境/';
+    var url = 'http://benjyair.github.io/2018/10/21/Android系统对eSIM的支持/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -290,7 +265,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Mac 下使用 VirtualBox 搭建 Ububtu 编译环境",
+        id: "Android 系统对 eSIM 的支持",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {
