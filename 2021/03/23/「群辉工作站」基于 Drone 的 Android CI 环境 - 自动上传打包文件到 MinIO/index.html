@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Benjy&#39;s Blog">
+  <meta name="keyword" content="Benjy, benjy, BenjyAir, benjyair">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      「群辉工作站」基于 Drone 的 Android CI 环境 - 自动上传打包文件到 MinIO | Benjy&#39;s Blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Benjy's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/read/" class="item-link">Read</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/read/" class="menu-link">Read</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>「群辉工作站」基于 Drone 的 Android CI 环境 - 自动上传打包文件到 MinIO</h2>
+  <p class="post-date">2021-03-23</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>在之前的文章中我们完成了 CI 环境的大部分工作，已经实现了提交代码自动编译，本文主要完成最后一步，上传编译后的 APK 到 MinIO。</p>
+<h3 id="准备-MinIO"><a href="#准备-MinIO" class="headerlink" title="准备 MinIO"></a>准备 MinIO</h3><p><a href="https://docs.min.io/cn/" target="_blank" rel="noopener">MinIO</a> 是一个非常轻量的对象存储服务，可以轻松快速的部署在 Amazon S3 或者 Docker 集群中。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  minio:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">minio/minio:latest</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">minio</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./data:/data</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"9090:9000"</span></span><br><span class="line"><span class="attr">    command:</span> <span class="string">server</span> <span class="string">/data</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MINIO_ROOT_USER=benjyair</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MINIO_ROOT_PASSWORD=abc123</span></span><br></pre></td></tr></table></figure>
+<p>依旧使用 compose 启动<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 1、在 File Station 中上传 docker-compose.yml 文件到 docker 共享文件夹的 minio 目录，</span><br><span class="line"><span class="meta">#</span>    如果没有就自己创建。我的 docker 共享文件夹在 存储池2 上，所以 compose 文件的路径就是：</span><br><span class="line"><span class="meta">#</span>    /volume2/docker/minio/docker-compose.yml</span><br><span class="line"><span class="meta">#</span> 2、ssh 登入群辉，ssh 用户名@群辉IP</span><br><span class="line">ssh benjy@192.168.192.1 </span><br><span class="line"><span class="meta">#</span> 3、获取 root 权限，进入 compose 路径</span><br><span class="line">sudo -i  # 再输入一次当前用户密码就行</span><br><span class="line">cd /volume2/docker/minio/</span><br><span class="line"><span class="meta">#</span> 4、创建容器</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure></p>
+<p>之后通过 <code>http://192.168.192.1:9090</code> 访问 MinIO，登录后首先为该项目创建一个叫 <code>draque</code> 的 Bucket 。Bucket 在 MinIO 中类似于项目的意思，也可以理解为项目根目录。之后我们自动打包的 APK 都放在这个 Bucket 下。</p>
+<p><br><br>MinIO Quickstart Guide:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Object API (Amazon S3 compatible):</span><br><span class="line">   Go:         https://docs.min.io/docs/golang-client-quickstart-guide</span><br><span class="line">   Java:       https://docs.min.io/docs/java-client-quickstart-guide</span><br><span class="line">   Python:     https://docs.min.io/docs/python-client-quickstart-guide</span><br><span class="line">   JavaScript: https://docs.min.io/docs/javascript-client-quickstart-guide</span><br><span class="line">   .NET:       https://docs.min.io/docs/dotnet-client-quickstart-guide</span><br></pre></td></tr></table></figure></p>
+<h3 id="准备-Android-项目的配置文件"><a href="#准备-Android-项目的配置文件" class="headerlink" title="准备 Android 项目的配置文件"></a>准备 Android 项目的配置文件</h3><p>既然需要自动化，那项目的配置文件也需要正式起来，修改我们 Android 项目的 <code>build.gradle</code>，重命名输出的 APK 文件，这里我顺道加入了一些渠道配置。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">'com.android.application'</span></span><br><span class="line">    id <span class="string">'kotlin-android'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">30</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId <span class="string">"com.benjyair.darque"</span></span><br><span class="line">        minSdkVersion <span class="number">16</span></span><br><span class="line">        targetSdkVersion <span class="number">30</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">"1.0"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android-optimize.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    flavorDimensions <span class="string">"mode"</span></span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        official &#123; dimension <span class="string">"mode"</span> &#125;</span><br><span class="line">        eng &#123; dimension <span class="string">"mode"</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123; output -&gt;</span><br><span class="line">            <span class="keyword">def</span> outputFile = output.outputFile</span><br><span class="line">            <span class="keyword">if</span> (outputFile != <span class="keyword">null</span> &amp;&amp; outputFile.name.endsWith(<span class="string">'.apk'</span>)) &#123;</span><br><span class="line">                <span class="keyword">def</span> createTime = <span class="keyword">new</span> Date().format(<span class="string">"yyyyMMdd-HHmm"</span>, TimeZone.getTimeZone(<span class="string">"GMT+08:00"</span>))</span><br><span class="line">                <span class="keyword">def</span> fileName = <span class="string">"App-$&#123;defaultConfig.versionName&#125;-$&#123;variant.productFlavors[0].name&#125;-$&#123;createTime&#125;.apk"</span></span><br><span class="line">                outputFileName = fileName</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后修改 <code>.drone.yml</code><br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">pipeline</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">docker</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">android</span></span><br><span class="line"></span><br><span class="line"><span class="attr">steps:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">build</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">benjyair/android-env-gradle</span></span><br><span class="line"><span class="attr">    commands:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">gradle</span> <span class="string">assembleEngRelease</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">upload</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">minio/mc</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      ACCESS_KEY:</span></span><br><span class="line"><span class="attr">        from_secret:</span> <span class="string">minio_access_key</span></span><br><span class="line"><span class="attr">      SECRET_KEY:</span></span><br><span class="line"><span class="attr">        from_secret:</span> <span class="string">minio_secret_key</span></span><br><span class="line"><span class="attr">    commands:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">mc</span> <span class="string">alias</span> <span class="string">set</span> <span class="string">minio</span> <span class="attr">http://192.168.192.1:9090</span> <span class="string">$ACCESS_KEY</span> <span class="string">$SECRET_KEY</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">cd</span> <span class="string">app/build/outputs/apk/eng/release</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">apk_file=`ls</span> <span class="string">| head -1`</span></span><br><span class="line"><span class="string">      - mc cp $apk_file minio/draque</span></span><br></pre></td></tr></table></figure></p>
+<p>以上文件中：<br>1、我修改了编译命令为 <code>assembleEngRelease</code>，这样只会只打包 Eng Release 版本。<br>2、上传的镜像使用的是 <code>minio/mc</code>，这个是 MinIO 的官方客户端镜像，其中提供了访问 MinIO 的 API。<br>3、MinIO 的用户名和密码使用了 Drone 的 Secret 机制，增加安全性，设置路径为 Drone 项目的「SETTINGS」–&gt; 「Secrets」。<br><br><br>提交到 Gitea 后，等 Drone Job 执行完成，在 MinIO 的控制台我们就能看到此次编译的 APK 已经完成了上传。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>至此，我就在群辉上完整的搭建了一套 Android CI 环境。磕磕绊绊，踩坑无数。系统的学习了 Docker 的使用、Docker 镜像的制作、Docker Compose 的使用，以及涉及到的和常用的一些 Docker 镜像，也了解了 Docker Machine、Docker Swarm 等集群的概念。还让在角落里的群辉发光发热，以上，真值得开心和记录的事情。<br><br><br>除去项目中列出的配置，整个项目的源码我放在<a href="https://github.com/benjyair/Draque" target="_blank" rel="noopener">这里</a> ，需要的可以自取。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Docker" >
+    <span class="tag-code">Docker</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+    
+      <a class="nav-right" href="/2021/03/02/「群辉工作站」好用的 Docker 镜像 - 技术篇/">
+        
+          「群辉工作站」好用的 Docker 镜像 - 技术篇
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://benjyair.github.io/2021/03/23/「群辉工作站」基于 Drone 的 Android CI 环境 - 自动上传打包文件到 MinIO/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "benjyair";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "「群辉工作站」基于 Drone 的 Android CI 环境 - 自动上传打包文件到 MinIO",
+        owner: "benjyair",
+        repo: "benjyair.github.io",
+        oauth: {
+          client_id: "dcedaa7e13d42cbba2fa",
+          client_secret: "14304e8d3a2a99f6b064ec43183d17cffc174d6f"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2021 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+
+  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253336121'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1253336121%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

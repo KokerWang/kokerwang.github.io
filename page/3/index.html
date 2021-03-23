@@ -141,6 +141,28 @@
   
     <article class="article-card">
       <h2 class="article-head">
+        <a href="/2015/06/30/使用Shell来编译Android项目/">使用 Shell 来编译 Android 项目</a>
+      </h2>
+      <p class="article-date">June 30, 2015</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          使用 Gradle 构建项目很久了，为了少敲命令行，我自己写了个简单的 Shell 脚本。
+脚本在项目目录下(不是 app moudle 目录下) 建一个 Shell 脚本 b.sh ，内容如下：
+123456789#!/bin/shecho "清理缓存..."./gradlew clean ...
+        
+      </div>
+      <a class="more" href="/2015/06/30/使用Shell来编译Android项目/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
         <a href="/2015/05/15/一招搞定IOS屏幕适配/">一招搞定 IOS 屏幕适配</a>
       </h2>
       <p class="article-date">May 15, 2015</p>
@@ -321,27 +343,6 @@
         
       </div>
       <a class="more" href="/2014/12/04/从Framework层看Android启动/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2014/11/11/Android应用内存溢出导致应用退出的解决方案/">Android 应用内存溢出导致应用退出的解决方案</a>
-      </h2>
-      <p class="article-date">November 11, 2014</p>
-      
-        
-  <a href="/tags#Android" >
-    <span class="tag-code">Android</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          昨天项目里遇到了一个严重问题，用户在使用一段时间应用之后，便会非常慢，最终导致内存溢出而崩溃，这个问题几乎让我们的一切努力白费。我几乎花了一整天的时间才终于找到了问题所在。问题的原因让我完全意料不到。
-在分析原因的时候我使用的是 Eclipse 的 Memory AnalysisTools  ...
-        
-      </div>
-      <a class="more" href="/2014/11/11/Android应用内存溢出导致应用退出的解决方案/">Read more</a>
     </article>
   
 

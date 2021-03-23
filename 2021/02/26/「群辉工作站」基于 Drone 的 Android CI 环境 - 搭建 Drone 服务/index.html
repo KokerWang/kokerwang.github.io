@@ -10,7 +10,7 @@
   
   <title>
     
-      「群辉工作站」搭建 Drone CI 环境 | Benjy&#39;s Blog
+      「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Drone 服务 | Benjy&#39;s Blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -138,7 +138,7 @@
 </header>
 
     <div id="article-banner">
-  <h2>「群辉工作站」搭建 Drone CI 环境</h2>
+  <h2>「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Drone 服务</h2>
   <p class="post-date">2021-02-26</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
@@ -159,7 +159,7 @@
 <h3 id="初始化-Drone"><a href="#初始化-Drone" class="headerlink" title="初始化 Drone"></a>初始化 Drone</h3><p>打开浏览器访问 Drone 服务：<code>http://192.168.192.1:9080/</code></p>
 <p>这里默认会跳转到 Gitea 进行应用授权，授权后返回 Drone 便能看到 Gitea 中创建的仓库。<br>我们提前在 Gitea 中创建一个 demo 项目，同时在 Drone 中点击 ACTIVATE，runner 会自动为该项目创建对应的 webhook。<br>接下来提交一个 .drone.yml 配置文件到 Git 仓库，配置中我们只是简单的打印出当前环境信息，<br>然后用 5 次 ping 模拟延时。提交完成后 Drone 就会自动执行该 pipeline。</p>
 <p>.drone.yml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">pipeline</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">docker</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">steps:</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">busybox</span></span><br><span class="line"><span class="attr">  image:</span> <span class="string">busybox</span></span><br><span class="line"><span class="attr">  commands:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">env</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">ping</span> <span class="bullet">-c</span> <span class="number">5</span> <span class="string">www.baidu.com</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p><br><br>到这里 Drone 这个轮子就算完成了。<br><br></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>到这里 Drone 这个轮子就算完成了。<br><br></p>
 </section>
     <!-- Tags START -->
     
@@ -178,17 +178,17 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2021/03/02/「群辉工作站」好用的 Docker 镜像 - 技术篇/">
+      <a class="nav-left" href="/2021/02/26/「群辉工作站」基于 Drone 的 Android CI 环境 - 准备 Android 编译镜像/">
         <span class="nav-arrow">← </span>
         
-          「群辉工作站」好用的 Docker 镜像 - 技术篇
+          「群辉工作站」基于 Drone 的 Android CI 环境 - 准备 Android 编译镜像
         
       </a>
     
     
-      <a class="nav-right" href="/2021/02/24/「群辉工作站」搭建 Gitea/">
+      <a class="nav-right" href="/2021/02/24/「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Gitea/">
         
-          「群辉工作站」搭建 Gitea
+          「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Gitea
         
         <span class="nav-arrow"> →</span>
       </a>
@@ -217,7 +217,7 @@
 
 <script>
   (function () {
-    var url = 'http://benjyair.github.io/2021/02/26/「群辉工作站」搭建 Drone CI 环境/';
+    var url = 'http://benjyair.github.io/2021/02/26/「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Drone 服务/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -273,7 +273,7 @@
     var gitmentConfig = "benjyair";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "「群辉工作站」搭建 Drone CI 环境",
+        id: "「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Drone 服务",
         owner: "benjyair",
         repo: "benjyair.github.io",
         oauth: {

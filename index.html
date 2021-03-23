@@ -141,9 +141,9 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2021/03/18/「群辉工作站」搭建 Drone CI 环境 - 准备 Android 编译镜像/">「群辉工作站」搭建 Drone CI 环境 - 准备 Android 编译镜像</a>
+        <a href="/2021/03/23/「群辉工作站」基于 Drone 的 Android CI 环境 - 自动上传打包文件到 MinIO/">「群辉工作站」基于 Drone 的 Android CI 环境 - 自动上传打包文件到 MinIO</a>
       </h2>
-      <p class="article-date">March 18, 2021</p>
+      <p class="article-date">March 23, 2021</p>
       
         
   <a href="/tags#Docker" >
@@ -153,11 +153,12 @@
       
       <div class="article-summary">
         
-          写在前面在之前的 搭建 Drone CI 环境 文章中我们的 Drone CI 环境已经搭建了起来，可以开始跑 CI 任务了。那么接下来就是准备一个我们自己的 Android 环境，用来放在 Drone 脚本中执行自动编译。
-前期调研在开始之前，我一直在纠结我的基础镜像应该继承自哪里，首先最 ...
+          写在前面在之前的文章中我们完成了 CI 环境的大部分工作，已经实现了提交代码自动编译，本文主要完成最后一步，上传编译后的 APK 到 MinIO。
+准备 MinIOMinIO 是一个非常轻量的对象存储服务，可以轻松快速的部署在 Amazon S3 或者 Docker 集群中。
+1234567 ...
         
       </div>
-      <a class="more" href="/2021/03/18/「群辉工作站」搭建 Drone CI 环境 - 准备 Android 编译镜像/">Read more</a>
+      <a class="more" href="/2021/03/23/「群辉工作站」基于 Drone 的 Android CI 环境 - 自动上传打包文件到 MinIO/">Read more</a>
     </article>
   
     <article class="article-card">
@@ -184,7 +185,28 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2021/02/26/「群辉工作站」搭建 Drone CI 环境/">「群辉工作站」搭建 Drone CI 环境</a>
+        <a href="/2021/02/26/「群辉工作站」基于 Drone 的 Android CI 环境 - 准备 Android 编译镜像/">「群辉工作站」基于 Drone 的 Android CI 环境 - 准备 Android 编译镜像</a>
+      </h2>
+      <p class="article-date">February 26, 2021</p>
+      
+        
+  <a href="/tags#Docker" >
+    <span class="tag-code">Docker</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          写在前面在之前的 搭建 Drone CI 环境 文章中我们的 Drone CI 环境已经搭建了起来，可以开始跑 CI 任务了。那么接下来就是准备一个我们自己的 Android 环境，用来放在 Drone 脚本中执行自动编译。
+前期调研在开始之前，我一直在纠结我的基础镜像应该继承自哪里，首先最 ...
+        
+      </div>
+      <a class="more" href="/2021/02/26/「群辉工作站」基于 Drone 的 Android CI 环境 - 准备 Android 编译镜像/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/02/26/「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Drone 服务/">「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Drone 服务</a>
       </h2>
       <p class="article-date">February 26, 2021</p>
       
@@ -200,12 +222,12 @@
 准备好 GiteaDrone 的使用需要一个 Git 仓 ...
         
       </div>
-      <a class="more" href="/2021/02/26/「群辉工作站」搭建 Drone CI 环境/">Read more</a>
+      <a class="more" href="/2021/02/26/「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Drone 服务/">Read more</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2021/02/24/「群辉工作站」搭建 Gitea/">「群辉工作站」搭建 Gitea</a>
+        <a href="/2021/02/24/「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Gitea/">「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Gitea</a>
       </h2>
       <p class="article-date">February 24, 2021</p>
       
@@ -224,7 +246,7 @@
 兼容性好，这次主要目的是与 Drone 配合搭建 CI 平台，Drone 官网中提到 Gitea 与 Dro ...
         
       </div>
-      <a class="more" href="/2021/02/24/「群辉工作站」搭建 Gitea/">Read more</a>
+      <a class="more" href="/2021/02/24/「群辉工作站」基于 Drone 的 Android CI 环境 - 搭建 Gitea/">Read more</a>
     </article>
   
     <article class="article-card">
@@ -325,27 +347,6 @@
         
       </div>
       <a class="more" href="/2018/06/03/Mac下使用VirtualBox搭建Ububtu编译环境/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/05/31/CLion开发环境的配置与搭建/">CLion 开发环境的配置与搭建</a>
-      </h2>
-      <p class="article-date">May 31, 2018</p>
-      
-        
-  <a href="/tags#C" >
-    <span class="tag-code">C</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          从 Android Studio 到 IntelliJ Idea 再到 PyCharm， 已经成了 Jetbrains 的超级粉丝。所以开发 C，果断选择 CLion。而 CLion 中使用 CMake 构建 C 项目。
-C 语言项目的目录结构以下例子基本涵盖了一个 C 语言大型项目所能用到 ...
-        
-      </div>
-      <a class="more" href="/2018/05/31/CLion开发环境的配置与搭建/">Read more</a>
     </article>
   
 
