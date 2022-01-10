@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Benjy&#39;s Blog">
+  <meta name="keyword" content="Benjy, benjy, BenjyAir, benjyair">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Benjy&#39;s Blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Benjy's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/read/" class="item-link">Read</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/read/" class="menu-link">Read</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/02/07/驻网APDU信息解读/">SIM 卡驻网 APDU 信息解读</a>
+      </h2>
+      <p class="article-date">February 7, 2018</p>
+      
+        
+  <a href="/tags#eSIM" >
+    <span class="tag-code">eSIM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          初识 APDU查看当前 SIM 卡驻在哪个网络上的方式比较多，本篇文章以学习 APDU 的角度从底层来看待这个问题。其实并没有文档明确说明能通过 APDU 来查询驻网信息，主动发 AT 指令除外。但是一旦驻网成功，Modem 一定会通过 APDU 来把 mccmnc 写入到 SIM 卡文件系 ...
+        
+      </div>
+      <a class="more" href="/2018/02/07/驻网APDU信息解读/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2017/06/21/Android使用指定APN发起网络请求/">Android 使用指定APN发起网络请求</a>
+      </h2>
+      <p class="article-date">June 21, 2017</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          如果想在不切换现有 APN 的情况下让一个网络请求走另一个 APN 应该怎么做？这样的需求在 Android 上是可行的，你只需要获取到一个 Network 对象就可以。Network 提供 openConnection() 方法，你可以像使用 HttpURLConnection 一样来发起 ...
+        
+      </div>
+      <a class="more" href="/2017/06/21/Android使用指定APN发起网络请求/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2017/03/18/在MacOS上为安卓刷机/">在 Mac OS 上为 Android 设备刷机</a>
+      </h2>
+      <p class="article-date">March 18, 2017</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          最近一段时间在研究 Android 的 AOSP，打算拿淘汰下来的 Nexus 刷机练练手，顺道也把吃灰的树莓派利用起来。本篇主要总结了一下刷机的步骤，在树莓派上编译 AOSP 等之后再写。
+工具准备在 Mac OS 上刷机需要使用 Google SDK Platform Tools，下载并 ...
+        
+      </div>
+      <a class="more" href="/2017/03/18/在MacOS上为安卓刷机/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/07/25/你试过这样分析Android界面么/">你试过这样分析 Android 界面么</a>
+      </h2>
+      <p class="article-date">July 25, 2015</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          常常有时候界面不是我们自己写的需要我们去改，常常有时候我们需要参考别人的 APP 的布局来写自己的应用，常常有时候我们自己写的界面需要调试一些隐藏界面。难，怎么办，我来教你一个办法。
+正题在 Android 开发者选项里面有几个设置大家可能没注意到过，我要说的就是通过那里面的设置来分析，首先 ...
+        
+      </div>
+      <a class="more" href="/2015/07/25/你试过这样分析Android界面么/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/06/30/使用Shell来编译Android项目/">使用 Shell 来编译 Android 项目</a>
+      </h2>
+      <p class="article-date">June 30, 2015</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          使用 Gradle 构建项目很久了，为了少敲命令行，我自己写了个简单的 Shell 脚本。
+脚本在项目目录下(不是 app moudle 目录下) 建一个 Shell 脚本 b.sh ，内容如下：
+123456789#!/bin/shecho "清理缓存..."./gradlew clean ...
+        
+      </div>
+      <a class="more" href="/2015/06/30/使用Shell来编译Android项目/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/05/15/一招搞定IOS屏幕适配/">一招搞定 IOS 屏幕适配</a>
+      </h2>
+      <p class="article-date">May 15, 2015</p>
+      
+        
+  <a href="/tags#Swift" >
+    <span class="tag-code">Swift</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          首先从一首歌说起，你还在，你还在，头悬梁，锥刺股，做做做做适配么？你还以为使用宏定义，纯代码编写，就能高枕无忧么？你还把分辨率转像素当成当成卖身资本么？你还在格子间码子冲刺过劳死么？ no no no no no no no no no no no no ~ ~ 。人生苦短，IOS 应用适配 ...
+        
+      </div>
+      <a class="more" href="/2015/05/15/一招搞定IOS屏幕适配/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/05/04/爬坑IOS第一季/">爬坑 IOS 第一季</a>
+      </h2>
+      <p class="article-date">May 4, 2015</p>
+      
+        
+  <a href="/tags#Swift" >
+    <span class="tag-code">Swift</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          辛苦了将近一个多月，公司应用的 IOS 第一个版本终于发布啦。从无到有，一步一个坑的走到了现在。自信心受到了前所未有的打击，不过还好坚持了下来。分享下爬坑的经验。
+爬坑 —— String 类Swift 语法对 String 支持的并不如 Java 全面，有好多方法调用都好麻烦，对于熟悉 J ...
+        
+      </div>
+      <a class="more" href="/2015/05/04/爬坑IOS第一季/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/03/13/Swift通过代码启动Storyboard内的ViewController/">Swift 通过代码启动 Storyboard 内的 ViewController</a>
+      </h2>
+      <p class="article-date">March 13, 2015</p>
+      
+        
+  <a href="/tags#Swift" >
+    <span class="tag-code">Swift</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          IOS 设计布局的方式有3种，1、代码编写，2、xib 文件，3、storyboard，三种方式的好坏及使用我就不细说了，网上资料很多，我这里主要说下我在使用 storyboard 中遇到的问题。
+问题storyboard 是 Apple 最新的设计界面的方式。第一次使用我就被他的功能所吸引 ...
+        
+      </div>
+      <a class="more" href="/2015/03/13/Swift通过代码启动Storyboard内的ViewController/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/03/04/自己修改的GustureLock/">自己修改的 GustureLock</a>
+      </h2>
+      <p class="article-date">March 4, 2015</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          今天分享一个我修改过样式的 GustureLock 的源码，该库的出处我已经找不到了，当时是我朋友给我的一个 zip 包，我拿到源码之后，做了一些样式的调整，具体逻辑没有做处理，风格是模仿的 JDME 软件的风格
+使用在需要检查手势锁的地方加入如下代码，考虑到会需要随时修改切换动画，我并没有 ...
+        
+      </div>
+      <a class="more" href="/2015/03/04/自己修改的GustureLock/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2015/02/28/为Context-Menu.Android库增加用户体验(续)/">为 Context-Menu.Android 库增加用户体验(续)</a>
+      </h2>
+      <p class="article-date">February 28, 2015</p>
+      
+        
+  <a href="/tags#Android" >
+    <span class="tag-code">Android</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          在我的另一篇博客 为Context-Menu.Android库增加用户体验 里面留下了一个遗留问题就是给 DialogFragment 添加 OnKeyListener，当时朋友说这个很不好弄，加上当时项目比较紧自己也没有细细研究就把问题放了下来。今天在写 PubDialog 这个项目的时候 ...
+        
+      </div>
+      <a class="more" href="/2015/02/28/为Context-Menu.Android库增加用户体验(续)/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a href="/page/2/"><span class="page-arrow">← </span>Prev</a>
+  
+  
+    <a href="/page/4/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+
+  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253336121'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1253336121%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
